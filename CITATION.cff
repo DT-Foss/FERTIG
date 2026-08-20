@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: "FERTIG"
+message: "Cite the exact repository commit and the solver architecture document when using FERTIG."
+type: software
+authors:
+  - family-names: Foss
+    given-names: David Tom
+repository-code: "https://github.com/DT-Foss/FERTIG"
+license: "NOASSERTION"
+version: "1.2.0"
+date-released: "2026-08-20"

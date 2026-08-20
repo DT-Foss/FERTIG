@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fertig"
+version = "1.2.0"
+description = "A grounded, abstaining personal AI runtime with an exact unified solver."
+requires-python = ">=3.11"
+authors = [{name = "David Tom Foss"}]
+readme = "README.md"
+dependencies = ["numpy>=1.26", "msgpack>=1.0", "torch>=2.0"]
+
+[project.scripts]
+fertig = "fertig.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]

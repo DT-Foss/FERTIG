@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+dist/
+build/
+*.egg-info/
+.DS_Store
+
+# Research data, checkpoints, and private traces are not part of the runtime repo.
+data/*
+_codex_lab/
+Formeln/
+*.pt
+*.pth
+*.safetensors
+*.npz
+*.parquet
+*.jsonl
+logs/
+
+# Small, explicitly whitelisted runtime fixtures are added with git -f.
