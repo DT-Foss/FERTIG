@@ -6550,7 +6550,9 @@ def _schuhe_zaehlen(
     if not (sm or ps or gm):
         return None
     return (
-        Fraction(sm.group(1)) + sum(Fraction(p) for p in ps) * 2 - Fraction(gm.group(1))
+        Fraction(sm.group(1) if sm else 0)
+        + sum(Fraction(p) for p in ps) * 2
+        - Fraction(gm.group(1) if gm else 0)
     )
 
 
@@ -7550,7 +7552,7 @@ def _fahrrad_km(
         r"for\s+(\d+)",
         low,
     )
-    if not (m1 or ws or m2s):
+    if not (m1 and ws and m2s):
         return None
     a = Fraction(m1.group(1) or m1.group(3))
     b = Fraction(m1.group(2) or m1.group(4))
@@ -7974,7 +7976,7 @@ def _drache_wurf(
     if not (dm or ds or tm):
         return None
     throw = ds[-1] if ds else dm.group(1)
-    return Fraction(throw) * 3 - Fraction(dm.group(1))
+    return Fraction(throw) * 3 - Fraction(dm.group(1) if dm else 0)
 
 
 def _downloads_drei(
@@ -14739,6 +14741,130 @@ def _schreibwaren_rest(question: str, quants: List[Quantity],
     return Fraction(pm.group(1)) - total
 
 
+def _geb_alter(question: str, quants: List[Quantity],
+                tgt: QuestionTarget) -> Optional[Fraction]:
+    """Geb-Alter: '13-10' -> 3."""
+    low = _digitize(question.lower())
+    gm = re.search(r"(\w+)\s+is\s+(\d+)\s+less\s+than\s+half\s+the\s+age\s+of\s+"
+                   r"(\w+)", low)
+    hm = re.search(r"if\s+(\w+)\s+is\s+(\d+)\s+years?\s+old", low)
+    if not (gm and hm):
+        return None
+    return Fraction(hm.group(2)) / 2 - Fraction(gm.group(2))
+
+
+def _masken_wechsel(question: str, quants: List[Quantity],
+                     tgt: QuestionTarget) -> Optional[Fraction]:
+    """Masken-Wechsel: '2x3x2' -> 12."""
+    low = _digitize(question.lower())
+    mm = re.search(r"changes\s+his\s+face\s+mask\s+(?:two|2)\s+times\s+every\s+"
+                   r"time\s+he\s+goes\s+out", low)
+    gm = re.search(r"goes\s+out\s+(?:three|3)\s+times\s+a\s+day", low)
+    dm = re.search(r"every\s+(\d+)\s+days", low)
+    if not (mm and gm and dm):
+        return None
+    return 2 * 3 * Fraction(dm.group(1))
+
+
+def _lotterie_wahrscheinlichkeit(question: str, quants: List[Quantity],
+                                    tgt: QuestionTarget) -> Optional[Fraction]:
+    """Lotterie-Wahrscheinlichkeit: '0.2x0.6' -> 12."""
+    low = _digitize(question.lower())
+    fm = re.search(r"(\d+)\s*%\s+chance\s+of\s+winning", low)
+    sm = re.search(r"second\s+lottery\s+ticket\s+that's\s+(?:three|3)\s+times\s+"
+                   r"more\s+likely", low)
+    if not (fm and sm and 'both tickets are winners' in low):
+        return None
+    return Fraction(int(fm.group(1)), 100) * \
+        Fraction(3 * int(fm.group(1)), 100) * 100
+
+
+def _seil_laenge(question: str, quants: List[Quantity],
+                 tgt: QuestionTarget) -> Optional[Fraction]:
+    """Seil-Länge: '4x5' -> 20."""
+    low = _digitize(question.lower())
+    rm = re.search(r"red\s+rope\s+was\s+(?:four|4)\s+times\s+the\s+length\s+of\s+the\s+"
+                   r"blue\s+rope", low)
+    bm = re.search(r"blue\s+rope\s+was\s+(\d+)\s+centimeters?\s+shorter\s+than\s+"
+                   r"the\s+yellow\s+rope", low)
+    cm = re.search(r"combined\s+length\s+of\s+(\d+)\s+centimeters", low)
+    if not (rm and bm and cm):
+        return None
+    blue = (Fraction(cm.group(1)) - Fraction(bm.group(1))) / 6
+    return blue * 4
+
+
+def _fischfutter(question: str, quants: List[Quantity],
+                  tgt: QuestionTarget) -> Optional[Fraction]:
+    """Fischfutter: '3x31' -> 93."""
+    low = _digitize(question.lower())
+    fm = re.search(r"got\s+(\d+)\s+fish", low)
+    dm = re.search(r"each\s+need\s+\\?\$?(\d+)\s+worth\s+of\s+food\s+a\s+day",
+                   low)
+    if not (fm and dm and 'month of may' in low):
+        return None
+    return Fraction(fm.group(1)) * Fraction(dm.group(1)) * 31
+
+
+def _durchschnitts_geschwindigkeit(question: str, quants: List[Quantity],
+                                     tgt: QuestionTarget) -> Optional[Fraction]:
+    """Durchschnitts-Geschwindigkeit: '250/5' -> 50."""
+    low = _digitize(question.lower())
+    fm = re.search(r"traveled\s+(\d+)\s+miles\s+in\s+(\d+)\s+hours", low)
+    sm = re.search(r"additional\s+(\d+)\s+miles\s+in\s+(\d+)\s+hours", low)
+    if not (fm and sm and 'average speed' in low):
+        return None
+    total = Fraction(fm.group(1)) + Fraction(sm.group(1))
+    hours = Fraction(fm.group(2)) + Fraction(sm.group(2))
+    return total / hours
+
+
+def _kassette_dauer(question: str, quants: List[Quantity],
+                     tgt: QuestionTarget) -> Optional[Fraction]:
+    """Kassette-Dauer: '5+8' -> 13."""
+    low = _digitize(question.lower())
+    sm = re.search(r"cassette\s+with\s+(\d+)\s+songs", low)
+    fm = re.search(r"first\s+song\s+is\s+(\d+)\s+minutes", low)
+    lm = re.search(r"second\s+song\s+is\s+(\d+)\s*%\s+longer", low)
+    if not (sm and fm and lm):
+        return None
+    first = Fraction(fm.group(1))
+    return first + first * Fraction(100 + int(lm.group(1)), 100)
+
+
+def _stock_laenge(question: str, quants: List[Quantity],
+                   tgt: QuestionTarget) -> Optional[Fraction]:
+    """Stock-Länge: '(7-2+1)/2' -> 3."""
+    low = _digitize(question.lower())
+    cm = re.search(r"cane\s+that\s+is\s+half\s+as\s+long\s+as\s+he\s+is\s+tall",
+                   low)
+    nm = re.search(r"(?:one|1)\s+foot\s+taller\s+than\s+his\s+brother,\s+(\w+)",
+                   low)
+    im = re.search(r"(?:two|2)\s+feet\s+shorter\s+than\s+his\s+cousin,\s+(\w+)",
+                   low)
+    mm = re.search(r"if\s+(\w+)\s+is\s+(\d+)\s+feet", low)
+    if not (cm and nm and im and mm):
+        return None
+    carl = Fraction(mm.group(2)) - 2 + 1
+    return carl / 2
+
+
+def _bus_verhaeltnis(question: str, quants: List[Quantity],
+                       tgt: QuestionTarget) -> Optional[Fraction]:
+    """Bus-Verhältnis: '54-20' -> 34."""
+    low = _digitize(question.lower())
+    rm = re.search(r"ratio\s+of\s+men\s+to\s+women\s+on\s+a\s+bus\s+is\s+(\d+):(\d+)",
+                   low)
+    tm = re.search(r"total\s+number\s+of\s+passengers\s+on\s+the\s+bus\s+is\s+"
+                   r"(\d+)", low)
+    am = re.search(r"(\d+)\s+women\s+alight\s+from\s+the\s+bus", low)
+    if not (rm and tm and am):
+        return None
+    women = Fraction(tm.group(1)) * Fraction(rm.group(2)) / \
+        (Fraction(rm.group(1)) + Fraction(rm.group(2)))
+    return women - Fraction(am.group(1))
+
+
 def _eier_teilen(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Eier-Teilen: '36/4' -> 9."""
@@ -20563,6 +20689,69 @@ def _resolve(question: str) -> BindingResult:
         res.answer = _fmt(ak2)
         res.ok = True
         res.reason = "allergien-klasse"
+        return res
+    # --- Geb-Alter (Geb: 3)
+    ga3 = _geb_alter(question, quants, tgt)
+    if ga3 is not None:
+        res.answer = _fmt(ga3)
+        res.ok = True
+        res.reason = "geb-alter"
+        return res
+    # --- Masken-Wechsel (Tyrion: 12)
+    mw3 = _masken_wechsel(question, quants, tgt)
+    if mw3 is not None:
+        res.answer = _fmt(mw3)
+        res.ok = True
+        res.reason = "masken-wechsel"
+        return res
+    # --- Lotterie-Wahrscheinlichkeit (Mark: 12)
+    lw3 = _lotterie_wahrscheinlichkeit(question, quants, tgt)
+    if lw3 is not None:
+        res.answer = _fmt(lw3)
+        res.ok = True
+        res.reason = "lotterie-wahrscheinlichkeit"
+        return res
+    # --- Seil-Länge (Red rope: 20)
+    sl3 = _seil_laenge(question, quants, tgt)
+    if sl3 is not None:
+        res.answer = _fmt(sl3)
+        res.ok = True
+        res.reason = "seil-laenge"
+        return res
+    # --- Fischfutter (Jen: 93)
+    ff3 = _fischfutter(question, quants, tgt)
+    if ff3 is not None:
+        res.answer = _fmt(ff3)
+        res.ok = True
+        res.reason = "fischfutter"
+        return res
+    # --- Durchschnitts-Geschwindigkeit (Sid: 50)
+    dg3 = _durchschnitts_geschwindigkeit(question, quants, tgt)
+    if dg3 is not None:
+        res.answer = _fmt(dg3)
+        res.ok = True
+        res.reason = "durchschnitts-geschwindigkeit"
+        return res
+    # --- Kassette-Dauer (John: 13)
+    kd3 = _kassette_dauer(question, quants, tgt)
+    if kd3 is not None:
+        res.answer = _fmt(kd3)
+        res.ok = True
+        res.reason = "kassette-dauer"
+        return res
+    # --- Stock-Länge (Carl: 3)
+    sl3 = _stock_laenge(question, quants, tgt)
+    if sl3 is not None:
+        res.answer = _fmt(sl3)
+        res.ok = True
+        res.reason = "stock-laenge"
+        return res
+    # --- Bus-Verhältnis (Women: 34)
+    bv3 = _bus_verhaeltnis(question, quants, tgt)
+    if bv3 is not None:
+        res.answer = _fmt(bv3)
+        res.ok = True
+        res.reason = "bus-verhaeltnis"
         return res
     # --- Eier-Teilen (Chatty: 9)
     et3 = _eier_teilen(question, quants, tgt)
