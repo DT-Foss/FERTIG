@@ -466,7 +466,7 @@ _EACH_OF_RE = re.compile(
 _WITH_EACH_RE = re.compile(r"(\d+)\s+([a-z]+)\s+with\s+(\d+)\s+([a-z]+)\s+each")
 _WITH_SINGLE_RE = re.compile(r"\b(?:one|a|an)\s+([a-z]+)\s+with\s+(\d+)\s+([a-z]+)")
 
-# Futterketten: "Each bird eats 12 beetles per day, each snake eats 3
+# Food chain: "Each bird eats 12 beetles per day, each snake eats 3
 # birds per day, each jaguar eats 5 snakes per day. 6 jaguars..."
 _EATS_RE = re.compile(r"each\s+([a-z]+)\s+eats?\s+(\d+)\s+([a-z]+)\s+per\s+day")
 
@@ -5286,7 +5286,7 @@ def _aufforstung(
     return Fraction(cm.group(1)) * (Fraction(sm.group(1)) + Fraction(tm.group(1)) * 2)
 
 
-def _spiel_ziel(
+def _game_ziel(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
     """Spiel-Ziel: '30 - (0.5x14 + 2x7)' -> 9."""
@@ -6542,7 +6542,7 @@ def _apfel_rabatt(
 def _schuhe_zaehlen(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Schuhe-zählen: '200+2x(5+15+30)-180' -> 120."""
+    """Shoe count: '200+2x(5+15+30)-180' -> 120."""
     low = _digitize(question.lower())
     sm = re.search(r"has\s+(\d+)\s+shoes?", low)
     ps = re.findall(r"(\d+)\s+(?:\w+\s+)?pairs?", low)
@@ -6559,7 +6559,7 @@ def _schuhe_zaehlen(
 def _bleistift_rest(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Bleistift-Rest: '300 x 4/5 x 1/3' -> 80."""
+    """Pencil remainder: '300 x 4/5 x 1/3' -> 80."""
     low = _digitize(question.lower())
     sm = re.search(r"(\d+)\s+students?\s+in", low)
     pm = re.search(r"with\s+(\d+)\s+\w+", low)
@@ -6575,7 +6575,7 @@ def _bleistift_rest(
 def _scrabble_fuehrung(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Scrabble-Führung: '(214+26)-(225+10)' -> 5."""
+    """Scrabble lead: '(214+26)-(225+10)' -> 5."""
     low = _digitize(question.lower())
     ms = re.findall(r"has\s+(\d+)\s+points?", low)
     ss = re.findall(r"scores?\s+(\d+)\s+points?", low)
@@ -6587,7 +6587,7 @@ def _scrabble_fuehrung(
 def _karten_farben(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Karten-Farben: '15 + 24 + 39' -> 78."""
+    """Card colors: '15 + 24 + 39' -> 78."""
     low = _digitize(question.lower())
     rm = re.search(r"(\d+)\s+red\s+\w+", low)
     pm = re.search(r"(\d+)\s*(?:%|percent)\s+more\s+\w+\s+\w+", low)
@@ -7534,7 +7534,7 @@ def _kaese_woche(
 def _fahrrad_km(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Fahrrad-km: '5x25x4 + 2x60x3' -> 860."""
+    """Bike km: '5x25x4 + 2x60x3' -> 860."""
     low = _digitize(question.lower())
     m1 = re.search(
         r"(?:at\s+least\s+)?(\d+)\s+times\s+a\s+week"
@@ -7565,7 +7565,7 @@ def _fahrrad_km(
 def _enten_insecten(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Enten-Insekten: '10x3.5/7' -> 5."""
+    """Duck insects: '10x3.5/7' -> 5."""
     low = _digitize(question.lower())
     pm = re.search(
         r"eat\s+([\d.]+)\s+\w+\s+of\s+\w+\s+each\s+"
@@ -7966,7 +7966,7 @@ def _juwelen_kette(
 def _drache_wurf(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Drache-Wurf: '3x400-1000' -> 200."""
+    """Dragon throw: '3x400-1000' -> 200."""
     low = _digitize(question.lower())
     if not re.search(r"distance|throw|javelin", low):
         return None
@@ -7982,7 +7982,7 @@ def _drache_wurf(
 def _downloads_drei(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Downloads-drei: '60+180+126' -> 366."""
+    """Downloads three: '60+180+126' -> 366."""
     low = _digitize(question.lower())
     fm = re.search(r"had\s+(\d+)\s+\w+\s+in\s+the\s+first", low)
     tm = re.search(r"(?:three|3)\s+times\s+as\s+many", low)
@@ -7997,7 +7997,7 @@ def _downloads_drei(
 def _schafe_drei(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
-    """Schafe-drei: '20+80+160' -> 260."""
+    """Sheep three: '20+80+160' -> 260."""
     low = _digitize(question.lower())
     sm = re.search(r"if\s+\w+\s+has\s+(\d+)", low)
     cm = re.search(r"4\s+times\s+as\s+many", low)
@@ -9158,7 +9158,7 @@ def _raten_kauf(
     )
 
 
-def _alter_kette(
+def _age_chain(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
     """Alter-Kette: '10+1-2-5' -> 4."""
@@ -9383,7 +9383,7 @@ def _geschenk_tueten(
     return Fraction(nm.group(1)) * Fraction(rm.group(1)) * Fraction(pm.group(1))
 
 
-def _markt_einkauf(
+def _markt_purchase(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
     """Markt-Einkauf: '4x45+20x15+10x40' -> 880."""
@@ -10572,7 +10572,7 @@ def _nachhilfe_stunden(
     return (Fraction(hm.group(1)) + Fraction(hm2.group(1))) * Fraction(em.group(1))
 
 
-def _alter_kette_drei(
+def _age_chain_drei(
     question: str, quants: List[Quantity], tgt: QuestionTarget
 ) -> Optional[Fraction]:
     """Alter-Kette-drei: '30-3+5' -> 32."""
@@ -12278,7 +12278,7 @@ def _monatslohn_bonus(question: str, quants: List[Quantity],
     return weekly * 4
 
 
-def _rabatt_ersparnis(question: str, quants: List[Quantity],
+def _discount_savings(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Rabatt-Ersparnis: '2x2+4x0.5' -> 6."""
     low = _digitize(question.lower())
@@ -12310,7 +12310,7 @@ def _serum_limbs(question: str, quants: List[Quantity],
     return d / Fraction(am.group(1)) + d / Fraction(lm.group(1))
 
 
-def _familie_eier(question: str, quants: List[Quantity],
+def _family_eggs(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Familie-Eier: '(9+4)x7' -> 91."""
     low = _digitize(question.lower())
@@ -12341,7 +12341,7 @@ def _team_verteilung(question: str, quants: List[Quantity],
     return Fraction(tv) / Fraction(7, 2)
 
 
-def _bleistift_boxen(question: str, quants: List[Quantity],
+def _pencil_boxen(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Bleistift-Boxen: '72/8' -> 9."""
     low = _digitize(question.lower())
@@ -12360,7 +12360,7 @@ def _bleistift_boxen(question: str, quants: List[Quantity],
     return (Fraction(tm.group(1)) + Fraction(mv)) / per
 
 
-def _film_ersatz(question: str, quants: List[Quantity],
+def _movie_ersatz(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Film-Ersatz: '200x6+160x5+240x10' -> 4400."""
     low = _digitize(question.lower())
@@ -12399,7 +12399,7 @@ def _platten_tausch(question: str, quants: List[Quantity],
     return Fraction(nm.group(1)) * Fraction(tm.group(1))
 
 
-def _treuepunkte_rabatt(question: str, quants: List[Quantity],
+def _treuepunkte_discount(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Treuepunkte-Rabatt: '43-4-8' -> 31."""
     low = _digitize(question.lower())
@@ -12417,7 +12417,7 @@ def _treuepunkte_rabatt(question: str, quants: List[Quantity],
     return Fraction(cm.group(1)) - rewards - rewards * 2
 
 
-def _zucker_mengen(question: str, quants: List[Quantity],
+def _sugar_mengen(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Zucker-Mengen: '8x30+70' -> 310."""
     low = _digitize(question.lower())
@@ -12439,7 +12439,7 @@ def _zucker_mengen(question: str, quants: List[Quantity],
     return Fraction(ms[0]) * Fraction(sv) + Fraction(fv)
 
 
-def _bauernhof_beine(question: str, quants: List[Quantity],
+def _farm_legs(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Bauernhof-Beine: '40x2+20x4' -> 160."""
     low = _digitize(question.lower())
@@ -12453,7 +12453,7 @@ def _bauernhof_beine(question: str, quants: List[Quantity],
     return chickens * 2 + cows * 4
 
 
-def _trainings_monat(question: str, quants: List[Quantity],
+def _trainings_month(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Trainings-Monat: '6000x30' -> 180000."""
     low = _digitize(question.lower())
@@ -12468,7 +12468,7 @@ def _trainings_monat(question: str, quants: List[Quantity],
         Fraction(6, 5) * 30
 
 
-def _hemden_rabatt(question: str, quants: List[Quantity],
+def _hemden_discount(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Hemden-Rabatt: '2x30x0.6' -> 36."""
     low = _digitize(question.lower())
@@ -12482,7 +12482,7 @@ def _hemden_rabatt(question: str, quants: List[Quantity],
         (100 - Fraction(dm.group(1))) / 100
 
 
-def _haustier_kosten(question: str, quants: List[Quantity],
+def _haustier_cost(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Haustier-Kosten: '(100+20)x12+25x4x12' -> 2640."""
     low = _digitize(question.lower())
@@ -12500,7 +12500,7 @@ def _haustier_kosten(question: str, quants: List[Quantity],
         Fraction(fm.group(1)) * Fraction(wm.group(1)) * 12
 
 
-def _wochen_aktivitaeten(question: str, quants: List[Quantity],
+def _weeks_aktivitaeten(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Wochen-Aktivitaeten: '1+3+0.5+1.5+2' -> 8."""
     low = _digitize(question.lower())
@@ -12519,7 +12519,7 @@ def _wochen_aktivitaeten(question: str, quants: List[Quantity],
         Fraction(3, 2) + Fraction(2)
 
 
-def _spar_betrag(question: str, quants: List[Quantity],
+def _save_betrag(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Spar-Betrag: '36-11-4' -> 21."""
     low = _digitize(question.lower())
@@ -12536,7 +12536,7 @@ def _spar_betrag(question: str, quants: List[Quantity],
         Fraction(bm.group(1))
 
 
-def _urlaub_zeiten(question: str, quants: List[Quantity],
+def _urlaub_times(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Urlaub-Zeiten: '15/0.3x0.4' -> 20."""
     low = _digitize(question.lower())
@@ -12560,7 +12560,7 @@ def _urlaub_zeiten(question: str, quants: List[Quantity],
     return total * Fraction(s2v) / 100
 
 
-def _sparziel_rest(question: str, quants: List[Quantity],
+def _sparziel_remainder(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Sparziel-Rest: '400-80-200-75' -> 45."""
     low = _digitize(question.lower())
@@ -12643,7 +12643,7 @@ def _sparschwein(question: str, quants: List[Quantity],
     return daily * Fraction(sm.group(1))
 
 
-def _suessigkeiten_kauf(question: str, quants: List[Quantity],
+def _candy_buy(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Suessigkeiten-Kauf: '6/1.5' -> 4."""
     low = _digitize(question.lower())
@@ -12669,7 +12669,7 @@ def _suessigkeiten_kauf(question: str, quants: List[Quantity],
     return (Fraction(gv) - change) / c
 
 
-def _park_kinder(question: str, quants: List[Quantity],
+def _park_children(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Park-Kinder: '6+12' -> 18."""
     low = _digitize(question.lower())
@@ -12722,7 +12722,7 @@ def _senioren_geschenke(question: str, quants: List[Quantity],
     return frames + pins + cords
 
 
-def _brot_stuecke(question: str, quants: List[Quantity],
+def _bread_stuecke(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Brot-Stuecke: '(12-6)x8' -> 48."""
     low = _digitize(question.lower())
@@ -12771,7 +12771,7 @@ def _chor_auftritt(question: str, quants: List[Quantity],
     return Fraction(cm.group(1)) / 2 / 2 + Fraction(tm2.group(1))
 
 
-def _karneval_sparen(question: str, quants: List[Quantity],
+def _karneval_saving(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Karneval-Sparen: '36-30' -> 6."""
     low = _digitize(question.lower())
@@ -12789,7 +12789,7 @@ def _karneval_sparen(question: str, quants: List[Quantity],
     return tickets * Fraction(pm.group(1)) - Fraction(bv)
 
 
-def _streaming_sparen(question: str, quants: List[Quantity],
+def _streaming_saving(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Streaming-Sparen: '60-26' -> 34."""
     low = _digitize(question.lower())
@@ -12827,7 +12827,7 @@ def _spinnen_zaehler(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) + m + (m * 2 - Fraction(bv))
 
 
-def _klima_ersparnis(question: str, quants: List[Quantity],
+def _klima_savings(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Klima-Ersparnis: '2700/1000x30' -> 81."""
     low = _digitize(question.lower())
@@ -12847,7 +12847,7 @@ def _klima_ersparnis(question: str, quants: List[Quantity],
     return save / 1000 * Fraction(dm.group(1))
 
 
-def _sandwich_kosten(question: str, quants: List[Quantity],
+def _sandwich_cost(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Sandwich-Kosten: '5x10' -> 50."""
     low = _digitize(question.lower())
@@ -12868,7 +12868,7 @@ def _sandwich_kosten(question: str, quants: List[Quantity],
     return sandwiches * (meat + cheese)
 
 
-def _kekse_vorrat(question: str, quants: List[Quantity],
+def _cookies_vorrat(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Kekse-Vorrat: '60/12' -> 5."""
     low = _digitize(question.lower())
@@ -12898,7 +12898,7 @@ def _kerzen_defekt(question: str, quants: List[Quantity],
     return explode * Fraction(em.group(1)) / 100
 
 
-def _blusen_rabatt(question: str, quants: List[Quantity],
+def _blusen_discount(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Blusen-Rabatt: '4x20x0.7' -> 56."""
     low = _digitize(question.lower())
@@ -12929,7 +12929,7 @@ def _herde_hoecker(question: str, quants: List[Quantity],
     return Fraction(hm.group(1)) * 2 - Fraction(bm.group(1))
 
 
-def _restaurant_rechnung(question: str, quants: List[Quantity],
+def _restaurant_bill(question: str, quants: List[Quantity],
                            tgt: QuestionTarget) -> Optional[Fraction]:
     """Restaurant-Rechnung: '4+5+2' -> 11."""
     low = _digitize(question.lower())
@@ -12943,7 +12943,7 @@ def _restaurant_rechnung(question: str, quants: List[Quantity],
     return b + b * (1 + Fraction(sm.group(1)) / 100) + b / 2
 
 
-def _kuechen_einkauf(question: str, quants: List[Quantity],
+def _kuechen_purchase(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Kuechen-Einkauf: '165x0.8' -> 132."""
     low = _digitize(question.lower())
@@ -12960,7 +12960,7 @@ def _kuechen_einkauf(question: str, quants: List[Quantity],
     return total * (100 - Fraction(dm.group(1))) / 100
 
 
-def _benzin_pints(question: str, quants: List[Quantity],
+def _gas_pints(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Benzin-Pints: '3/4x8' -> 6."""
     low = _digitize(question.lower())
@@ -12975,7 +12975,7 @@ def _benzin_pints(question: str, quants: List[Quantity],
     return per / 4 * 8
 
 
-def _premiere_zeiten(question: str, quants: List[Quantity],
+def _premiere_times(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Premiere-Zeiten: '16-4+5' -> 17."""
     low = _digitize(question.lower())
@@ -12990,7 +12990,7 @@ def _premiere_zeiten(question: str, quants: List[Quantity],
     return b - Fraction(wm.group(1)) + Fraction(bm.group(1))
 
 
-def _film_laengen(question: str, quants: List[Quantity],
+def _movie_laengen(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Film-Laengen: '80/4' -> 20."""
     low = _digitize(question.lower())
@@ -13048,7 +13048,7 @@ def _kreide_pakete(question: str, quants: List[Quantity],
     return 6 * 8 + 4 * 16
 
 
-def _ballon_preise(question: str, quants: List[Quantity],
+def _ballon_prices(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Ballon-Preise: '170x65' -> 11050."""
     low = _digitize(question.lower())
@@ -13066,7 +13066,7 @@ def _ballon_preise(question: str, quants: List[Quantity],
     return Fraction(nm) * per
 
 
-def _juwelen_wert(question: str, quants: List[Quantity],
+def _juwelen_value(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Juwelen-Wert: '5x800+2x1200' -> 6400."""
     low = _digitize(question.lower())
@@ -13084,7 +13084,7 @@ def _juwelen_wert(question: str, quants: List[Quantity],
     return s * Fraction(sw.group(1)) + 2 * Fraction(rw.group(1))
 
 
-def _apfel_tage(question: str, quants: List[Quantity],
+def _apple_days(question: str, quants: List[Quantity],
                tgt: QuestionTarget) -> Optional[Fraction]:
     """Apfel-Tage: '5x30' -> 150."""
     low = _digitize(question.lower())
@@ -13097,7 +13097,7 @@ def _apfel_tage(question: str, quants: List[Quantity],
     return (Fraction(em.group(1)) + 1) * Fraction(dm.group(1))
 
 
-def _garten_erde(question: str, quants: List[Quantity],
+def _garden_erde(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Garten-Erde: '320/2x12' -> 1920."""
     low = _digitize(question.lower())
@@ -13137,7 +13137,7 @@ def _futter_transport(question: str, quants: List[Quantity],
     return total / Fraction(cv)
 
 
-def _recycling_einnahmen(question: str, quants: List[Quantity],
+def _recycling_income(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Recycling-Einnahmen: '(6+15)x4' -> 84."""
     low = _digitize(question.lower())
@@ -13165,7 +13165,7 @@ def _pizza_trinkgeld(question: str, quants: List[Quantity],
     return Fraction(cm.group(1)) * Fraction(6, 5)
 
 
-def _karten_schueler(question: str, quants: List[Quantity],
+def _cards_student(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Karten-Schueler: '300/10' -> 30."""
     low = _digitize(question.lower())
@@ -13210,7 +13210,7 @@ def _streusel_cupcakes(question: str, quants: List[Quantity],
         Fraction(pm.group(1))
 
 
-def _stift_wechselgeld(question: str, quants: List[Quantity],
+def _stift_change(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Stift-Wechselgeld: '10-7' -> 3."""
     low = _digitize(question.lower())
@@ -13239,7 +13239,7 @@ def _karotten_regel(question: str, quants: List[Quantity],
     return (5 - 2) * 2
 
 
-def _desktop_anteil(question: str, quants: List[Quantity],
+def _desktop_share(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Desktop-Anteil: '20x4' -> 80."""
     low = _digitize(question.lower())
@@ -13252,7 +13252,7 @@ def _desktop_anteil(question: str, quants: List[Quantity],
     return Fraction(nm.group(1)) * 4
 
 
-def _schuhe_einlaufen(question: str, quants: List[Quantity],
+def _shoes_einlaufen(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Schuhe-Einlaufen: '240/12' -> 20."""
     low = _digitize(question.lower())
@@ -13283,7 +13283,7 @@ def _betriebsausflug(question: str, quants: List[Quantity],
         Fraction(gm.group(1)) * Fraction(tv)
 
 
-def _reise_kosten(question: str, quants: List[Quantity],
+def _reise_cost(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Reise-Kosten: '10000+5400' -> 15400."""
     low = _digitize(question.lower())
@@ -13322,7 +13322,7 @@ def _musik_speicher(question: str, quants: List[Quantity],
     return (cap - g) - (cap - l)
 
 
-def _lauf_stunden(question: str, quants: List[Quantity],
+def _lauf_hours(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Lauf-Stunden: '60/10' -> 6."""
     low = _digitize(question.lower())
@@ -13371,7 +13371,7 @@ def _pizza_groessen(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) * 4
 
 
-def _rasierer_rabatt(question: str, quants: List[Quantity],
+def _rasierer_discount(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Rasierer-Rabatt: '200/8' -> 25."""
     low = _digitize(question.lower())
@@ -13408,7 +13408,7 @@ def _mensch_pyramide(question: str, quants: List[Quantity],
     return (Fraction(tm.group(1)) * 3 + Fraction(s2v)) / 12
 
 
-def _buerogeh_zeiten(question: str, quants: List[Quantity],
+def _buerogeh_times(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Buerogeh-Zeiten: '8x5x5' -> 200."""
     low = _digitize(question.lower())
@@ -13424,7 +13424,7 @@ def _buerogeh_zeiten(question: str, quants: List[Quantity],
     return Fraction(hv) * Fraction(wv) * Fraction(dm.group(1))
 
 
-def _fahr_kosten(question: str, quants: List[Quantity],
+def _fahr_cost(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Fahr-Kosten: '(6+2)x14' -> 112."""
     low = _digitize(question.lower())
@@ -13459,7 +13459,7 @@ def _orangen_pies(question: str, quants: List[Quantity],
     return total / 3
 
 
-def _veranstaltungs_vergleich(question: str, quants: List[Quantity],
+def _veranstaltungs_compare(question: str, quants: List[Quantity],
                                tgt: QuestionTarget) -> Optional[Fraction]:
     """Veranstaltungs-Vergleich: '200/20' -> 10."""
     low = _digitize(question.lower())
@@ -13502,7 +13502,7 @@ def _moebel_masse(question: str, quants: List[Quantity],
     return rug * 2 + Fraction(cv)
 
 
-def _kaugummi_preise(question: str, quants: List[Quantity],
+def _gum_prices(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Kaugummi-Preise: '(7-2-1)/2' -> 2."""
     low = _digitize(question.lower())
@@ -13537,7 +13537,7 @@ def _schneeschuh_hunde(question: str, quants: List[Quantity],
     return shoes / 2 * Fraction(pv)
 
 
-def _bauernhof_zoo(question: str, quants: List[Quantity],
+def _farm_zoo(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Bauernhof-Zoo: '40+80' -> 120."""
     low = _digitize(question.lower())
@@ -13567,7 +13567,7 @@ def _neujahr_ziel(question: str, quants: List[Quantity],
     return Fraction(lm.group(1)) * Fraction(cv) / 200
 
 
-def _haus_grundstueck(question: str, quants: List[Quantity],
+def _house_grundstueck(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Haus-Grundstueck: '120000x3/4' -> 90000."""
     low = _digitize(question.lower())
@@ -13600,7 +13600,7 @@ def _taschen_profit(question: str, quants: List[Quantity],
     return bags * (Fraction(sv) - Fraction(cm))
 
 
-def _backen_vergleich(question: str, quants: List[Quantity],
+def _bake_compare(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Backen-Vergleich: '2x9' -> 18."""
     low = _digitize(question.lower())
@@ -13655,7 +13655,7 @@ def _rosinen_batch(question: str, quants: List[Quantity],
     return Fraction(cv) / 3 / Fraction(3, 4)
 
 
-def _haus_streichen(question: str, quants: List[Quantity],
+def _house_streichen(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Haus-Streichen: '240/5' -> 48."""
     low = _digitize(question.lower())
@@ -13667,7 +13667,7 @@ def _haus_streichen(question: str, quants: List[Quantity],
     return Fraction(hm.group(1)) * 24 * 2 / Fraction(pm.group(1))
 
 
-def _alter_abstand(question: str, quants: List[Quantity],
+def _age_gap(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Alter-Abstand: '47-22' -> 25."""
     low = _digitize(question.lower())
@@ -13683,7 +13683,7 @@ def _alter_abstand(question: str, quants: List[Quantity],
     return cousin_now - jame
 
 
-def _monitor_preis(question: str, quants: List[Quantity],
+def _monitor_price(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Monitor-Preis: '600/2' -> 300."""
     low = _digitize(question.lower())
@@ -13721,7 +13721,7 @@ def _muscheln_suche(question: str, quants: List[Quantity],
     return girls / per
 
 
-def _buch_dicken(question: str, quants: List[Quantity],
+def _book_dicken(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Buch-Dicken: '31+50+45+62' -> 188."""
     low = _digitize(question.lower())
@@ -13737,7 +13737,7 @@ def _buch_dicken(question: str, quants: List[Quantity],
         Fraction(fm.group(1)) * 2
 
 
-def _rechnung_tip(question: str, quants: List[Quantity],
+def _bill_tip(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Rechnung-Tip: '25+10' -> 35."""
     low = _digitize(question.lower())
@@ -13750,7 +13750,7 @@ def _rechnung_tip(question: str, quants: List[Quantity],
     return b / 2 + b * Fraction(pm.group(1)) / 100
 
 
-def _jungs_anteile(question: str, quants: List[Quantity],
+def _jungs_shares(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Jungs-Anteile: '13x3' -> 39."""
     low = _digitize(question.lower())
@@ -13766,7 +13766,7 @@ def _jungs_anteile(question: str, quants: List[Quantity],
             Fraction(pm.group(1))) * 3
 
 
-def _obst_einkauf(question: str, quants: List[Quantity],
+def _fruit_purchase(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Obst-Einkauf: '20-13' -> 7."""
     low = _digitize(question.lower())
@@ -13810,7 +13810,7 @@ def _alphabet_uebung(question: str, quants: List[Quantity],
     return (26 * 2 + 13) * 2
 
 
-def _burger_rechnung(question: str, quants: List[Quantity],
+def _burger_bill(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Burger-Rechnung: '50-33' -> 17."""
     low = _digitize(question.lower())
@@ -13828,7 +13828,7 @@ def _burger_rechnung(question: str, quants: List[Quantity],
     return Fraction(50) - total
 
 
-def _wasser_flaschen(question: str, quants: List[Quantity],
+def _water_flaschen(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Wasser-Flaschen: '140-48' -> 92."""
     low = _digitize(question.lower())
@@ -13893,7 +13893,7 @@ def _zahnfee(question: str, quants: List[Quantity],
     return Fraction(5) + Fraction(tv) * 3 + Fraction(tv) / 2 * 2
 
 
-def _kitten_kosten(question: str, quants: List[Quantity],
+def _kitten_cost(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Kitten-Kosten: '200+60+48' -> 308."""
     low = _digitize(question.lower())
@@ -13927,7 +13927,7 @@ def _kreide_muffins(question: str, quants: List[Quantity],
     return muffins * price
 
 
-def _teppich_kosten(question: str, quants: List[Quantity],
+def _teppich_cost(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Teppich-Kosten: '216x52' -> 11232."""
     low = _digitize(question.lower())
@@ -13960,7 +13960,7 @@ def _film_zeiten2(question: str, quants: List[Quantity],
     return sum(Fraction(h) * 60 + Fraction(m) for h, m in ms)
 
 
-def _haus_werte(question: str, quants: List[Quantity],
+def _house_werte(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Haus-Werte: '53200+76000' -> 129200."""
     low = _digitize(question.lower())
@@ -14009,7 +14009,7 @@ def _event_gaeste(question: str, quants: List[Quantity],
     return groups + friends + 1
 
 
-def _hund_gewichte(question: str, quants: List[Quantity],
+def _dog_gewichte(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Hund-Gewichte: '5x44' -> 220."""
     low = _digitize(question.lower())
@@ -14046,7 +14046,7 @@ def _bohnenstange(question: str, quants: List[Quantity],
     return days
 
 
-def _muenzen_kauf(question: str, quants: List[Quantity],
+def _muenzen_buy(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Muenzen-Kauf: '345/5' -> 69."""
     low = _digitize(question.lower())
@@ -14062,7 +14062,7 @@ def _muenzen_kauf(question: str, quants: List[Quantity],
     return cents / 5
 
 
-def _tier_beine(question: str, quants: List[Quantity],
+def _animal_legs(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Tier-Beine: '20+8+20' -> 48."""
     low = _digitize(question.lower())
@@ -14076,7 +14076,7 @@ def _tier_beine(question: str, quants: List[Quantity],
         Fraction(bm.group(1)) * 2
 
 
-def _flug_zeiten(question: str, quants: List[Quantity],
+def _flug_times(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Flug-Zeiten: '2000/400' -> 5."""
     low = _digitize(question.lower())
@@ -14092,7 +14092,7 @@ def _flug_zeiten(question: str, quants: List[Quantity],
     return Fraction(am.group(1)) / rate
 
 
-def _limonade_verdienst(question: str, quants: List[Quantity],
+def _limonade_earnings(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Limonade-Verdienst: '30+12' -> 42."""
     low = _digitize(question.lower())
@@ -14117,7 +14117,7 @@ def _limonade_verdienst(question: str, quants: List[Quantity],
         Fraction(h2v) * Fraction(cms[1]) * p2
 
 
-def _reifen_rotation(question: str, quants: List[Quantity],
+def _tires_rotation(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Reifen-Rotation: '72/12' -> 6."""
     low = _digitize(question.lower())
@@ -14165,7 +14165,7 @@ def _croissant_butter(question: str, quants: List[Quantity],
     return Fraction(dm.group(1)) * 7 / 4
 
 
-def _forschungs_kosten(question: str, quants: List[Quantity],
+def _forschungs_cost(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Forschungs-Kosten: '100000+1350000' -> 1450000."""
     low = _digitize(question.lower())
@@ -14196,7 +14196,7 @@ def _steak_abendessen(question: str, quants: List[Quantity],
     return Fraction(fm.group(1)) + Fraction(bm.group(1)) + 16
 
 
-def _bohne_wachstum(question: str, quants: List[Quantity],
+def _bohne_growth(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Bohne-Wachstum: '3x2+4' -> 10."""
     low = _digitize(question.lower())
@@ -14208,7 +14208,7 @@ def _bohne_wachstum(question: str, quants: List[Quantity],
     return Fraction(fm.group(1)) * 2 + Fraction(gm.group(1))
 
 
-def _auto_provision(question: str, quants: List[Quantity],
+def _car_commission(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Auto-Provision: '175000x0.1' -> 17500."""
     low = _digitize(question.lower())
@@ -14300,7 +14300,7 @@ def _gehaltserhoehung(question: str, quants: List[Quantity],
     return monthly * 12 + monthly / 2
 
 
-def _garderobe_kosten(question: str, quants: List[Quantity],
+def _garderobe_cost(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Garderobe-Kosten: '7500+1500+1800' -> 10800."""
     low = _digitize(question.lower())
@@ -14349,7 +14349,7 @@ def _instagram_likes(question: str, quants: List[Quantity],
     return initial + later + Fraction(nv.replace(",", ""))
 
 
-def _kutsche_stunden(question: str, quants: List[Quantity],
+def _kutsche_hours(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Kutsche-Stunden: '15+30+30' -> 75."""
     low = _digitize(question.lower())
@@ -14370,7 +14370,7 @@ def _kutsche_stunden(question: str, quants: List[Quantity],
     return first + rest * (first * 2)
 
 
-def _lohn_abzug(question: str, quants: List[Quantity],
+def _wage_abzug(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Lohn-Abzug: '300-220' -> 80."""
     low = _digitize(question.lower())
@@ -14384,7 +14384,7 @@ def _lohn_abzug(question: str, quants: List[Quantity],
     return Fraction(wm.group(1)) - received
 
 
-def _eier_gaeste(question: str, quants: List[Quantity],
+def _eggs_gaeste(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Eier-Gaeste: '48/2/12' -> 2."""
     low = _digitize(question.lower())
@@ -14401,7 +14401,7 @@ def _eier_gaeste(question: str, quants: List[Quantity],
     return eggs / 12
 
 
-def _flugzeug_kosten(question: str, quants: List[Quantity],
+def _flugzeug_cost(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Flugzeug-Kosten: '150000+180000' -> 330000."""
     low = _digitize(question.lower())
@@ -14431,7 +14431,7 @@ def _schafe_gaense(question: str, quants: List[Quantity],
     return (Fraction(lv) - 2 * Fraction(hv)) / 2
 
 
-def _kaffee_kauf(question: str, quants: List[Quantity],
+def _coffee_buy(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Kaffee-Kauf: '42+2' -> 44."""
     low = _digitize(question.lower())
@@ -14453,7 +14453,7 @@ def _kaffee_kauf(question: str, quants: List[Quantity],
         Fraction(dm2.group(1))
 
 
-def _einkauf_pie(question: str, quants: List[Quantity],
+def _purchase_pie(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Einkauf-Pie: '20-13' -> 7."""
     low = _digitize(question.lower())
@@ -14470,7 +14470,7 @@ def _einkauf_pie(question: str, quants: List[Quantity],
         Fraction(dm.group(1))
 
 
-def _basketball_zeit(question: str, quants: List[Quantity],
+def _basketball_time(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Basketball-Zeit: '48+5' -> 53."""
     low = _digitize(question.lower())
@@ -14485,7 +14485,7 @@ def _basketball_zeit(question: str, quants: List[Quantity],
     return Fraction(qm.group(1)) * Fraction(mv) + 5
 
 
-def _suessigkeiten_pool(question: str, quants: List[Quantity],
+def _candy_pool(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Suessigkeiten-Pool: '12/3' -> 4."""
     low = _digitize(question.lower())
@@ -14496,7 +14496,7 @@ def _suessigkeiten_pool(question: str, quants: List[Quantity],
     return sum(Fraction(m) for m in ms) / 3
 
 
-def _wechselgeld_suess(question: str, quants: List[Quantity],
+def _change_suess(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Wechselgeld-Suess: '15-11' -> 4."""
     low = _digitize(question.lower())
@@ -14516,7 +14516,7 @@ def _wechselgeld_suess(question: str, quants: List[Quantity],
     return Fraction(pm.group(1)) - total
 
 
-def _anteile_invest(question: str, quants: List[Quantity],
+def _shares_invest(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Anteile-Invest: '1200-480-480' -> 240."""
     low = _digitize(question.lower())
@@ -14566,7 +14566,7 @@ def _aufzug_last(question: str, quants: List[Quantity],
     return total - Fraction(lv)
 
 
-def _schulweg_zeit(question: str, quants: List[Quantity],
+def _schulweg_time(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Schulweg-Zeit: '30-6-13' -> 11."""
     low = _digitize(question.lower())
@@ -14585,7 +14585,7 @@ def _schulweg_zeit(question: str, quants: List[Quantity],
     return Fraction(tv) - Fraction(cv) - Fraction(fv)
 
 
-def _obst_kauf(question: str, quants: List[Quantity],
+def _fruit_buy(question: str, quants: List[Quantity],
               tgt: QuestionTarget) -> Optional[Fraction]:
     """Obst-Kauf: '4+4+6' -> 14."""
     low = _digitize(question.lower())
@@ -14603,7 +14603,7 @@ def _obst_kauf(question: str, quants: List[Quantity],
         Fraction(om.group(1))
 
 
-def _lutscher_gesamt(question: str, quants: List[Quantity],
+def _lutscher_total(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Lutscher-Gesamt: '10*(0.4)+10*0.3' -> 7."""
     low = _digitize(question.lower())
@@ -14672,7 +14672,7 @@ def _grossmutter_babies(question: str, quants: List[Quantity],
     return 27
 
 
-def _bleistift_paare(question: str, quants: List[Quantity],
+def _pencil_paare(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Bleistift-Paare: '16/2' -> 8."""
     low = _digitize(question.lower())
@@ -14703,7 +14703,7 @@ def _mosaik_fliesen(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) * Fraction(2, 3) * Fraction(tv)
 
 
-def _blaubeeren_spar(question: str, quants: List[Quantity],
+def _blaubeeren_save(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Blaubeeren-Spar: '75-65' -> 10."""
     low = _digitize(question.lower())
@@ -14723,7 +14723,7 @@ def _blaubeeren_spar(question: str, quants: List[Quantity],
     return store - pick
 
 
-def _schreibwaren_rest(question: str, quants: List[Quantity],
+def _schreibwaren_remainder(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Schreibwaren-Rest: '10-5' -> 5."""
     low = _digitize(question.lower())
@@ -14741,7 +14741,7 @@ def _schreibwaren_rest(question: str, quants: List[Quantity],
     return Fraction(pm.group(1)) - total
 
 
-def _geb_alter(question: str, quants: List[Quantity],
+def _geb_age(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Geb-Alter: '13-10' -> 3."""
     low = _digitize(question.lower())
@@ -14779,7 +14779,7 @@ def _lotterie_wahrscheinlichkeit(question: str, quants: List[Quantity],
         Fraction(3 * int(fm.group(1)), 100) * 100
 
 
-def _seil_laenge(question: str, quants: List[Quantity],
+def _seil_length(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Seil-Länge: '4x5' -> 20."""
     low = _digitize(question.lower())
@@ -14806,7 +14806,7 @@ def _fischfutter(question: str, quants: List[Quantity],
     return Fraction(fm.group(1)) * Fraction(dm.group(1)) * 31
 
 
-def _durchschnitts_geschwindigkeit(question: str, quants: List[Quantity],
+def _durchschnitts_speed(question: str, quants: List[Quantity],
                                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Durchschnitts-Geschwindigkeit: '250/5' -> 50."""
     low = _digitize(question.lower())
@@ -14832,7 +14832,7 @@ def _kassette_dauer(question: str, quants: List[Quantity],
     return first + first * Fraction(100 + int(lm.group(1)), 100)
 
 
-def _stock_laenge(question: str, quants: List[Quantity],
+def _stock_length(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Stock-Länge: '(7-2+1)/2' -> 3."""
     low = _digitize(question.lower())
@@ -14849,7 +14849,7 @@ def _stock_laenge(question: str, quants: List[Quantity],
     return carl / 2
 
 
-def _bus_verhaeltnis(question: str, quants: List[Quantity],
+def _bus_ratio(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Bus-Verhältnis: '54-20' -> 34."""
     low = _digitize(question.lower())
@@ -14865,7 +14865,7 @@ def _bus_verhaeltnis(question: str, quants: List[Quantity],
     return women - Fraction(am.group(1))
 
 
-def _eier_teilen(question: str, quants: List[Quantity],
+def _eggs_divide(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Eier-Teilen: '36/4' -> 9."""
     low = _digitize(question.lower())
@@ -14891,7 +14891,7 @@ def _kartoffelbrei(question: str, quants: List[Quantity],
     return scoops * per
 
 
-def _eier_monate(question: str, quants: List[Quantity],
+def _eggs_months(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Eier-Monate: '240/12' -> 20."""
     low = _digitize(question.lower())
@@ -14919,7 +14919,7 @@ def _tierfarm(question: str, quants: List[Quantity],
     return start + (Fraction(cm.group(1)) + Fraction(hm.group(1))) * 21
 
 
-def _gehalt_familie(question: str, quants: List[Quantity],
+def _gehalt_family(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Gehalt-Familie: '15000+30000' -> 45000."""
     low = _digitize(question.lower())
@@ -14947,7 +14947,7 @@ def _sparwochen(question: str, quants: List[Quantity],
     return (Fraction(tm.group(1)) - already) / Fraction(wm.group(1))
 
 
-def _voegel_baume(question: str, quants: List[Quantity],
+def _birds_baume(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Vögel-Bäume: '21+8+3' -> 32."""
     low = _digitize(question.lower())
@@ -15008,7 +15008,7 @@ def _mnm_tuetchen(question: str, quants: List[Quantity],
     return total / Fraction(pm.group(1))
 
 
-def _hunde_gewicht(question: str, quants: List[Quantity],
+def _hunde_weight(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Hunde-Gewicht: '60+15+30' -> 105."""
     low = _digitize(question.lower())
@@ -15022,7 +15022,7 @@ def _hunde_gewicht(question: str, quants: List[Quantity],
     return kory + kory / 4 + kory / 2
 
 
-def _baum_erloes(question: str, quants: List[Quantity],
+def _tree_revenue(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Baum-Erlös: '16x5x1.2' -> 96."""
     low = _digitize(question.lower())
@@ -15052,7 +15052,7 @@ def _wasserrutsche(question: str, quants: List[Quantity],
         Fraction(sm.group(1)) / Fraction(sm.group(2))
 
 
-def _buch_budget(question: str, quants: List[Quantity],
+def _book_budget(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Buch-Budget: '(16-6)/2' -> 5."""
     low = _digitize(question.lower())
@@ -15103,7 +15103,7 @@ def _wander_distanz(question: str, quants: List[Quantity],
     return Fraction(pm.group(1)) * Fraction(dm.group(1)) / 2
 
 
-def _band_teilen(question: str, quants: List[Quantity],
+def _band_divide(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Band-Teilen: '100/4/5' -> 5."""
     low = _digitize(question.lower())
@@ -15128,7 +15128,7 @@ def _schulmaedchen(question: str, quants: List[Quantity],
     return total * Fraction(100 - int(pm.group(1)), 100)
 
 
-def _garten_einkauf(question: str, quants: List[Quantity],
+def _garden_purchase(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Garten-Einkauf: '45-7' -> 38."""
     low = _digitize(question.lower())
@@ -15141,7 +15141,7 @@ def _garten_einkauf(question: str, quants: List[Quantity],
         Fraction(cm.group(1))
 
 
-def _absatz_durchschnitt(question: str, quants: List[Quantity],
+def _absatz_average(question: str, quants: List[Quantity],
                            tgt: QuestionTarget) -> Optional[Fraction]:
     """Absatz-Durchschnitt: '18/6' -> 3."""
     low = _digitize(question.lower())
@@ -15181,7 +15181,7 @@ def _jeff_martha(question: str, quants: List[Quantity],
         Fraction(jm.group(2))
 
 
-def _pause_stunden(question: str, quants: List[Quantity],
+def _pause_hours(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Pause-Stunden: '60x5/60' -> 5."""
     low = _digitize(question.lower())
@@ -15214,7 +15214,7 @@ def _kreditkarte_balance(question: str, quants: List[Quantity],
         Fraction(tm.group(2)) * Fraction(100 - int(tm.group(1)), 100)
 
 
-def _alter_dreifach_kette(question: str, quants: List[Quantity],
+def _age_triple_chain(question: str, quants: List[Quantity],
                            tgt: QuestionTarget) -> Optional[Fraction]:
     """Alter-Dreifach-Kette: '4x2x3' -> 24."""
     low = _digitize(question.lower())
@@ -15256,7 +15256,7 @@ def _springball(question: str, quants: List[Quantity],
     return start * frac * frac
 
 
-def _apfel_erloes(question: str, quants: List[Quantity],
+def _apple_revenue(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Apfel-Erlös: '200/10x5' -> 1000."""
     low = _digitize(question.lower())
@@ -15286,7 +15286,7 @@ def _wand_anstrich(question: str, quants: List[Quantity],
     return area / Fraction(gm.group(1)) * Fraction(gm.group(2))
 
 
-def _zug_entfernung(question: str, quants: List[Quantity],
+def _train_entfernung(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Zug-Entfernung: '(60+30)x3' -> 270."""
     low = _digitize(question.lower())
@@ -15300,7 +15300,7 @@ def _zug_entfernung(question: str, quants: List[Quantity],
     return (a + a / 2) * Fraction(am.group(1))
 
 
-def _bananen_spar(question: str, quants: List[Quantity],
+def _bananas_save(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Bananen-Spar: '32-30' -> 2."""
     low = _digitize(question.lower())
@@ -15316,7 +15316,7 @@ def _bananen_spar(question: str, quants: List[Quantity],
     return single - bunch
 
 
-def _zaun_teilen(question: str, quants: List[Quantity],
+def _zaun_divide(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Zaun-Teilen: '(100-60)/2' -> 20."""
     low = _digitize(question.lower())
@@ -15328,7 +15328,7 @@ def _zaun_teilen(question: str, quants: List[Quantity],
     return (Fraction(fm.group(1)) - Fraction(hm.group(2))) / 2
 
 
-def _krokodil_wachstum(question: str, quants: List[Quantity],
+def _krokodil_growth(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Krokodil-Wachstum: '2x13' -> 26."""
     low = _digitize(question.lower())
@@ -15352,7 +15352,7 @@ def _bowling_score(question: str, quants: List[Quantity],
     return Fraction(bm.group(2)) * 2 + Fraction(fm.group(1))
 
 
-def _milchshake_umsatz(question: str, quants: List[Quantity],
+def _milchshake_revenue(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Milchshake-Umsatz: '33+99+30' -> 162."""
     low = _digitize(question.lower())
@@ -15369,7 +15369,7 @@ def _milchshake_umsatz(question: str, quants: List[Quantity],
         Fraction(sm.group(1)) * Fraction(sm.group(2))
 
 
-def _affen_rest(question: str, quants: List[Quantity],
+def _monkeys_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Affen-Rest: '45-24' -> 21."""
     low = _digitize(question.lower())
@@ -15385,7 +15385,7 @@ def _affen_rest(question: str, quants: List[Quantity],
         (Fraction(fm.group(1)) + Fraction(sm.group(1)))
 
 
-def _uhr_rabatt(question: str, quants: List[Quantity],
+def _uhr_discount(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Uhr-Rabatt: '200/2000' -> 10."""
     low = _digitize(question.lower())
@@ -15475,7 +15475,7 @@ def _butter_angebot(question: str, quants: List[Quantity],
     return full * price + (pounds - full) * price / 2
 
 
-def _katzenfutter_tage(question: str, quants: List[Quantity],
+def _katzenfutter_days(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Katzenfutter-Tage: '720/360' -> 2."""
     low = _digitize(question.lower())
@@ -15489,7 +15489,7 @@ def _katzenfutter_tage(question: str, quants: List[Quantity],
     return Fraction(gm.group(1)) / per_day
 
 
-def _film_wochenende(question: str, quants: List[Quantity],
+def _movie_wochenende(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Film-Wochenende: '6x4' -> 24."""
     low = _digitize(question.lower())
@@ -15502,7 +15502,7 @@ def _film_wochenende(question: str, quants: List[Quantity],
     return (sat + sat / 2) * Fraction(wm.group(1))
 
 
-def _essens_zeiten(question: str, quants: List[Quantity],
+def _essens_times(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Essens-Zeiten: '(98+18)/2' -> 58."""
     low = _digitize(question.lower())
@@ -15545,7 +15545,7 @@ def _postamt_briefe(question: str, quants: List[Quantity],
     return mon + tue + wed
 
 
-def _wasser_galonen(question: str, quants: List[Quantity],
+def _water_galonen(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Wasser-Galonen: '240/16' -> 15."""
     low = _digitize(question.lower())
@@ -15558,7 +15558,7 @@ def _wasser_galonen(question: str, quants: List[Quantity],
         Fraction(gm.group(1))
 
 
-def _zug_passagiere(question: str, quants: List[Quantity],
+def _train_passagiere(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Zug-Passagiere: '120+20-50+100-80' -> 110."""
     low = _digitize(question.lower())
@@ -15587,7 +15587,7 @@ def _bodenfliesen(question: str, quants: List[Quantity],
     return Fraction(am.group(1)) * Fraction(cm.group(1))
 
 
-def _versicherung_jahr(question: str, quants: List[Quantity],
+def _versicherung_year(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Versicherung-Jahr: '120x1.6x12' -> 2304."""
     low = _digitize(question.lower())
@@ -15614,7 +15614,7 @@ def _bettdecke_stoff(question: str, quants: List[Quantity],
     return per * 2
 
 
-def _catering_kosten(question: str, quants: List[Quantity],
+def _catering_cost(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Catering-Kosten: '65+36' -> 101."""
     low = _digitize(question.lower())
@@ -15641,7 +15641,7 @@ def _suedamerika_bevoelkerung(question: str, quants: List[Quantity],
         Fraction(cm2.group(2))
 
 
-def _maler_arbeit(question: str, quants: List[Quantity],
+def _maler_work(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Maler-Arbeit: '9x21' -> 189."""
     low = _digitize(question.lower())
@@ -15682,7 +15682,7 @@ def _geschworene_bezahlung(question: str, quants: List[Quantity],
     return total / (Fraction(hm.group(1)) * Fraction(hm.group(2)))
 
 
-def _einkauf_summe(question: str, quants: List[Quantity],
+def _purchase_sum(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Einkauf-Summe: '48+18' -> 66."""
     low = _digitize(question.lower())
@@ -15694,7 +15694,7 @@ def _einkauf_summe(question: str, quants: List[Quantity],
         Fraction(bm.group(3)) * Fraction(bm.group(4))
 
 
-def _apfel_packungen(question: str, quants: List[Quantity],
+def _apple_packs(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Apfel-Packungen: '80/8' -> 10."""
     low = _digitize(question.lower())
@@ -15723,7 +15723,7 @@ def _kaese_budget(question: str, quants: List[Quantity],
         Fraction(mm.group(1))
 
 
-def _tanzstudio_einnahmen(question: str, quants: List[Quantity],
+def _tanzstudio_income(question: str, quants: List[Quantity],
                              tgt: QuestionTarget) -> Optional[Fraction]:
     """Tanzstudio-Einnahmen: '40x12' -> 480."""
     low = _digitize(question.lower())
@@ -15755,7 +15755,7 @@ def _pool_befuellung(question: str, quants: List[Quantity],
     return volume * Fraction(mm.group(1)) * Fraction(pm.group(1))
 
 
-def _kuchen_einnahmen(question: str, quants: List[Quantity],
+def _cake_income(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Kuchen-Einnahmen: '320-20' -> 300."""
     low = _digitize(question.lower())
@@ -15796,7 +15796,7 @@ def _abschluss_tickets(question: str, quants: List[Quantity],
             Fraction(fm.group(1))) / Fraction(gm.group(1))
 
 
-def _schokobox_vergleich(question: str, quants: List[Quantity],
+def _schokobox_compare(question: str, quants: List[Quantity],
                            tgt: QuestionTarget) -> Optional[Fraction]:
     """Schokobox-Vergleich: '16-8' -> 8."""
     low = _digitize(question.lower())
@@ -15810,7 +15810,7 @@ def _schokobox_vergleich(question: str, quants: List[Quantity],
         Fraction(tm.group(2)) / Fraction(boxes[1][1])
 
 
-def _kellnerin_sparen(question: str, quants: List[Quantity],
+def _kellnerin_saving(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Kellnerin-Sparen: '2000/1000' -> 2."""
     low = _digitize(question.lower())
@@ -15827,7 +15827,7 @@ def _kellnerin_sparen(question: str, quants: List[Quantity],
     return down / per_week
 
 
-def _suessigkeiten_freunde(question: str, quants: List[Quantity],
+def _candy_freunde(question: str, quants: List[Quantity],
                              tgt: QuestionTarget) -> Optional[Fraction]:
     """Süßigkeiten-Freunde: '13x60/10' -> 78."""
     low = _digitize(question.lower())
@@ -15856,7 +15856,7 @@ def _foto_alben(question: str, quants: List[Quantity],
     return (Fraction(sm.group(1)) + Fraction(sm.group(2))) * per
 
 
-def _komet_alter(question: str, quants: List[Quantity],
+def _komet_age(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Komet-Alter: '90-75' -> 15."""
     low = _digitize(question.lower())
@@ -15887,7 +15887,7 @@ def _stachelschweine(question: str, quants: List[Quantity],
     return total + female * Fraction(bm.group(1)) * 12
 
 
-def _laufbahn_vergleich(question: str, quants: List[Quantity],
+def _laufbahn_compare(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Laufbahn-Vergleich: '10-5' -> 5."""
     low = _digitize(question.lower())
@@ -15907,7 +15907,7 @@ def _laufbahn_vergleich(question: str, quants: List[Quantity],
     return bethany - quinn
 
 
-def _tank_rest(question: str, quants: List[Quantity],
+def _tank_remainder(question: str, quants: List[Quantity],
                tgt: QuestionTarget) -> Optional[Fraction]:
     """Tank-Rest: '18000-12000' -> 6000."""
     low = _digitize(question.lower())
@@ -15961,7 +15961,7 @@ def _arzt_zeitplan(question: str, quants: List[Quantity],
     return Fraction(hm.group(1)) - busy
 
 
-def _kuchen_zeit(question: str, quants: List[Quantity],
+def _cake_time(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Kuchen-Zeit: '5-3' -> 2."""
     low = _digitize(question.lower())
@@ -16007,7 +16007,7 @@ def _haengekoerbe(question: str, quants: List[Quantity],
     return Fraction(km.group(1)) * per
 
 
-def _hose_ersparnis(question: str, quants: List[Quantity],
+def _hose_savings(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Hose-Ersparnis: '30-18' -> 12."""
     low = _digitize(question.lower())
@@ -16019,7 +16019,7 @@ def _hose_ersparnis(question: str, quants: List[Quantity],
     return Fraction(tm.group(1)) - Fraction(mm.group(1)) * 3
 
 
-def _kirchen_kekse(question: str, quants: List[Quantity],
+def _kirchen_cookies(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Kirchen-Kekse: '750/15' -> 50."""
     low = _digitize(question.lower())
@@ -16034,7 +16034,7 @@ def _kirchen_kekse(question: str, quants: List[Quantity],
     return half / Fraction(cm.group(1))
 
 
-def _wassermelone_anteil(question: str, quants: List[Quantity],
+def _wassermelone_share(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Wassermelone-Anteil: '2x/8x' -> 25."""
     low = _digitize(question.lower())
@@ -16047,7 +16047,7 @@ def _wassermelone_anteil(question: str, quants: List[Quantity],
     return Fraction(2) / total * 100
 
 
-def _schuhe_jahr(question: str, quants: List[Quantity],
+def _shoes_year(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Schuhe-Jahr: '6000/1000' -> 6."""
     low = _digitize(question.lower())
@@ -16062,7 +16062,7 @@ def _schuhe_jahr(question: str, quants: List[Quantity],
     return saved / Fraction(cm.group(1).replace(',', ''))
 
 
-def _lebkuchen_verdienst(question: str, quants: List[Quantity],
+def _lebkuchen_earnings(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Lebkuchen-Verdienst: '150+390' -> 540."""
     low = _digitize(question.lower())
@@ -16117,7 +16117,7 @@ def _sonnencreme_flaschen(question: str, quants: List[Quantity],
         Fraction(hm.group(2)) / Fraction(bm.group(1))
 
 
-def _auto_preis_vergleich(question: str, quants: List[Quantity],
+def _car_price_compare(question: str, quants: List[Quantity],
                             tgt: QuestionTarget) -> Optional[Fraction]:
     """Auto-Preis-Vergleich: '60+100' -> 160."""
     low = _digitize(question.lower())
@@ -16130,7 +16130,7 @@ def _auto_preis_vergleich(question: str, quants: List[Quantity],
     return blue * Fraction(100 - int(cm.group(1)), 100) + blue
 
 
-def _stiefel_durchschnitt(question: str, quants: List[Quantity],
+def _stiefel_average(question: str, quants: List[Quantity],
                            tgt: QuestionTarget) -> Optional[Fraction]:
     """Stiefel-Durchschnitt: '(25+5)/2' -> 15."""
     low = _digitize(question.lower())
@@ -16143,7 +16143,7 @@ def _stiefel_durchschnitt(question: str, quants: List[Quantity],
     return (sophie * 5 + sophie) / 2
 
 
-def _brezel_woche(question: str, quants: List[Quantity],
+def _brezel_week(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Brezel-Woche: '18/2x7' -> 63."""
     low = _digitize(question.lower())
@@ -16155,7 +16155,7 @@ def _brezel_woche(question: str, quants: List[Quantity],
         Fraction(int(bm.group(1)), int(bm.group(2))) * 7
 
 
-def _emil_alter(question: str, quants: List[Quantity],
+def _emil_age(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Emil-Alter: '43+7' -> 50."""
     low = _digitize(question.lower())
@@ -16172,7 +16172,7 @@ def _emil_alter(question: str, quants: List[Quantity],
     return dad_now + bro_now
 
 
-def _familie_gesamt(question: str, quants: List[Quantity],
+def _family_total(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Familie-Gesamt: '8+16+6' -> 30."""
     low = _digitize(question.lower())
@@ -16186,7 +16186,7 @@ def _familie_gesamt(question: str, quants: List[Quantity],
         nani * Fraction(100 - int(sm.group(1)), 100)
 
 
-def _handy_familie(question: str, quants: List[Quantity],
+def _handy_family(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Handy-Familie: '2x600+2x300' -> 1800."""
     low = _digitize(question.lower())
@@ -16228,7 +16228,7 @@ def _staatengruppe(question: str, quants: List[Quantity],
     return usa + india
 
 
-def _vater_verhaeltnis(question: str, quants: List[Quantity],
+def _vater_ratio(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Vater-Verhältnis: '3x3x5' -> 45."""
     low = _digitize(question.lower())
@@ -16314,7 +16314,7 @@ def _messloeffel(question: str, quants: List[Quantity],
     return cups + spoons - Fraction(gm.group(1))
 
 
-def _email_familie(question: str, quants: List[Quantity],
+def _email_family(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Email-Familie: '9x1/3' -> 3? -> 1."""
     low = _digitize(question.lower())
@@ -16332,7 +16332,7 @@ def _email_familie(question: str, quants: List[Quantity],
     return other / 3
 
 
-def _klempner_rechnung(question: str, quants: List[Quantity],
+def _klempner_bill(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Klempner-Rechnung: '40+105+60' -> 205."""
     low = _digitize(question.lower())
@@ -16376,7 +16376,7 @@ def _massendrill(question: str, quants: List[Quantity],
         Fraction(rr.group(2))
 
 
-def _baeckerei_brot(question: str, quants: List[Quantity],
+def _bakery_bread(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Bäckerei-Brot: '7x70-40' -> 450."""
     low = _digitize(question.lower())
@@ -16388,7 +16388,7 @@ def _baeckerei_brot(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) * 7 - Fraction(lm.group(1))
 
 
-def _schuhkartons_rest(question: str, quants: List[Quantity],
+def _schuhkartons_remainder(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Schuhkartons-Rest: '4+6' -> 10."""
     low = _digitize(question.lower())
@@ -16404,7 +16404,7 @@ def _schuhkartons_rest(question: str, quants: List[Quantity],
         Fraction(bm.group(2)) - red_used
 
 
-def _kaefer_durchschnitt(question: str, quants: List[Quantity],
+def _kaefer_average(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Käfer-Durchschnitt: '300/5' -> 60."""
     low = _digitize(question.lower())
@@ -16434,7 +16434,7 @@ def _viehfutter(question: str, quants: List[Quantity],
     return Fraction(qm.group(1)) * goat + Fraction(qm.group(2)) * sheep
 
 
-def _stift_kauf(question: str, quants: List[Quantity],
+def _stift_buy(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Stift-Kauf: '(300-200)/25' -> 4."""
     low = _digitize(question.lower())
@@ -16453,7 +16453,7 @@ def _stift_kauf(question: str, quants: List[Quantity],
     return left / Fraction(pm.group(1))
 
 
-def _sudoku_wasser(question: str, quants: List[Quantity],
+def _sudoku_water(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Sudoku-Wasser: '180/30' -> 6."""
     low = _digitize(question.lower())
@@ -16496,7 +16496,7 @@ def _pool_tank(question: str, quants: List[Quantity],
     return tank - Fraction(rm.group(1)) * Fraction(dm.group(1))
 
 
-def _alters_summe(question: str, quants: List[Quantity],
+def _alters_sum(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Alters-Summe: '2x20+10' -> 50."""
     low = _digitize(question.lower())
@@ -16512,7 +16512,7 @@ def _alters_summe(question: str, quants: List[Quantity],
     return base * 2 + Fraction(om.group(2))
 
 
-def _sport_schueler(question: str, quants: List[Quantity],
+def _sport_student(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Sport-Schüler: '6+12+16+22' -> 56."""
     low = _digitize(question.lower())
@@ -16546,7 +16546,7 @@ def _haustier_zoo(question: str, quants: List[Quantity],
     return cats + dogs + rabbits + fish + gerbils
 
 
-def _brot_tage(question: str, quants: List[Quantity],
+def _bread_days(question: str, quants: List[Quantity],
                tgt: QuestionTarget) -> Optional[Fraction]:
     """Brot-Tage: '24/6' -> 4."""
     low = _digitize(question.lower())
@@ -16570,7 +16570,7 @@ def _muschel_sammlung(question: str, quants: List[Quantity],
     return (Fraction(bm.group(1)) - Fraction(sm.group(1))) * 12
 
 
-def _bauernhof_flaeche(question: str, quants: List[Quantity],
+def _farm_flaeche(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Bauernhof-Fläche: '200+500' -> 700."""
     low = _digitize(question.lower())
@@ -16583,7 +16583,7 @@ def _bauernhof_flaeche(question: str, quants: List[Quantity],
     return first + (first * 2 + Fraction(sm.group(2)))
 
 
-def _paket_lohn(question: str, quants: List[Quantity],
+def _paket_wage(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Paket-Lohn: '40x0.2x8' -> 64."""
     low = _digitize(question.lower())
@@ -16598,7 +16598,7 @@ def _paket_lohn(question: str, quants: List[Quantity],
     return per_hour * Fraction(pm.group(1)) * Fraction(dm.group(1))
 
 
-def _tuneup_anzahl(question: str, quants: List[Quantity],
+def _tuneup_count(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Tuneup-Anzahl: '3000/1000' -> 3."""
     low = _digitize(question.lower())
@@ -16643,7 +16643,7 @@ def _masken_material(question: str, quants: List[Quantity],
     return small + large
 
 
-def _film_preis(question: str, quants: List[Quantity],
+def _movie_price(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Film-Preis: '216/27' -> 8."""
     low = _digitize(question.lower())
@@ -16655,7 +16655,7 @@ def _film_preis(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) / (Fraction(fm.group(1)) * 3)
 
 
-def _freizeit_stunden(question: str, quants: List[Quantity],
+def _freizeit_hours(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Freizeit-Stunden: '24-19' -> 5."""
     low = _digitize(question.lower())
@@ -16668,7 +16668,7 @@ def _freizeit_stunden(question: str, quants: List[Quantity],
     return 24 - sleep - (sleep - Fraction(wm.group(1))) - 1
 
 
-def _adam_alter(question: str, quants: List[Quantity],
+def _adam_age(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Adam-Alter: '30+8' -> 38."""
     low = _digitize(question.lower())
@@ -16684,7 +16684,7 @@ def _adam_alter(question: str, quants: List[Quantity],
     return adam_now + Fraction(im.group(2))
 
 
-def _gewicht_kette(question: str, quants: List[Quantity],
+def _weight_chain(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Gewicht-Kette: '55+16+8-5' -> 74."""
     low = _digitize(question.lower())
@@ -16715,7 +16715,7 @@ def _mietwagen_profit(question: str, quants: List[Quantity],
         Fraction(pm.group(1)) - Fraction(cm.group(1))
 
 
-def _schreibwaren_kauf(question: str, quants: List[Quantity],
+def _schreibwaren_buy(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Schreibwaren-Kauf: '7.5+0.5' -> 8."""
     low = _digitize(question.lower())
@@ -16728,7 +16728,7 @@ def _schreibwaren_kauf(question: str, quants: List[Quantity],
         Fraction(bm.group(1))
 
 
-def _bananenbrot_verdienst(question: str, quants: List[Quantity],
+def _bananenbrot_earnings(question: str, quants: List[Quantity],
                              tgt: QuestionTarget) -> Optional[Fraction]:
     """Bananenbrot-Verdienst: '5x2x8x0.5' -> 40."""
     low = _digitize(question.lower())
@@ -16742,7 +16742,7 @@ def _bananenbrot_verdienst(question: str, quants: List[Quantity],
         Fraction(sm.group(1)) / 100
 
 
-def _dreifaches_alter(question: str, quants: List[Quantity],
+def _dreifaches_age(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Dreifaches-Alter: '24-8' -> 16."""
     low = _digitize(question.lower())
@@ -16754,7 +16754,7 @@ def _dreifaches_alter(question: str, quants: List[Quantity],
     return now * 3 - now
 
 
-def _voegel_zaehlung(question: str, quants: List[Quantity],
+def _birds_zaehlung(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Vögel-Zählung: '6+4+24' -> 34."""
     low = _digitize(question.lower())
@@ -16769,7 +16769,7 @@ def _voegel_zaehlung(question: str, quants: List[Quantity],
         Fraction(gm.group(1)) * Fraction(gm.group(2))
 
 
-def _kreisel_geschwindigkeit(question: str, quants: List[Quantity],
+def _kreisel_speed(question: str, quants: List[Quantity],
                                tgt: QuestionTarget) -> Optional[Fraction]:
     """Kreisel-Geschwindigkeit: '121/11x5' -> 55."""
     low = _digitize(question.lower())
@@ -16784,7 +16784,7 @@ def _kreisel_geschwindigkeit(question: str, quants: List[Quantity],
     return thing * 5
 
 
-def _arbeitslohn_woche(question: str, quants: List[Quantity],
+def _arbeitslohn_week(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Arbeitslohn-Woche: '8x5x12' -> 480."""
     low = _digitize(question.lower())
@@ -16799,7 +16799,7 @@ def _arbeitslohn_woche(question: str, quants: List[Quantity],
         (Fraction(pm.group(1)) + Fraction(pm.group(2)))
 
 
-def _getraenke_kosten(question: str, quants: List[Quantity],
+def _getraenke_cost(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Getränke-Kosten: '3x3+2x2' -> 13."""
     low = _digitize(question.lower())
@@ -16816,7 +16816,7 @@ def _getraenke_kosten(question: str, quants: List[Quantity],
         Fraction(wm.group(2)) / Fraction(wm.group(1))
 
 
-def _schrauben_rest(question: str, quants: List[Quantity],
+def _schrauben_remainder(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Schrauben-Rest: '12.48-0.48' -> 12."""
     low = _digitize(question.lower())
@@ -16829,7 +16829,7 @@ def _schrauben_rest(question: str, quants: List[Quantity],
         Fraction(bm.group(1))
 
 
-def _hundesitter_verdienst(question: str, quants: List[Quantity],
+def _hundesitter_earnings(question: str, quants: List[Quantity],
                              tgt: QuestionTarget) -> Optional[Fraction]:
     """Hundesitter-Verdienst: '33/3x12' -> 132."""
     low = _digitize(question.lower())
@@ -16858,7 +16858,7 @@ def _spa_ausgaben(question: str, quants: List[Quantity],
     return hair + mani + pedi
 
 
-def _burrito_rest(question: str, quants: List[Quantity],
+def _burrito_remainder(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Burrito-Rest: '600-500-20' -> 80."""
     low = _digitize(question.lower())
@@ -16873,7 +16873,7 @@ def _burrito_rest(question: str, quants: List[Quantity],
         Fraction(gm.group(1)) - Fraction(em.group(1))
 
 
-def _handy_wechselgeld(question: str, quants: List[Quantity],
+def _handy_change(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Handy-Wechselgeld: '4000-3500' -> 500."""
     low = _digitize(question.lower())
@@ -16887,7 +16887,7 @@ def _handy_wechselgeld(question: str, quants: List[Quantity],
         Fraction(pm.group(2))
 
 
-def _lebensmittel_anteil(question: str, quants: List[Quantity],
+def _lebensmittel_share(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Lebensmittel-Anteil: '400x0.4/4' -> 40."""
     low = _digitize(question.lower())
@@ -16919,7 +16919,7 @@ def _pizza_gegessen(question: str, quants: List[Quantity],
     return day1 + day2 + day3
 
 
-def _klebestifte_packungen(question: str, quants: List[Quantity],
+def _klebestifte_packs(question: str, quants: List[Quantity],
                              tgt: QuestionTarget) -> Optional[Fraction]:
     """Klebestifte-Packungen: 'ceil(54/8)' -> 7."""
     low = _digitize(question.lower())
@@ -16961,7 +16961,7 @@ def _zins_anlage(question: str, quants: List[Quantity],
         (1 + Fraction(3, 4) * Fraction(ym.group(1)))
 
 
-def _familien_alter(question: str, quants: List[Quantity],
+def _familien_age(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Familien-Alter: '(87-9)/6' -> 13."""
     low = _digitize(question.lower())
@@ -16976,7 +16976,7 @@ def _familien_alter(question: str, quants: List[Quantity],
     return (Fraction(tm.group(1)) - 9) / 6
 
 
-def _klasse_faecher(question: str, quants: List[Quantity],
+def _class_faecher(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Klasse-Fächer: '5+7' -> 12."""
     low = _digitize(question.lower())
@@ -17009,7 +17009,7 @@ def _konzert_gruppen(question: str, quants: List[Quantity],
     return total / per
 
 
-def _eier_verdienst(question: str, quants: List[Quantity],
+def _eggs_earnings(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Eier-Verdienst: '900/30x2.5' -> 75."""
     low = _digitize(question.lower())
@@ -17023,7 +17023,7 @@ def _eier_verdienst(question: str, quants: List[Quantity],
         Fraction(pm.group(1))
 
 
-def _schuhe_durchschnitt(question: str, quants: List[Quantity],
+def _shoes_average(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Schuhe-Durchschnitt: '2640/24' -> 110."""
     low = _digitize(question.lower())
@@ -17035,7 +17035,7 @@ def _schuhe_durchschnitt(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) / (Fraction(pm.group(1)) * 12)
 
 
-def _apfel_scheiben(question: str, quants: List[Quantity],
+def _apple_scheiben(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Apfel-Scheiben: '30-15' -> 15."""
     low = _digitize(question.lower())
@@ -17053,7 +17053,7 @@ def _apfel_scheiben(question: str, quants: List[Quantity],
     return total - Fraction(em.group(1))
 
 
-def _milch_kuehe(question: str, quants: List[Quantity],
+def _milk_kuehe(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Milch-Kühe: '25/5-3' -> 2."""
     low = _digitize(question.lower())
@@ -17067,7 +17067,7 @@ def _milch_kuehe(question: str, quants: List[Quantity],
         Fraction(hm.group(1))
 
 
-def _auto_finanzierung(question: str, quants: List[Quantity],
+def _car_finanzierung(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Auto-Finanzierung: '10800-5200' -> 5600."""
     low = _digitize(question.lower())
@@ -17082,7 +17082,7 @@ def _auto_finanzierung(question: str, quants: List[Quantity],
         Fraction(wm.group(1)) - Fraction(bm.group(1))
 
 
-def _wechselgeld_hat(question: str, quants: List[Quantity],
+def _change_has(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Wechselgeld-Hat: '80-70' -> 10."""
     low = _digitize(question.lower())
@@ -17094,7 +17094,7 @@ def _wechselgeld_hat(question: str, quants: List[Quantity],
     return Fraction(gm.group(1)) * 4 - Fraction(hm.group(1))
 
 
-def _mulan_geld(question: str, quants: List[Quantity],
+def _mulan_money(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Mulan-Geld: '140-80' -> 60."""
     low = _digitize(question.lower())
@@ -17110,7 +17110,7 @@ def _mulan_geld(question: str, quants: List[Quantity],
         Fraction(bm.group(1))
 
 
-def _ersparnis_vergleich(question: str, quants: List[Quantity],
+def _savings_compare(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Ersparnis-Vergleich: '(20+10)x1.4' -> 42."""
     low = _digitize(question.lower())
@@ -17127,7 +17127,7 @@ def _ersparnis_vergleich(question: str, quants: List[Quantity],
     return anthony * Fraction(100 + int(pm.group(1)), 100)
 
 
-def _bonbon_verkauf(question: str, quants: List[Quantity],
+def _bonbon_sale(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Bonbon-Verkauf: '200-150' -> 50."""
     low = _digitize(question.lower())
@@ -17154,7 +17154,7 @@ def _parkplatz_autos(question: str, quants: List[Quantity],
     return (Fraction(cm.group(1)) + Fraction(mm.group(1))) / 2
 
 
-def _tv_verkauf(question: str, quants: List[Quantity],
+def _tv_sale(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """TV-Verkauf: '40x5/8' -> 25."""
     low = _digitize(question.lower())
@@ -17167,7 +17167,7 @@ def _tv_verkauf(question: str, quants: List[Quantity],
     return Fraction(tm.group(1)) * (1 - Fraction(1, 4) - Fraction(1, 8))
 
 
-def _jeans_wechselgeld(question: str, quants: List[Quantity],
+def _jeans_change(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Jeans-Wechselgeld: '50-30' -> 20."""
     low = _digitize(question.lower())
@@ -17182,7 +17182,7 @@ def _jeans_wechselgeld(question: str, quants: List[Quantity],
     return Fraction(bm.group(1)) - price
 
 
-def _mosaik_laenge(question: str, quants: List[Quantity],
+def _mosaik_length(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Mosaik-Länge: '144/36' -> 4."""
     low = _digitize(question.lower())
@@ -17198,7 +17198,7 @@ def _mosaik_laenge(question: str, quants: List[Quantity],
     return total / (3 * Fraction(cm.group(1)))
 
 
-def _zyklus_lohn(question: str, quants: List[Quantity],
+def _zyklus_wage(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Zyklus-Lohn: '30x5x1.2x7' -> 1260."""
     low = _digitize(question.lower())
@@ -17212,7 +17212,7 @@ def _zyklus_lohn(question: str, quants: List[Quantity],
         Fraction(pm.group(1)) * Fraction(wm.group(1))
 
 
-def _tierfutter_vergleich(question: str, quants: List[Quantity],
+def _tierfutter_compare(question: str, quants: List[Quantity],
                            tgt: QuestionTarget) -> Optional[Fraction]:
     """Tierfutter-Vergleich: '88-36' -> 52."""
     low = _digitize(question.lower())
@@ -17243,7 +17243,7 @@ def _baumklettern(question: str, quants: List[Quantity],
     return Fraction(em.group(1)) / Fraction(cost) / 7
 
 
-def _marshmallow_teilen(question: str, quants: List[Quantity],
+def _marshmallow_divide(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Marshmallow-Teilen: '(35-21)/2' -> 7."""
     low = _digitize(question.lower())
@@ -17257,7 +17257,7 @@ def _marshmallow_teilen(question: str, quants: List[Quantity],
     return left / 2
 
 
-def _markt_einkauf(question: str, quants: List[Quantity],
+def _markt_purchase(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Markt-Einkauf: '3x500+2x1500' -> 4500."""
     low = _digitize(question.lower())
@@ -17282,7 +17282,7 @@ def _cupcake_bedarf(question: str, quants: List[Quantity],
         Fraction(hm.group(2))
 
 
-def _brot_vergleich(question: str, quants: List[Quantity],
+def _bread_compare(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Brot-Vergleich: '6-2' -> 4."""
     low = _digitize(question.lower())
@@ -17310,7 +17310,7 @@ def _ring_premium(question: str, quants: List[Quantity],
         Fraction(100 + int(pm.group(1)), 100)
 
 
-def _spiel_ziel(question: str, quants: List[Quantity],
+def _game_ziel(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Spiel-Ziel: '30-21' -> 9."""
     low = _digitize(question.lower())
@@ -17325,7 +17325,7 @@ def _spiel_ziel(question: str, quants: List[Quantity],
     return Fraction(tm.group(1)) - played
 
 
-def _tee_anfang(question: str, quants: List[Quantity],
+def _tea_beginning(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Tee-Anfang: '(6+32+10)/4' -> 12."""
     low = _digitize(question.lower())
@@ -17382,7 +17382,7 @@ def _holzscheit_heizung(question: str, quants: List[Quantity],
     return need / Fraction(hm.group(1))
 
 
-def _deckel_verdienst(question: str, quants: List[Quantity],
+def _deckel_earnings(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Deckel-Verdienst: '10x0.25x30' -> 75."""
     low = _digitize(question.lower())
@@ -17399,7 +17399,7 @@ def _deckel_verdienst(question: str, quants: List[Quantity],
         Fraction(mm.group(1))
 
 
-def _sonderstunden_lohn(question: str, quants: List[Quantity],
+def _sonderstunden_wage(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Sonderstunden-Lohn: '160+90' -> 250."""
     low = _digitize(question.lower())
@@ -17417,7 +17417,7 @@ def _sonderstunden_lohn(question: str, quants: List[Quantity],
     return base + extra
 
 
-def _pizza_kosten(question: str, quants: List[Quantity],
+def _pizza_cost(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Pizza-Kosten: '(64-30)/2' -> 17."""
     low = _digitize(question.lower())
@@ -17431,7 +17431,7 @@ def _pizza_kosten(question: str, quants: List[Quantity],
     return (Fraction(tm.group(1)) - Fraction(tm2.group(1))) / 2
 
 
-def _garten_ernte(question: str, quants: List[Quantity],
+def _garden_ernte(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Garten-Ernte: '5x22+8x4' -> 142."""
     low = _digitize(question.lower())
@@ -17447,7 +17447,7 @@ def _garten_ernte(question: str, quants: List[Quantity],
         Fraction(pm.group(2)) * Fraction(em.group(1))
 
 
-def _salat_einkauf(question: str, quants: List[Quantity],
+def _salat_purchase(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Salat-Einkauf: '6+5+3' -> 14."""
     low = _digitize(question.lower())
@@ -17464,7 +17464,7 @@ def _salat_einkauf(question: str, quants: List[Quantity],
         Fraction(lm.group(1)) * Fraction(lp.group(1))
 
 
-def _benzin_kosten(question: str, quants: List[Quantity],
+def _gas_cost(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Benzin-Kosten: '50/10x3' -> 15."""
     low = _digitize(question.lower())
@@ -17479,7 +17479,7 @@ def _benzin_kosten(question: str, quants: List[Quantity],
     return miles / Fraction(fm.group(1)) * Fraction(pm.group(1))
 
 
-def _ball_kaugummi(question: str, quants: List[Quantity],
+def _ball_gum(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Ball-Kaugummi: '(80-20)/5' -> 12."""
     low = _digitize(question.lower())
@@ -17492,7 +17492,7 @@ def _ball_kaugummi(question: str, quants: List[Quantity],
         Fraction(cm.group(1))
 
 
-def _lehrer_verdienst(question: str, quants: List[Quantity],
+def _teacher_earnings(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Lehrer-Verdienst: '75+5+30' -> 110."""
     low = _digitize(question.lower())
@@ -17512,7 +17512,7 @@ def _lehrer_verdienst(question: str, quants: List[Quantity],
     return total
 
 
-def _auberginen_preis(question: str, quants: List[Quantity],
+def _auberginen_price(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Auberginen-Preis: '(135-60)/25' -> 3."""
     low = _digitize(question.lower())
@@ -17526,7 +17526,7 @@ def _auberginen_preis(question: str, quants: List[Quantity],
             Fraction(em.group(2))) / Fraction(cm.group(1))
 
 
-def _raeder_rest(question: str, quants: List[Quantity],
+def _raeder_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Räder-Rest: '650-374' -> 276."""
     low = _digitize(question.lower())
@@ -17541,7 +17541,7 @@ def _raeder_rest(question: str, quants: List[Quantity],
     return Fraction(bm.group(1)) - need
 
 
-def _rat_abstimmung(question: str, quants: List[Quantity],
+def _rat_vote(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Rat-Abstimmung: '33x2/3' -> 22."""
     low = _digitize(question.lower())
@@ -17565,7 +17565,7 @@ def _playlist_dauer(question: str, quants: List[Quantity],
         Fraction(hm.group(1))
 
 
-def _saft_kosten(question: str, quants: List[Quantity],
+def _juice_cost(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Saft-Kosten: '5x3x4' -> 60."""
     low = _digitize(question.lower())
@@ -17579,7 +17579,7 @@ def _saft_kosten(question: str, quants: List[Quantity],
         Fraction(lms[-1])
 
 
-def _leser_gesamt(question: str, quants: List[Quantity],
+def _leser_total(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Leser-Gesamt: '450+225' -> 675."""
     low = _digitize(question.lower())
@@ -17595,7 +17595,7 @@ def _leser_gesamt(question: str, quants: List[Quantity],
     return ezra + ahmed
 
 
-def _computer_kauf(question: str, quants: List[Quantity],
+def _computer_buy(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Computer-Kauf: '500x700x1.1' -> 385000."""
     low = _digitize(question.lower())
@@ -17653,7 +17653,7 @@ def _mitbewohner_strom(question: str, quants: List[Quantity],
     return Fraction(bm.group(1)) * 12 / (Fraction(rm.group(2)) + 1)
 
 
-def _milchglas_kosten(question: str, quants: List[Quantity],
+def _milchglas_cost(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Milchglas-Kosten: '10x5+16x3' -> 98."""
     low = _digitize(question.lower())
@@ -17669,7 +17669,7 @@ def _milchglas_kosten(question: str, quants: List[Quantity],
         Fraction(qm.group(2)) * half
 
 
-def _klassen_maedchen(question: str, quants: List[Quantity],
+def _classes_maedchen(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Klassen-Mädchen: '40x0.6' -> 24."""
     low = _digitize(question.lower())
@@ -17682,7 +17682,7 @@ def _klassen_maedchen(question: str, quants: List[Quantity],
     return per * Fraction(100 - int(pm.group(1)), 100)
 
 
-def _tierpflege_tage(question: str, quants: List[Quantity],
+def _tierpflege_days(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Tierpflege-Tage: '28/7' -> 4."""
     low = _digitize(question.lower())
@@ -17729,7 +17729,7 @@ def _wahl_stimmen(question: str, quants: List[Quantity],
     return Fraction(vm.group(1)) - a - b
 
 
-def _kaugummi_packungen(question: str, quants: List[Quantity],
+def _gum_packs(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Kaugummi-Packungen: '4x30/15' -> 8."""
     low = _digitize(question.lower())
@@ -17742,7 +17742,7 @@ def _kaugummi_packungen(question: str, quants: List[Quantity],
         Fraction(pm.group(1))
 
 
-def _geld_teilen_gleich(question: str, quants: List[Quantity],
+def _money_divide_gleich(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Geld-Teilen-Gleich: '20/4' -> 5."""
     low = _digitize(question.lower())
@@ -17753,7 +17753,7 @@ def _geld_teilen_gleich(question: str, quants: List[Quantity],
     return Fraction(fm.group(1)) / (Fraction(sm.group(1)) + 1)
 
 
-def _vater_alter(question: str, quants: List[Quantity],
+def _vater_age(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Vater-Alter: '15+38+34' -> 87."""
     low = _digitize(question.lower())
@@ -17769,7 +17769,7 @@ def _vater_alter(question: str, quants: List[Quantity],
     return Fraction(dm.group(2)) + father + mother
 
 
-def _buecher_gewicht(question: str, quants: List[Quantity],
+def _buecher_weight(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Bücher-Gewicht: '2+2+4+3+6' -> 17."""
     low = _digitize(question.lower())
@@ -17785,7 +17785,7 @@ def _buecher_gewicht(question: str, quants: List[Quantity],
         Fraction(em.group(1)) + Fraction(em.group(1)) * 2
 
 
-def _lehrer_schlaf(question: str, quants: List[Quantity],
+def _teacher_sleep(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Lehrer-Schlaf: '60x6' -> 360."""
     low = _digitize(question.lower())
@@ -17800,7 +17800,7 @@ def _lehrer_schlaf(question: str, quants: List[Quantity],
     return math * Fraction(sm.group(1))
 
 
-def _wurst_zeit(question: str, quants: List[Quantity],
+def _wurst_time(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Wurst-Zeit: '(30+20)/2' -> 25."""
     low = _digitize(question.lower())
@@ -17815,7 +17815,7 @@ def _wurst_zeit(question: str, quants: List[Quantity],
     return (cat + dog) / 2
 
 
-def _spulen_prozent(question: str, quants: List[Quantity],
+def _spulen_percent(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Spulen-Prozent: '60/150' -> 40."""
     low = _digitize(question.lower())
@@ -17844,7 +17844,7 @@ def _stuhl_restaurant(question: str, quants: List[Quantity],
         Fraction(nm.group(2)) - Fraction(rm.group(2))
 
 
-def _verhaeltnis_teilen(question: str, quants: List[Quantity],
+def _ratio_divide(question: str, quants: List[Quantity],
                          tgt: QuestionTarget) -> Optional[Fraction]:
     """Verhältnis-Teilen: '100x3/5-10' -> 50."""
     low = _digitize(question.lower())
@@ -17858,7 +17858,7 @@ def _verhaeltnis_teilen(question: str, quants: List[Quantity],
     return share - Fraction(sm.group(2))
 
 
-def _tier_geschwindigkeit(question: str, quants: List[Quantity],
+def _animal_speed(question: str, quants: List[Quantity],
                            tgt: QuestionTarget) -> Optional[Fraction]:
     """Tier-Geschwindigkeit: '15/5x40' -> 120."""
     low = _digitize(question.lower())
@@ -17885,7 +17885,7 @@ def _nachhilfe_gebuehr(question: str, quants: List[Quantity],
         Fraction(wm.group(1))
 
 
-def _baeckerei_rabatt(question: str, quants: List[Quantity],
+def _bakery_discount(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Bäckerei-Rabatt: '50x0.9' -> 45."""
     low = _digitize(question.lower())
@@ -17907,7 +17907,7 @@ def _baeckerei_rabatt(question: str, quants: List[Quantity],
     return total * Fraction(100 - int(dm.group(1)), 100)
 
 
-def _suessigkeiten_diff(question: str, quants: List[Quantity],
+def _candy_diff(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Süßigkeiten-Diff: '(4-3)x14' -> 14."""
     low = _digitize(question.lower())
@@ -17918,7 +17918,7 @@ def _suessigkeiten_diff(question: str, quants: List[Quantity],
     return (Fraction(gm.group(2)) - Fraction(gm.group(4))) * 14
 
 
-def _buch_anzahl(question: str, quants: List[Quantity],
+def _book_count(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Buch-Anzahl: '(21-3)/2' -> 9."""
     low = _digitize(question.lower())
@@ -17930,7 +17930,7 @@ def _buch_anzahl(question: str, quants: List[Quantity],
     return (Fraction(im.group(2)) - Fraction(jm.group(2))) / 2
 
 
-def _zwillinge_alter(question: str, quants: List[Quantity],
+def _zwillinge_age(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Zwillinge-Alter: '6+7' -> 13."""
     low = _digitize(question.lower())
@@ -17991,7 +17991,7 @@ def _waeschekosten(question: str, quants: List[Quantity],
     return 2 * 52 * Fraction(gm.group(1)) * Fraction(pm.group(1))
 
 
-def _dvd_rest(question: str, quants: List[Quantity],
+def _dvd_remainder(question: str, quants: List[Quantity],
               tgt: QuestionTarget) -> Optional[Fraction]:
     """DVD-Rest: '644+865' -> 1509."""
     low = _digitize(question.lower())
@@ -18004,7 +18004,7 @@ def _dvd_rest(question: str, quants: List[Quantity],
     return (limit - Fraction(ps[0])) + (limit - Fraction(ps[1]))
 
 
-def _therapie_kosten(question: str, quants: List[Quantity],
+def _therapie_cost(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Therapie-Kosten: '6x2x2x125' -> 3000."""
     low = _digitize(question.lower())
@@ -18033,7 +18033,7 @@ def _kochkurs_rezepte(question: str, quants: List[Quantity],
         Fraction(cm.group(3)) / Fraction(rm.group(1))
 
 
-def _arcade_rest(question: str, quants: List[Quantity],
+def _arcade_remainder(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Arcade-Rest: '100-8-16-64' -> 12."""
     low = _digitize(question.lower())
@@ -18050,7 +18050,7 @@ def _arcade_rest(question: str, quants: List[Quantity],
     return Fraction(om.group(1)) - mon - mon * 2 - mon * 8
 
 
-def _alter_zukunft(question: str, quants: List[Quantity],
+def _age_zukunft(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Alter-Zukunft: '(16-12)+4' -> 8."""
     low = _digitize(question.lower())
@@ -18075,7 +18075,7 @@ def _internet_speed(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) * 3600 / Fraction(mb.group(1))
 
 
-def _karate_klassen(question: str, quants: List[Quantity],
+def _karate_classes(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Karate-Klassen: '10-60/10' -> 4."""
     low = _digitize(question.lower())
@@ -18115,7 +18115,7 @@ def _fruehstueck_diff(question: str, quants: List[Quantity],
         Fraction(wm.group(1))
 
 
-def _stiefel_preis(question: str, quants: List[Quantity],
+def _stiefel_price(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Stiefel-Preis: '(13+8)-(16+4)' -> 1."""
     low = _digitize(question.lower())
@@ -18130,7 +18130,7 @@ def _stiefel_preis(question: str, quants: List[Quantity],
     return ebay - amazon
 
 
-def _outfit_rest(question: str, quants: List[Quantity],
+def _outfit_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Outfit-Rest: '50-42' -> 8."""
     low = _digitize(question.lower())
@@ -18192,7 +18192,7 @@ def _dreieck_winkel(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) * 3 / 6
 
 
-def _gewicht_erhoehung(question: str, quants: List[Quantity],
+def _weight_erhoehung(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Gewicht-Erhöhung: '8x1.5-2' -> 10."""
     low = _digitize(question.lower())
@@ -18206,7 +18206,7 @@ def _gewicht_erhoehung(question: str, quants: List[Quantity],
         Fraction(100 + int(pm.group(1)), 100) - Fraction(lm.group(1))
 
 
-def _provision_verdienst(question: str, quants: List[Quantity],
+def _commission_earnings(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Provision-Verdienst: '300+150' -> 450."""
     low = _digitize(question.lower())
@@ -18223,7 +18223,7 @@ def _provision_verdienst(question: str, quants: List[Quantity],
         (sold - base) * Fraction(int(sm.group(2)), 100)
 
 
-def _schwimmen_zeit(question: str, quants: List[Quantity],
+def _schwimmen_time(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Schwimmen-Zeit: '(34-16)x3' -> 54."""
     low = _digitize(question.lower())
@@ -18238,7 +18238,7 @@ def _schwimmen_zeit(question: str, quants: List[Quantity],
     return (warm - cold) * Fraction(mm.group(1))
 
 
-def _kerzen_kosten(question: str, quants: List[Quantity],
+def _kerzen_cost(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Kerzen-Kosten: '20/5x3' -> 12."""
     low = _digitize(question.lower())
@@ -18252,7 +18252,7 @@ def _kerzen_kosten(question: str, quants: List[Quantity],
     return total / Fraction(pm.group(1)) * Fraction(pm.group(2))
 
 
-def _alter_raetsel(question: str, quants: List[Quantity],
+def _age_raetsel(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Alter-Rätsel: '10+3' -> 13."""
     low = _digitize(question.lower())
@@ -18278,7 +18278,7 @@ def _aufgaben_diff(question: str, quants: List[Quantity],
                                     Fraction(gm.group(4)))
 
 
-def _geld_teilen(question: str, quants: List[Quantity],
+def _money_divide(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Geld-Teilen: '100/5x4' -> 80."""
     low = _digitize(question.lower())
@@ -18291,7 +18291,7 @@ def _geld_teilen(question: str, quants: List[Quantity],
         (Fraction(tm.group(2)) + 1)
 
 
-def _neffe_alter(question: str, quants: List[Quantity],
+def _neffe_age(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Neffe-Alter: '(44+7)/3-7' -> 10."""
     low = _digitize(question.lower())
@@ -18318,7 +18318,7 @@ def _konto_abhebung(question: str, quants: List[Quantity],
         Fraction(rm.group(1)) * Fraction(ym.group(1)) * 12
 
 
-def _subway_kosten(question: str, quants: List[Quantity],
+def _subway_cost(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Subway-Kosten: '40+120' -> 160."""
     low = _digitize(question.lower())
@@ -18330,7 +18330,7 @@ def _subway_kosten(question: str, quants: List[Quantity],
     return Fraction(pm.group(1)) * 4
 
 
-def _sparbuch_tage(question: str, quants: List[Quantity],
+def _sparbuch_days(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Sparbuch-Tage: '(12-4)/2' -> 4."""
     low = _digitize(question.lower())
@@ -18377,7 +18377,7 @@ def _holz_sticks(question: str, quants: List[Quantity],
     return budget / Fraction(p4.group(1)) * Fraction(f4.group(1))
 
 
-def _workout_stunden(question: str, quants: List[Quantity],
+def _workout_hours(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Workout-Stunden: '32+2+2' -> 36."""
     low = _digitize(question.lower())
@@ -18393,7 +18393,7 @@ def _workout_stunden(question: str, quants: List[Quantity],
         (Fraction(om.group(1)) - Fraction(wm.group(1)))
 
 
-def _ali_geld(question: str, quants: List[Quantity],
+def _ali_money(question: str, quants: List[Quantity],
                tgt: QuestionTarget) -> Optional[Fraction]:
     """Ali-Geld: '160/2x2/5' -> 32."""
     low = _digitize(question.lower())
@@ -18438,7 +18438,7 @@ def _sofa_stuhl(question: str, quants: List[Quantity],
     return op_sofas + op_chairs + jn_chairs + jn_sofas
 
 
-def _cd_vergleich(question: str, quants: List[Quantity],
+def _cd_compare(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """CD-Vergleich: '48/4-1' -> 11."""
     low = _digitize(question.lower())
@@ -18471,7 +18471,7 @@ def _bus_passagiere(question: str, quants: List[Quantity],
     return n
 
 
-def _alter_dreifach(question: str, quants: List[Quantity],
+def _age_triple(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Alter-Dreifach: '3x14-4' -> 38."""
     low = _digitize(question.lower())
@@ -18484,7 +18484,7 @@ def _alter_dreifach(question: str, quants: List[Quantity],
     return Fraction(bm.group(2)) * 3 - 4
 
 
-def _buspass_spar(question: str, quants: List[Quantity],
+def _buspass_save(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Buspass-Spar: '2x5x2.2-20' -> 2."""
     low = _digitize(question.lower())
@@ -18500,7 +18500,7 @@ def _buspass_spar(question: str, quants: List[Quantity],
         Fraction(pm.group(1))
 
 
-def _tagegeld_rest(question: str, quants: List[Quantity],
+def _tagegeld_remainder(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Tagegeld-Rest: '30x7-100' -> 110."""
     low = _digitize(question.lower())
@@ -18511,7 +18511,7 @@ def _tagegeld_rest(question: str, quants: List[Quantity],
     return Fraction(pm.group(1)) * 7 - Fraction(sm.group(1))
 
 
-def _minuten_doppelt(question: str, quants: List[Quantity],
+def _minutes_doppelt(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Minuten-Doppelt: '40+2x120' -> 280."""
     low = _digitize(question.lower())
@@ -18523,7 +18523,7 @@ def _minuten_doppelt(question: str, quants: List[Quantity],
     return Fraction(mm.group(1)) + 2 * Fraction(hm.group(2)) * 60
 
 
-def _taffy_rest(question: str, quants: List[Quantity],
+def _taffy_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Taffy-Rest: '10-7' -> 3."""
     low = _digitize(question.lower())
@@ -18540,7 +18540,7 @@ def _taffy_rest(question: str, quants: List[Quantity],
         Fraction(mm.group(1)) * Fraction(mm.group(2))
 
 
-def _jeans_vergleich(question: str, quants: List[Quantity],
+def _jeans_compare(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Jeans-Vergleich: '6+2' -> 8."""
     low = _digitize(question.lower())
@@ -18560,7 +18560,7 @@ def _jeans_vergleich(question: str, quants: List[Quantity],
     return abs(tat_orig - jog_orig)
 
 
-def _pokemon_verkauf(question: str, quants: List[Quantity],
+def _pokemon_sale(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Pokemon-Verkauf: '150/(1.5x2/3)' -> 150."""
     low = _digitize(question.lower())
@@ -18577,7 +18577,7 @@ def _pokemon_verkauf(question: str, quants: List[Quantity],
     return needed / (Fraction(sm.group(1)) * sold_frac)
 
 
-def _suppe_kosten(question: str, quants: List[Quantity],
+def _suppe_cost(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Suppe-Kosten: '(8+4)/6' -> 2."""
     low = _digitize(question.lower())
@@ -18595,7 +18595,7 @@ def _suppe_kosten(question: str, quants: List[Quantity],
     return (onions + stock) / 6
 
 
-def _feen_rest(question: str, quants: List[Quantity],
+def _feen_remainder(question: str, quants: List[Quantity],
                tgt: QuestionTarget) -> Optional[Fraction]:
     """Feen-Rest: '50+25-30' -> 45."""
     low = _digitize(question.lower())
@@ -18670,7 +18670,7 @@ def _caterer_hotdogs(question: str, quants: List[Quantity],
     return Fraction(sm.group(1)) - (prepared - first)
 
 
-def _streaming_jahre(question: str, quants: List[Quantity],
+def _streaming_years(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Streaming-Jahre: '6x8+8x12+10x14' -> 284."""
     low = _digitize(question.lower())
@@ -18689,7 +18689,7 @@ def _streaming_jahre(question: str, quants: List[Quantity],
     return intro + normal + rest * Fraction(im2.group(1))
 
 
-def _pizza_rest(question: str, quants: List[Quantity],
+def _pizza_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Pizza-Rest: '12-4-3-2' -> 3."""
     low = _digitize(question.lower())
@@ -18705,7 +18705,7 @@ def _pizza_rest(question: str, quants: List[Quantity],
         Fraction(em.group(1))
 
 
-def _bauarbeiter_jahr(question: str, quants: List[Quantity],
+def _bauarbeiter_year(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Bauarbeiter-Jahr: '4x6x50x12' -> 14400."""
     low = _digitize(question.lower())
@@ -18718,7 +18718,7 @@ def _bauarbeiter_jahr(question: str, quants: List[Quantity],
         Fraction(pm.group(1)) * 12
 
 
-def _katzen_rest(question: str, quants: List[Quantity],
+def _katzen_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Katzen-Rest: '(50-20)x2/5' -> 12."""
     low = _digitize(question.lower())
@@ -18734,7 +18734,7 @@ def _katzen_rest(question: str, quants: List[Quantity],
     return left * (1 - Fraction(int(rm.group(1)), int(rm.group(2))))
 
 
-def _kuchen_rest(question: str, quants: List[Quantity],
+def _cake_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Kuchen-Rest: '20-2x2.5' -> 15."""
     low = _digitize(question.lower())
@@ -18747,7 +18747,7 @@ def _kuchen_rest(question: str, quants: List[Quantity],
         Fraction(cm.group(1))
 
 
-def _urlaub_zeit(question: str, quants: List[Quantity],
+def _urlaub_time(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Urlaub-Zeit: '15/0.3x0.4' -> 20."""
     low = _digitize(question.lower())
@@ -18767,7 +18767,7 @@ def _urlaub_zeit(question: str, quants: List[Quantity],
     return total * Fraction(int(sp.group(1)), 100)
 
 
-def _tapete_spar(question: str, quants: List[Quantity],
+def _tapete_save(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Tapete-Spar: '400x0.8' -> 320."""
     low = _digitize(question.lower())
@@ -18796,7 +18796,7 @@ def _schuhverkauf(question: str, quants: List[Quantity],
     return f + f * 2 + f - Fraction(rm.group(1))
 
 
-def _alter_halb(question: str, quants: List[Quantity],
+def _age_half(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Alter-Halb: '(26-5)x2' -> 42."""
     low = _digitize(question.lower())
@@ -18808,7 +18808,7 @@ def _alter_halb(question: str, quants: List[Quantity],
     return (Fraction(dm.group(2)) - Fraction(fm.group(3))) * 2
 
 
-def _thunfisch_verdienst(question: str, quants: List[Quantity],
+def _thunfisch_earnings(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Thunfisch-Verdienst: '(56+46+26)x0.5' -> 64."""
     low = _digitize(question.lower())
@@ -18821,7 +18821,7 @@ def _thunfisch_verdienst(question: str, quants: List[Quantity],
     return total * Fraction(km.group(1))
 
 
-def _moebel_vergleich(question: str, quants: List[Quantity],
+def _moebel_compare(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Möbel-Vergleich: '(1350+2100)-(1100+2250)' -> 100."""
     low = _digitize(question.lower())
@@ -18851,7 +18851,7 @@ def _klassengruppen(question: str, quants: List[Quantity],
     return big - Fraction(lm.group(1))
 
 
-def _zug_service(question: str, quants: List[Quantity],
+def _train_service(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Zug-Service: '18000/900' -> 20."""
     low = _digitize(question.lower())
@@ -18886,7 +18886,7 @@ def _socken_missed(question: str, quants: List[Quantity],
         Fraction(wm.group(2))
 
 
-def _kredit_monat(question: str, quants: List[Quantity],
+def _kredit_month(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Kredit-Monat: '3650x1.1/5' -> 803."""
     low = _digitize(question.lower())
@@ -18918,7 +18918,7 @@ def _hotdog_diff(question: str, quants: List[Quantity],
     return john - luke
 
 
-def _pflanzentopf_rest(question: str, quants: List[Quantity],
+def _pflanzentopf_remainder(question: str, quants: List[Quantity],
                         tgt: QuestionTarget) -> Optional[Fraction]:
     """Pflanzentopf-Rest: '100-90' -> 10."""
     low = _digitize(question.lower())
@@ -18931,7 +18931,7 @@ def _pflanzentopf_rest(question: str, quants: List[Quantity],
     return Fraction(bm.group(1)) - Fraction(dm.group(1)) * 3
 
 
-def _spielzeug_rest(question: str, quants: List[Quantity],
+def _spielzeug_remainder(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Spielzeug-Rest: '28-17+10' -> 21."""
     low = _digitize(question.lower())
@@ -18949,7 +18949,7 @@ def _spielzeug_rest(question: str, quants: List[Quantity],
     return Fraction(gm.group(1)) - spent + Fraction(em.group(1))
 
 
-def _klassen_anwesenheit(question: str, quants: List[Quantity],
+def _classes_anwesenheit(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Klassen-Anwesenheit: '96-43-4' -> 49."""
     low = _digitize(question.lower())
@@ -18982,7 +18982,7 @@ def _brettspiel_punkte(question: str, quants: List[Quantity],
     return Fraction(tm.group(1)) - naomi - yuri - brianna
 
 
-def _klassen_jungen(question: str, quants: List[Quantity],
+def _classes_jungen(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Klassen-Jungen: '30-5-8' -> 17."""
     low = _digitize(question.lower())
@@ -18999,7 +18999,7 @@ def _klassen_jungen(question: str, quants: List[Quantity],
         (Fraction(sm.group(1)) - Fraction(sm2.group(1)))
 
 
-def _haus_budget(question: str, quants: List[Quantity],
+def _house_budget(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Haus-Budget: '350000x1.17-400000' -> 9500."""
     low = _digitize(question.lower())
@@ -19018,7 +19018,7 @@ def _haus_budget(question: str, quants: List[Quantity],
         Fraction(int(um.group(1).replace(' ', '').replace(',', '')))
 
 
-def _haus_erloes(question: str, quants: List[Quantity],
+def _house_revenue(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Haus-Erlös: '400000x0.92-250000' -> 118000."""
     low = _digitize(question.lower())
@@ -19052,7 +19052,7 @@ def _wuerfel_wahrscheinlichkeit(question: str, quants: List[Quantity],
     return Fraction(int(g)) - Fraction(int(even))
 
 
-def _burrito_kosten(question: str, quants: List[Quantity],
+def _burrito_cost(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Burrito-Kosten: '14-5' -> 9."""
     low = _digitize(question.lower())
@@ -19092,7 +19092,7 @@ def _rutsche_wasserpark(question: str, quants: List[Quantity],
         Fraction(100 - int(pm.group(1)), 100) * Fraction(tm.group(1))
 
 
-def _schoko_kinder(question: str, quants: List[Quantity],
+def _schoko_children(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Schoko-Kinder: '(40-24)/8' -> 2."""
     low = _digitize(question.lower())
@@ -19110,7 +19110,7 @@ def _schoko_kinder(question: str, quants: List[Quantity],
     return (total - adults) / Fraction(pm.group(2))
 
 
-def _orangen_rest(question: str, quants: List[Quantity],
+def _orangen_remainder(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Orangen-Rest: '15-8-4' -> 3."""
     low = _digitize(question.lower())
@@ -19154,7 +19154,7 @@ def _schnecken_fische(question: str, quants: List[Quantity],
     return diff / 2 / 2
 
 
-def _baum_gewicht(question: str, quants: List[Quantity],
+def _tree_weight(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Baum-Gewicht: '(200/10)x400x0.7' -> 5600."""
     low = _digitize(question.lower())
@@ -19168,7 +19168,7 @@ def _baum_gewicht(question: str, quants: List[Quantity],
         Fraction(100 - int(tm.group(1)), 100)
 
 
-def _muenzen_rest(question: str, quants: List[Quantity],
+def _muenzen_remainder(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Münzen-Rest: '5x25+2x10-55' -> 90."""
     low = _digitize(question.lower())
@@ -19181,7 +19181,7 @@ def _muenzen_rest(question: str, quants: List[Quantity],
         Fraction(pm.group(1))
 
 
-def _steuer_vergleich(question: str, quants: List[Quantity],
+def _steuer_compare(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Steuer-Vergleich: '3x35-90' -> 15."""
     low = _digitize(question.lower())
@@ -19195,7 +19195,7 @@ def _steuer_vergleich(question: str, quants: List[Quantity],
         Fraction(am.group(1))
 
 
-def _computer_rest(question: str, quants: List[Quantity],
+def _computer_remainder(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Computer-Rest: '1500-1423' -> 77."""
     low = _digitize(question.lower())
@@ -19212,7 +19212,7 @@ def _computer_rest(question: str, quants: List[Quantity],
         Fraction(pm.group(1))
 
 
-def _schulden_jahr(question: str, quants: List[Quantity],
+def _schulden_year(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Schulden-Jahr: '1000x1.5x12' -> 18000."""
     low = _digitize(question.lower())
@@ -19272,7 +19272,7 @@ def _bienen_rueckkehr(question: str, quants: List[Quantity],
     return first + second - back
 
 
-def _affen_bananen(question: str, quants: List[Quantity],
+def _monkeys_bananas(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Affen-Bananen: '(200+400+100)x2' -> 1400."""
     low = _digitize(question.lower())
@@ -19287,7 +19287,7 @@ def _affen_bananen(question: str, quants: List[Quantity],
             Fraction(bm.group(1))) * Fraction(om.group(1))
 
 
-def _baum_rest(question: str, quants: List[Quantity],
+def _tree_remainder(question: str, quants: List[Quantity],
                tgt: QuestionTarget) -> Optional[Fraction]:
     """Baum-Rest: '(50+100-20)x0.7' -> 91."""
     low = _digitize(question.lower())
@@ -19320,7 +19320,7 @@ def _flamingo_diff(question: str, quants: List[Quantity],
     return pink - white
 
 
-def _wasser_rest(question: str, quants: List[Quantity],
+def _water_remainder(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Wasser-Rest: '24-2x4-6' -> 10."""
     low = _digitize(question.lower())
@@ -19346,7 +19346,7 @@ def _schallplatten(question: str, quants: List[Quantity],
         (Fraction(sm.group(1)) + 1)
 
 
-def _kinder_schuhe(question: str, quants: List[Quantity],
+def _children_shoes(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Kinder-Schuhe: '2x3x60' -> 360."""
     low = _digitize(question.lower())
@@ -19359,7 +19359,7 @@ def _kinder_schuhe(question: str, quants: List[Quantity],
         Fraction(cm.group(1))
 
 
-def _schlaf_woche(question: str, quants: List[Quantity],
+def _sleep_week(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Schlaf-Woche: '8+2x6+4x7' -> 48."""
     low = _digitize(question.lower())
@@ -19377,7 +19377,7 @@ def _schlaf_woche(question: str, quants: List[Quantity],
     return base + 2 * two + 4 * rest
 
 
-def _marmor_preis(question: str, quants: List[Quantity],
+def _marmor_price(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Marmor-Preis: '20 + 4x18' -> 92."""
     low = _digitize(question.lower())
@@ -19393,7 +19393,7 @@ def _marmor_preis(question: str, quants: List[Quantity],
     return base + step * cycles
 
 
-def _foto_voegel(question: str, quants: List[Quantity],
+def _foto_birds(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Foto-Vögel: '1800/6/50' -> 6."""
     low = _digitize(question.lower())
@@ -19409,7 +19409,7 @@ def _foto_voegel(question: str, quants: List[Quantity],
         Fraction(bm.group(1))
 
 
-def _gehalt_rest(question: str, quants: List[Quantity],
+def _gehalt_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Gehalt-Rest: '2400x(1-0.5-0.2)' -> 720."""
     low = _digitize(question.lower())
@@ -19423,7 +19423,7 @@ def _gehalt_rest(question: str, quants: List[Quantity],
          Fraction(int(cm.group(1)), 100))
 
 
-def _braunies_rest(question: str, quants: List[Quantity],
+def _braunies_remainder(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Brownies-Rest: '12+6+48-18' -> 48."""
     low = _digitize(question.lower())
@@ -19440,7 +19440,7 @@ def _braunies_rest(question: str, quants: List[Quantity],
         (Fraction(em.group(1)) + Fraction(1, 2)) * 12
 
 
-def _spiel_bilanz(question: str, quants: List[Quantity],
+def _game_bilanz(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Spiel-Bilanz: '(22+8)/2' -> 15."""
     low = _digitize(question.lower())
@@ -19472,7 +19472,7 @@ def _tuerklingel(question: str, quants: List[Quantity],
     return first + second + third + fourth
 
 
-def _kekse_box(question: str, quants: List[Quantity],
+def _cookies_box(question: str, quants: List[Quantity],
                tgt: QuestionTarget) -> Optional[Fraction]:
     """Kekse-Box: '30+60-10' -> 80."""
     low = _digitize(question.lower())
@@ -19484,7 +19484,7 @@ def _kekse_box(question: str, quants: List[Quantity],
     return Fraction(bm.group(2)) * 3 - Fraction(em.group(1))
 
 
-def _wasser_prozent(question: str, quants: List[Quantity],
+def _water_percent(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Wasser-Prozent: '40% x (1-80%)' -> 8."""
     low = _digitize(question.lower())
@@ -19515,7 +19515,7 @@ def _haustiere_total(question: str, quants: List[Quantity],
     return dogs + cats + rabbits
 
 
-def _elfen_rest(question: str, quants: List[Quantity],
+def _elfen_remainder(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Elfen-Rest: '60-20-10' -> 30."""
     low = _digitize(question.lower())
@@ -19566,7 +19566,7 @@ def _heels_boots(question: str, quants: List[Quantity],
     return Fraction(hm.group(1)) * 3 + Fraction(dm.group(1))
 
 
-def _reifen_umsatz(question: str, quants: List[Quantity],
+def _tires_revenue(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Reifen-Umsatz: '(6x60+4x40)-12x40' -> 40."""
     low = _digitize(question.lower())
@@ -19583,7 +19583,7 @@ def _reifen_umsatz(question: str, quants: List[Quantity],
     return thu - fri
 
 
-def _geschwister_alter(question: str, quants: List[Quantity],
+def _geschwister_age(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Geschwister-Alter: 'James 10, +1 Corey, -2 Amy, -5 Jackson'
     -> 4."""
@@ -19603,7 +19603,7 @@ def _geschwister_alter(question: str, quants: List[Quantity],
     return target
 
 
-def _puzzle_rest(question: str, quants: List[Quantity],
+def _puzzle_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Puzzle-Rest: '1000-250-250' -> 500."""
     low = _digitize(question.lower())
@@ -19616,7 +19616,7 @@ def _puzzle_rest(question: str, quants: List[Quantity],
     return n - n / 4 - (n - n / 4) / 3
 
 
-def _glas_rabatt(question: str, quants: List[Quantity],
+def _glas_discount(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Glas-Rabatt: 'jedes 2. Glas 60%' -> 8*5+8*3 = 64."""
     low = _digitize(question.lower())
@@ -19632,7 +19632,7 @@ def _glas_rabatt(question: str, quants: List[Quantity],
     return n / 2 * full + n / 2 * half
 
 
-def _kleidung_kauf(question: str, quants: List[Quantity],
+def _kleidung_buy(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Kleidung-Kauf: '3x16.5+3x22.5+3x42' -> 243."""
     low = _digitize(question.lower())
@@ -19652,7 +19652,7 @@ def _kleidung_kauf(question: str, quants: List[Quantity],
         Fraction(hm.group(1)) * Fraction(hp.group(1))
 
 
-def _stopp_abstand(question: str, quants: List[Quantity],
+def _stopp_gap(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Stopp-Abstand: '60-20-15' -> 25."""
     low = _digitize(question.lower())
@@ -19678,7 +19678,7 @@ def _taschengeld_start(question: str, quants: List[Quantity],
         Fraction(wm.group(2))
 
 
-def _yogurt_kosten(question: str, quants: List[Quantity],
+def _yogurt_cost(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Yogurt-Kosten: '2/Tag, 4 für $5, 30 Tage' -> 75."""
     low = _digitize(question.lower())
@@ -19692,7 +19692,7 @@ def _yogurt_kosten(question: str, quants: List[Quantity],
         Fraction(sm.group(1)) * Fraction(sm.group(2))
 
 
-def _eier_woche(question: str, quants: List[Quantity],
+def _eggs_week(question: str, quants: List[Quantity],
                 tgt: QuestionTarget) -> Optional[Fraction]:
     """Eier-Woche: '252/Tag, $2/Dutzend, Woche' -> 294."""
     low = _digitize(question.lower())
@@ -19703,7 +19703,7 @@ def _eier_woche(question: str, quants: List[Quantity],
     return Fraction(em.group(1)) * 7 / 12 * Fraction(dm.group(1))
 
 
-def _autowasche_jahr(question: str, quants: List[Quantity],
+def _autowasche_year(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Autowäsche-Jahr: '4/Monat, $15, Jahr' -> 720."""
     low = _digitize(question.lower())
@@ -19714,7 +19714,7 @@ def _autowasche_jahr(question: str, quants: List[Quantity],
     return Fraction(cm.group(1)) * 12 * Fraction(pm.group(1))
 
 
-def _schlaf_diff(question: str, quants: List[Quantity],
+def _sleep_diff(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Schlaf-Diff: '9h, James 2/3 davon' -> 9-6 = 3."""
     low = _digitize(question.lower())
@@ -19727,7 +19727,7 @@ def _schlaf_diff(question: str, quants: List[Quantity],
     return base - base * Fraction(int(fm.group(1)), int(fm.group(2)))
 
 
-def _locker_kette(question: str, quants: List[Quantity],
+def _locker_chain(question: str, quants: List[Quantity],
                    tgt: QuestionTarget) -> Optional[Fraction]:
     """Locker-Kette: '24, halb so groß, 1/4 davon' -> 24/2/4 = 3."""
     low = _digitize(question.lower())
@@ -19744,7 +19744,7 @@ def _locker_kette(question: str, quants: List[Quantity],
     return Fraction(bm.group(2)) / 2 / 4
 
 
-def _alter_kette(question: str, quants: List[Quantity],
+def _age_chain(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Alter-Kette: '(60+4)/2-3' -> 29."""
     low = _digitize(question.lower())
@@ -19761,7 +19761,7 @@ def _alter_kette(question: str, quants: List[Quantity],
     return son - Fraction(dm.group(1))
 
 
-def _kamera_rest(question: str, quants: List[Quantity],
+def _kamera_remainder(question: str, quants: List[Quantity],
                  tgt: QuestionTarget) -> Optional[Fraction]:
     """Kamera-Rest: '200-(70+90/2)' -> 85."""
     low = _digitize(question.lower())
@@ -19775,7 +19775,7 @@ def _kamera_rest(question: str, quants: List[Quantity],
         Fraction(gm.group(1)) / 2
 
 
-def _schulreise_rest(question: str, quants: List[Quantity],
+def _schulreise_remainder(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Schulreise-Rest: '300/2-50' -> 100."""
     low = _digitize(question.lower())
@@ -19787,7 +19787,7 @@ def _schulreise_rest(question: str, quants: List[Quantity],
     return Fraction(tm.group(1)) / 2 - Fraction(hm.group(1))
 
 
-def _fabrik_rest(question: str, quants: List[Quantity],
+def _fabrik_remainder(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Fabrik-Rest: '50000/Monat, 8000 W1, halb W2, 3x W3'
     -> 50000-8000-4000-24000 = 14000."""
@@ -19807,7 +19807,7 @@ def _fabrik_rest(question: str, quants: List[Quantity],
     return month - w1 - w1 / 2 - w1 * 3
 
 
-def _stunden_minuten(question: str, quants: List[Quantity],
+def _hours_minutes(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Stunden-Minuten: '8h Tag1, halb Tag2, in Minuten'
     -> (8+4)*60 = 720."""
@@ -19821,7 +19821,7 @@ def _stunden_minuten(question: str, quants: List[Quantity],
     return (Fraction(hm.group(1)) + Fraction(hm.group(1)) / 2) * 60
 
 
-def _blueten_vergleich(question: str, quants: List[Quantity],
+def _blueten_compare(question: str, quants: List[Quantity],
                        tgt: QuestionTarget) -> Optional[Fraction]:
     """Blüten-Vergleich: '5 Orchideen x5, 4 Gänseblümchen x10'
     -> 40-25 = 15."""
@@ -19854,7 +19854,7 @@ def _crawfish_portionen(question: str, quants: List[Quantity],
     return (thu + fri + sat) / Fraction(vm.group(1))
 
 
-def _sack_gewicht(question: str, quants: List[Quantity],
+def _sack_weight(question: str, quants: List[Quantity],
                   tgt: QuestionTarget) -> Optional[Fraction]:
     """Sack-Gewicht: '25 bars 40g, 80 apples halb so schwer'
     -> 25*40+80*20 = 2600."""
@@ -19871,7 +19871,7 @@ def _sack_gewicht(question: str, quants: List[Quantity],
     return Fraction(cm.group(1)) * bar + Fraction(cm.group(2)) * apple
 
 
-def _durchschnitt_gewicht(question: str, quants: List[Quantity],
+def _average_weight(question: str, quants: List[Quantity],
                           tgt: QuestionTarget) -> Optional[Fraction]:
     """Durchschnitts-Gewicht: '150, 20 weniger, doppelt so viel'
     -> (150+130+260)/3 = 180."""
@@ -19891,7 +19891,7 @@ def _durchschnitt_gewicht(question: str, quants: List[Quantity],
     return (a + b + c) / 3
 
 
-def _muschel_teilen(question: str, quants: List[Quantity],
+def _muschel_divide(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Muschel-Teilen: '27, 5 mehr als Carlos, doppelt Carrey,
     gleich geteilt' -> (27+22+11)/3 = 20."""
@@ -19911,7 +19911,7 @@ def _muschel_teilen(question: str, quants: List[Quantity],
     return (jim + carlos + carrey) / 3
 
 
-def _halb_plus_total(question: str, quants: List[Quantity],
+def _half_plus_total(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Halb-Plus-Total: '278, 11 mehr als die Hälfte, total'
     -> 278+139+11 = 428."""
@@ -19927,7 +19927,7 @@ def _halb_plus_total(question: str, quants: List[Quantity],
         Fraction(nm.group(2))
 
 
-def _halb_preis_kette(question: str, quants: List[Quantity],
+def _half_price_chain(question: str, quants: List[Quantity],
                       tgt: QuestionTarget) -> Optional[Fraction]:
     """Halb-Preis-Kette: 'magazine half of book $4, pen $1 less'
     -> 4/2-1 = 1."""
@@ -19950,7 +19950,7 @@ def _halb_preis_kette(question: str, quants: List[Quantity],
     return item
 
 
-def _job_kette(question: str, quants: List[Quantity],
+def _job_chain(question: str, quants: List[Quantity],
               tgt: QuestionTarget) -> Optional[Fraction]:
     """Job-Kette: '100 apply, 30% interviews, 20% offer,
     a third accept' -> 2."""
@@ -19965,7 +19965,7 @@ def _job_kette(question: str, quants: List[Quantity],
         Fraction(int(jm.group(1)), 100) / 3
 
 
-def _abstimmung_rest(question: str, quants: List[Quantity],
+def _vote_remainder(question: str, quants: List[Quantity],
                      tgt: QuestionTarget) -> Optional[Fraction]:
     """Abstimmungs-Rest: '5000, 2/5 voted, 2/3 of rest voted'
     -> 5000*3/5*1/3 = 1000."""
@@ -19982,7 +19982,7 @@ def _abstimmung_rest(question: str, quants: List[Quantity],
         (1 - Fraction(int(rm.group(1)), int(rm.group(2))))
 
 
-def _prozent_rabatt(question: str, quants: List[Quantity],
+def _percent_discount(question: str, quants: List[Quantity],
                     tgt: QuestionTarget) -> Optional[Fraction]:
     """Prozent-Rabatt: 'marked $140, 5% discount' -> 133."""
     low = _digitize(question.lower())
@@ -20556,7 +20556,7 @@ def _resolve(question: str) -> BindingResult:
     res.quantities = quants
     res.target = _parse_target(question)
 
-    # --- Abstinenz-Gate 0.75: Futterketten (each X eats N Y; M Z)
+    # --- Abstention Gate 0.75: Food chain (each X eats N Y; M Z)
     fc = _food_chain(question, rels, quants)
     if fc is not None:
         # Rate-Roh-Mengen derselben Einheit ersetzen ("12 beetles" sind
@@ -20572,7 +20572,7 @@ def _resolve(question: str) -> BindingResult:
         ]
         quants.append(fc)
 
-    # --- Abstinenz-Gate 1: Ziel-Objekt muss gebunden sein ---
+    # --- Abstention Gate 1: Ziel-Objekt muss gebunden sein ---
     tgt = res.target
     # --- Steuer-frei (Billy: 240) — VOR dem Kalender (Datumsbereich)
     stf = _steuer_frei(question, quants, tgt)
@@ -20691,7 +20691,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "allergien-klasse"
         return res
     # --- Geb-Alter (Geb: 3)
-    ga3 = _geb_alter(question, quants, tgt)
+    ga3 = _geb_age(question, quants, tgt)
     if ga3 is not None:
         res.answer = _fmt(ga3)
         res.ok = True
@@ -20712,7 +20712,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "lotterie-wahrscheinlichkeit"
         return res
     # --- Seil-Länge (Red rope: 20)
-    sl3 = _seil_laenge(question, quants, tgt)
+    sl3 = _seil_length(question, quants, tgt)
     if sl3 is not None:
         res.answer = _fmt(sl3)
         res.ok = True
@@ -20726,7 +20726,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "fischfutter"
         return res
     # --- Durchschnitts-Geschwindigkeit (Sid: 50)
-    dg3 = _durchschnitts_geschwindigkeit(question, quants, tgt)
+    dg3 = _durchschnitts_speed(question, quants, tgt)
     if dg3 is not None:
         res.answer = _fmt(dg3)
         res.ok = True
@@ -20740,21 +20740,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kassette-dauer"
         return res
     # --- Stock-Länge (Carl: 3)
-    sl3 = _stock_laenge(question, quants, tgt)
+    sl3 = _stock_length(question, quants, tgt)
     if sl3 is not None:
         res.answer = _fmt(sl3)
         res.ok = True
         res.reason = "stock-laenge"
         return res
     # --- Bus-Verhältnis (Women: 34)
-    bv3 = _bus_verhaeltnis(question, quants, tgt)
+    bv3 = _bus_ratio(question, quants, tgt)
     if bv3 is not None:
         res.answer = _fmt(bv3)
         res.ok = True
         res.reason = "bus-verhaeltnis"
         return res
     # --- Eier-Teilen (Chatty: 9)
-    et3 = _eier_teilen(question, quants, tgt)
+    et3 = _eggs_divide(question, quants, tgt)
     if et3 is not None:
         res.answer = _fmt(et3)
         res.ok = True
@@ -20768,7 +20768,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kartoffelbrei"
         return res
     # --- Eier-Monate (Chester: 20)
-    em3 = _eier_monate(question, quants, tgt)
+    em3 = _eggs_months(question, quants, tgt)
     if em3 is not None:
         res.answer = _fmt(em3)
         res.ok = True
@@ -20782,7 +20782,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "tierfarm"
         return res
     # --- Gehalt-Familie (Valerie: 45000)
-    gf3 = _gehalt_familie(question, quants, tgt)
+    gf3 = _gehalt_family(question, quants, tgt)
     if gf3 is not None:
         res.answer = _fmt(gf3)
         res.ok = True
@@ -20796,7 +20796,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "sparwochen"
         return res
     # --- Vögel-Bäume (Birds: 32)
-    vb3 = _voegel_baume(question, quants, tgt)
+    vb3 = _birds_baume(question, quants, tgt)
     if vb3 is not None:
         res.answer = _fmt(vb3)
         res.ok = True
@@ -20824,14 +20824,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "mnm-tuetchen"
         return res
     # --- Hunde-Gewicht (Elijah: 105)
-    hg3 = _hunde_gewicht(question, quants, tgt)
+    hg3 = _hunde_weight(question, quants, tgt)
     if hg3 is not None:
         res.answer = _fmt(hg3)
         res.ok = True
         res.reason = "hunde-gewicht"
         return res
     # --- Baum-Erlös (John: 96)
-    be3 = _baum_erloes(question, quants, tgt)
+    be3 = _tree_revenue(question, quants, tgt)
     if be3 is not None:
         res.answer = _fmt(be3)
         res.ok = True
@@ -20845,7 +20845,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "wasserrutsche"
         return res
     # --- Buch-Budget (Anna: 5)
-    bb3 = _buch_budget(question, quants, tgt)
+    bb3 = _book_budget(question, quants, tgt)
     if bb3 is not None:
         res.answer = _fmt(bb3)
         res.ok = True
@@ -20873,7 +20873,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "wander-distanz"
         return res
     # --- Band-Teilen (Marty: 5)
-    bt3 = _band_teilen(question, quants, tgt)
+    bt3 = _band_divide(question, quants, tgt)
     if bt3 is not None:
         res.answer = _fmt(bt3)
         res.ok = True
@@ -20887,14 +20887,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "schulmaedchen"
         return res
     # --- Garten-Einkauf (Mom: 38)
-    ge3 = _garten_einkauf(question, quants, tgt)
+    ge3 = _garden_purchase(question, quants, tgt)
     if ge3 is not None:
         res.answer = _fmt(ge3)
         res.ok = True
         res.reason = "garten-einkauf"
         return res
     # --- Absatz-Durchschnitt (Heels: 3)
-    ad3 = _absatz_durchschnitt(question, quants, tgt)
+    ad3 = _absatz_average(question, quants, tgt)
     if ad3 is not None:
         res.answer = _fmt(ad3)
         res.ok = True
@@ -20915,7 +20915,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "jeff-martha"
         return res
     # --- Pause-Stunden (Bobby: 5)
-    ps3 = _pause_stunden(question, quants, tgt)
+    ps3 = _pause_hours(question, quants, tgt)
     if ps3 is not None:
         res.answer = _fmt(ps3)
         res.ok = True
@@ -20929,7 +20929,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kreditkarte-balance"
         return res
     # --- Alter-Dreifach-Kette (Caroline: 24)
-    adk3 = _alter_dreifach_kette(question, quants, tgt)
+    adk3 = _age_triple_chain(question, quants, tgt)
     if adk3 is not None:
         res.answer = _fmt(adk3)
         res.ok = True
@@ -20950,7 +20950,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "springball"
         return res
     # --- Apfel-Erlös (Orchard: 1000)
-    ae3 = _apfel_erloes(question, quants, tgt)
+    ae3 = _apple_revenue(question, quants, tgt)
     if ae3 is not None:
         res.answer = _fmt(ae3)
         res.ok = True
@@ -20964,28 +20964,28 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "wand-anstrich"
         return res
     # --- Zug-Entfernung (Trains: 270)
-    ze3 = _zug_entfernung(question, quants, tgt)
+    ze3 = _train_entfernung(question, quants, tgt)
     if ze3 is not None:
         res.answer = _fmt(ze3)
         res.ok = True
         res.reason = "zug-entfernung"
         return res
     # --- Bananen-Spar (Jenny: 2)
-    bs3 = _bananen_spar(question, quants, tgt)
+    bs3 = _bananas_save(question, quants, tgt)
     if bs3 is not None:
         res.answer = _fmt(bs3)
         res.ok = True
         res.reason = "bananen-spar"
         return res
     # --- Zaun-Teilen (Sam: 20)
-    zt3 = _zaun_teilen(question, quants, tgt)
+    zt3 = _zaun_divide(question, quants, tgt)
     if zt3 is not None:
         res.answer = _fmt(zt3)
         res.ok = True
         res.reason = "zaun-teilen"
         return res
     # --- Krokodil-Wachstum (Crocodile: 26)
-    kw3 = _krokodil_wachstum(question, quants, tgt)
+    kw3 = _krokodil_growth(question, quants, tgt)
     if kw3 is not None:
         res.answer = _fmt(kw3)
         res.ok = True
@@ -20999,21 +20999,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "bowling-score"
         return res
     # --- Milchshake-Umsatz (Terry: 162)
-    mu3 = _milchshake_umsatz(question, quants, tgt)
+    mu3 = _milchshake_revenue(question, quants, tgt)
     if mu3 is not None:
         res.answer = _fmt(mu3)
         res.ok = True
         res.reason = "milchshake-umsatz"
         return res
     # --- Affen-Rest (Mr. Robles: 21)
-    ar3 = _affen_rest(question, quants, tgt)
+    ar3 = _monkeys_remainder(question, quants, tgt)
     if ar3 is not None:
         res.answer = _fmt(ar3)
         res.ok = True
         res.reason = "affen-rest"
         return res
     # --- Uhr-Rabatt (Mr. Rogers: 10)
-    ur3 = _uhr_rabatt(question, quants, tgt)
+    ur3 = _uhr_discount(question, quants, tgt)
     if ur3 is not None:
         res.answer = _fmt(ur3)
         res.ok = True
@@ -21055,21 +21055,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "butter-angebot"
         return res
     # --- Katzenfutter-Tage (Imma: 2)
-    kt3 = _katzenfutter_tage(question, quants, tgt)
+    kt3 = _katzenfutter_days(question, quants, tgt)
     if kt3 is not None:
         res.answer = _fmt(kt3)
         res.ok = True
         res.reason = "katzenfutter-tage"
         return res
     # --- Film-Wochenende (Jill: 24)
-    fw3 = _film_wochenende(question, quants, tgt)
+    fw3 = _movie_wochenende(question, quants, tgt)
     if fw3 is not None:
         res.answer = _fmt(fw3)
         res.ok = True
         res.reason = "film-wochenende"
         return res
     # --- Essens-Zeiten (Betsy: 58)
-    ez3 = _essens_zeiten(question, quants, tgt)
+    ez3 = _essens_times(question, quants, tgt)
     if ez3 is not None:
         res.answer = _fmt(ez3)
         res.ok = True
@@ -21090,14 +21090,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "postamt-briefe"
         return res
     # --- Wasser-Galonen (Ingrid: 15)
-    wg3 = _wasser_galonen(question, quants, tgt)
+    wg3 = _water_galonen(question, quants, tgt)
     if wg3 is not None:
         res.answer = _fmt(wg3)
         res.ok = True
         res.reason = "wasser-galonen"
         return res
     # --- Zug-Passagiere (Romeo: 110)
-    zp3 = _zug_passagiere(question, quants, tgt)
+    zp3 = _train_passagiere(question, quants, tgt)
     if zp3 is not None:
         res.answer = _fmt(zp3)
         res.ok = True
@@ -21111,7 +21111,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "bodenfliesen"
         return res
     # --- Versicherung-Jahr (James: 2304)
-    vj3 = _versicherung_jahr(question, quants, tgt)
+    vj3 = _versicherung_year(question, quants, tgt)
     if vj3 is not None:
         res.answer = _fmt(vj3)
         res.ok = True
@@ -21125,7 +21125,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "bettdecke-stoff"
         return res
     # --- Catering-Kosten (Molly: 101)
-    ck3 = _catering_kosten(question, quants, tgt)
+    ck3 = _catering_cost(question, quants, tgt)
     if ck3 is not None:
         res.answer = _fmt(ck3)
         res.ok = True
@@ -21139,7 +21139,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "suedamerika-bevoelkerung"
         return res
     # --- Maler-Arbeit (Painters: 189)
-    ma3 = _maler_arbeit(question, quants, tgt)
+    ma3 = _maler_work(question, quants, tgt)
     if ma3 is not None:
         res.answer = _fmt(ma3)
         res.ok = True
@@ -21160,14 +21160,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "geschworene-bezahlung"
         return res
     # --- Einkauf-Summe (Ted: 66)
-    es3 = _einkauf_summe(question, quants, tgt)
+    es3 = _purchase_sum(question, quants, tgt)
     if es3 is not None:
         res.answer = _fmt(es3)
         res.ok = True
         res.reason = "einkauf-summe"
         return res
     # --- Apfel-Packungen (Franky: 10)
-    ap3 = _apfel_packungen(question, quants, tgt)
+    ap3 = _apple_packs(question, quants, tgt)
     if ap3 is not None:
         res.answer = _fmt(ap3)
         res.ok = True
@@ -21181,7 +21181,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kaese-budget"
         return res
     # --- Tanzstudio-Einnahmen (Studio: 480)
-    te3 = _tanzstudio_einnahmen(question, quants, tgt)
+    te3 = _tanzstudio_income(question, quants, tgt)
     if te3 is not None:
         res.answer = _fmt(te3)
         res.ok = True
@@ -21195,7 +21195,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "pool-befuellung"
         return res
     # --- Kuchen-Einnahmen (Suzanne: 300)
-    ke3 = _kuchen_einnahmen(question, quants, tgt)
+    ke3 = _cake_income(question, quants, tgt)
     if ke3 is not None:
         res.answer = _fmt(ke3)
         res.ok = True
@@ -21216,21 +21216,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "abschluss-tickets"
         return res
     # --- Schokobox-Vergleich (Peter: 8)
-    sv3 = _schokobox_vergleich(question, quants, tgt)
+    sv3 = _schokobox_compare(question, quants, tgt)
     if sv3 is not None:
         res.answer = _fmt(sv3)
         res.ok = True
         res.reason = "schokobox-vergleich"
         return res
     # --- Kellnerin-Sparen (Janet: 2)
-    ks3 = _kellnerin_sparen(question, quants, tgt)
+    ks3 = _kellnerin_saving(question, quants, tgt)
     if ks3 is not None:
         res.answer = _fmt(ks3)
         res.ok = True
         res.reason = "kellnerin-sparen"
         return res
     # --- Süßigkeiten-Freunde (Anne: 78)
-    sf3 = _suessigkeiten_freunde(question, quants, tgt)
+    sf3 = _candy_freunde(question, quants, tgt)
     if sf3 is not None:
         res.answer = _fmt(sf3)
         res.ok = True
@@ -21244,7 +21244,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "foto-alben"
         return res
     # --- Komet-Alter (Bill: 15)
-    ka3 = _komet_alter(question, quants, tgt)
+    ka3 = _komet_age(question, quants, tgt)
     if ka3 is not None:
         res.answer = _fmt(ka3)
         res.ok = True
@@ -21258,14 +21258,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "stachelschweine"
         return res
     # --- Laufbahn-Vergleich (Bethany: 5)
-    lv3 = _laufbahn_vergleich(question, quants, tgt)
+    lv3 = _laufbahn_compare(question, quants, tgt)
     if lv3 is not None:
         res.answer = _fmt(lv3)
         res.ok = True
         res.reason = "laufbahn-vergleich"
         return res
     # --- Tank-Rest (Tank: 6000)
-    tr3 = _tank_rest(question, quants, tgt)
+    tr3 = _tank_remainder(question, quants, tgt)
     if tr3 is not None:
         res.answer = _fmt(tr3)
         res.ok = True
@@ -21286,7 +21286,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "arzt-zeitplan"
         return res
     # --- Kuchen-Zeit (Jordan: 2)
-    kz3 = _kuchen_zeit(question, quants, tgt)
+    kz3 = _cake_time(question, quants, tgt)
     if kz3 is not None:
         res.answer = _fmt(kz3)
         res.ok = True
@@ -21307,35 +21307,35 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "haengekoerbe"
         return res
     # --- Hose-Ersparnis (Adam: 12)
-    he3 = _hose_ersparnis(question, quants, tgt)
+    he3 = _hose_savings(question, quants, tgt)
     if he3 is not None:
         res.answer = _fmt(he3)
         res.ok = True
         res.reason = "hose-ersparnis"
         return res
     # --- Kirchen-Kekse (Dylan: 50)
-    kk3 = _kirchen_kekse(question, quants, tgt)
+    kk3 = _kirchen_cookies(question, quants, tgt)
     if kk3 is not None:
         res.answer = _fmt(kk3)
         res.ok = True
         res.reason = "kirchen-kekse"
         return res
     # --- Wassermelone-Anteil (Family: 25)
-    wa3 = _wassermelone_anteil(question, quants, tgt)
+    wa3 = _wassermelone_share(question, quants, tgt)
     if wa3 is not None:
         res.answer = _fmt(wa3)
         res.ok = True
         res.reason = "wassermelone-anteil"
         return res
     # --- Schuhe-Jahr (Jessica: 6)
-    sj3 = _schuhe_jahr(question, quants, tgt)
+    sj3 = _shoes_year(question, quants, tgt)
     if sj3 is not None:
         res.answer = _fmt(sj3)
         res.ok = True
         res.reason = "schuhe-jahr"
         return res
     # --- Lebkuchen-Verdienst (Sunny: 540)
-    lv3 = _lebkuchen_verdienst(question, quants, tgt)
+    lv3 = _lebkuchen_earnings(question, quants, tgt)
     if lv3 is not None:
         res.answer = _fmt(lv3)
         res.ok = True
@@ -21356,42 +21356,42 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "sonnencreme-flaschen"
         return res
     # --- Auto-Preis-Vergleich (Cars: 160)
-    av3 = _auto_preis_vergleich(question, quants, tgt)
+    av3 = _car_price_compare(question, quants, tgt)
     if av3 is not None:
         res.answer = _fmt(av3)
         res.ok = True
         res.reason = "auto-preis-vergleich"
         return res
     # --- Stiefel-Durchschnitt (Charlie: 15)
-    sd3 = _stiefel_durchschnitt(question, quants, tgt)
+    sd3 = _stiefel_average(question, quants, tgt)
     if sd3 is not None:
         res.answer = _fmt(sd3)
         res.ok = True
         res.reason = "stiefel-durchschnitt"
         return res
     # --- Brezel-Woche (Edgar: 63)
-    bw3 = _brezel_woche(question, quants, tgt)
+    bw3 = _brezel_week(question, quants, tgt)
     if bw3 is not None:
         res.answer = _fmt(bw3)
         res.ok = True
         res.reason = "brezel-woche"
         return res
     # --- Emil-Alter (Emil: 50)
-    ea3 = _emil_alter(question, quants, tgt)
+    ea3 = _emil_age(question, quants, tgt)
     if ea3 is not None:
         res.answer = _fmt(ea3)
         res.ok = True
         res.reason = "emil-alter"
         return res
     # --- Familie-Gesamt (Nani: 30)
-    fg3 = _familie_gesamt(question, quants, tgt)
+    fg3 = _family_total(question, quants, tgt)
     if fg3 is not None:
         res.answer = _fmt(fg3)
         res.ok = True
         res.reason = "familie-gesamt"
         return res
     # --- Handy-Familie (John: 1800)
-    hf3 = _handy_familie(question, quants, tgt)
+    hf3 = _handy_family(question, quants, tgt)
     if hf3 is not None:
         res.answer = _fmt(hf3)
         res.ok = True
@@ -21412,7 +21412,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "staatengruppe"
         return res
     # --- Vater-Verhältnis (Shawna: 45)
-    vv3 = _vater_verhaeltnis(question, quants, tgt)
+    vv3 = _vater_ratio(question, quants, tgt)
     if vv3 is not None:
         res.answer = _fmt(vv3)
         res.ok = True
@@ -21454,14 +21454,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "messloeffel"
         return res
     # --- Email-Familie (Robyn: 1)
-    ef3 = _email_familie(question, quants, tgt)
+    ef3 = _email_family(question, quants, tgt)
     if ef3 is not None:
         res.answer = _fmt(ef3)
         res.ok = True
         res.reason = "email-familie"
         return res
     # --- Klempner-Rechnung (Patty: 205)
-    kr3 = _klempner_rechnung(question, quants, tgt)
+    kr3 = _klempner_bill(question, quants, tgt)
     if kr3 is not None:
         res.answer = _fmt(kr3)
         res.ok = True
@@ -21482,21 +21482,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "massendrill"
         return res
     # --- Bäckerei-Brot (Bakery: 450)
-    bb3 = _baeckerei_brot(question, quants, tgt)
+    bb3 = _bakery_bread(question, quants, tgt)
     if bb3 is not None:
         res.answer = _fmt(bb3)
         res.ok = True
         res.reason = "baeckerei-brot"
         return res
     # --- Schuhkartons-Rest (Tim: 10)
-    sr3 = _schuhkartons_rest(question, quants, tgt)
+    sr3 = _schuhkartons_remainder(question, quants, tgt)
     if sr3 is not None:
         res.answer = _fmt(sr3)
         res.ok = True
         res.reason = "schuhkartons-rest"
         return res
     # --- Käfer-Durchschnitt (Rita: 60)
-    kd3 = _kaefer_durchschnitt(question, quants, tgt)
+    kd3 = _kaefer_average(question, quants, tgt)
     if kd3 is not None:
         res.answer = _fmt(kd3)
         res.ok = True
@@ -21510,14 +21510,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "viehfutter"
         return res
     # --- Stift-Kauf (John: 4)
-    sk3 = _stift_kauf(question, quants, tgt)
+    sk3 = _stift_buy(question, quants, tgt)
     if sk3 is not None:
         res.answer = _fmt(sk3)
         res.ok = True
         res.reason = "stift-kauf"
         return res
     # --- Sudoku-Wasser (John: 6)
-    sw3 = _sudoku_wasser(question, quants, tgt)
+    sw3 = _sudoku_water(question, quants, tgt)
     if sw3 is not None:
         res.answer = _fmt(sw3)
         res.ok = True
@@ -21538,14 +21538,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "pool-tank"
         return res
     # --- Alters-Summe (Peter: 50)
-    as3 = _alters_summe(question, quants, tgt)
+    as3 = _alters_sum(question, quants, tgt)
     if as3 is not None:
         res.answer = _fmt(as3)
         res.ok = True
         res.reason = "alters-summe"
         return res
     # --- Sport-Schüler (Tennis: 56)
-    ss3 = _sport_schueler(question, quants, tgt)
+    ss3 = _sport_student(question, quants, tgt)
     if ss3 is not None:
         res.answer = _fmt(ss3)
         res.ok = True
@@ -21559,7 +21559,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "haustier-zoo"
         return res
     # --- Brot-Tage (Bread: 4)
-    bt3 = _brot_tage(question, quants, tgt)
+    bt3 = _bread_days(question, quants, tgt)
     if bt3 is not None:
         res.answer = _fmt(bt3)
         res.ok = True
@@ -21573,21 +21573,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "muschel-sammlung"
         return res
     # --- Bauernhof-Fläche (Farmer Brown: 700)
-    bf3 = _bauernhof_flaeche(question, quants, tgt)
+    bf3 = _farm_flaeche(question, quants, tgt)
     if bf3 is not None:
         res.answer = _fmt(bf3)
         res.ok = True
         res.reason = "bauernhof-flaeche"
         return res
     # --- Paket-Lohn (Colby: 64)
-    pl3 = _paket_lohn(question, quants, tgt)
+    pl3 = _paket_wage(question, quants, tgt)
     if pl3 is not None:
         res.answer = _fmt(pl3)
         res.ok = True
         res.reason = "paket-lohn"
         return res
     # --- Tuneup-Anzahl (Jon: 3)
-    ta3 = _tuneup_anzahl(question, quants, tgt)
+    ta3 = _tuneup_count(question, quants, tgt)
     if ta3 is not None:
         res.answer = _fmt(ta3)
         res.ok = True
@@ -21608,28 +21608,28 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "masken-material"
         return res
     # --- Film-Preis (Deepa: 8)
-    fp3 = _film_preis(question, quants, tgt)
+    fp3 = _movie_price(question, quants, tgt)
     if fp3 is not None:
         res.answer = _fmt(fp3)
         res.ok = True
         res.reason = "film-preis"
         return res
     # --- Freizeit-Stunden (Harold: 5)
-    fs3 = _freizeit_stunden(question, quants, tgt)
+    fs3 = _freizeit_hours(question, quants, tgt)
     if fs3 is not None:
         res.answer = _fmt(fs3)
         res.ok = True
         res.reason = "freizeit-stunden"
         return res
     # --- Adam-Alter (Adam: 38)
-    aa3 = _adam_alter(question, quants, tgt)
+    aa3 = _adam_age(question, quants, tgt)
     if aa3 is not None:
         res.answer = _fmt(aa3)
         res.ok = True
         res.reason = "adam-alter"
         return res
     # --- Gewicht-Kette (Martin: 74)
-    gk3 = _gewicht_kette(question, quants, tgt)
+    gk3 = _weight_chain(question, quants, tgt)
     if gk3 is not None:
         res.answer = _fmt(gk3)
         res.ok = True
@@ -21643,63 +21643,63 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "mietwagen-profit"
         return res
     # --- Schreibwaren-Kauf (William: 8)
-    sw3 = _schreibwaren_kauf(question, quants, tgt)
+    sw3 = _schreibwaren_buy(question, quants, tgt)
     if sw3 is not None:
         res.answer = _fmt(sw3)
         res.ok = True
         res.reason = "schreibwaren-kauf"
         return res
     # --- Bananenbrot-Verdienst (Paige: 40)
-    bv3 = _bananenbrot_verdienst(question, quants, tgt)
+    bv3 = _bananenbrot_earnings(question, quants, tgt)
     if bv3 is not None:
         res.answer = _fmt(bv3)
         res.ok = True
         res.reason = "bananenbrot-verdienst"
         return res
     # --- Dreifaches-Alter (Melanie: 16)
-    da3 = _dreifaches_alter(question, quants, tgt)
+    da3 = _dreifaches_age(question, quants, tgt)
     if da3 is not None:
         res.answer = _fmt(da3)
         res.ok = True
         res.reason = "dreifaches-alter"
         return res
     # --- Vögel-Zählung (Jerry: 34)
-    vz3 = _voegel_zaehlung(question, quants, tgt)
+    vz3 = _birds_zaehlung(question, quants, tgt)
     if vz3 is not None:
         res.answer = _fmt(vz3)
         res.ok = True
         res.reason = "voegel-zaehlung"
         return res
     # --- Kreisel-Geschwindigkeit (Whirligig: 55)
-    kg3 = _kreisel_geschwindigkeit(question, quants, tgt)
+    kg3 = _kreisel_speed(question, quants, tgt)
     if kg3 is not None:
         res.answer = _fmt(kg3)
         res.ok = True
         res.reason = "kreisel-geschwindigkeit"
         return res
     # --- Arbeitslohn-Woche (Mark: 480)
-    aw3 = _arbeitslohn_woche(question, quants, tgt)
+    aw3 = _arbeitslohn_week(question, quants, tgt)
     if aw3 is not None:
         res.answer = _fmt(aw3)
         res.ok = True
         res.reason = "arbeitslohn-woche"
         return res
     # --- Getränke-Kosten (Soda: 13)
-    gk3 = _getraenke_kosten(question, quants, tgt)
+    gk3 = _getraenke_cost(question, quants, tgt)
     if gk3 is not None:
         res.answer = _fmt(gk3)
         res.ok = True
         res.reason = "getraenke-kosten"
         return res
     # --- Schrauben-Rest (David: 12)
-    sr3 = _schrauben_rest(question, quants, tgt)
+    sr3 = _schrauben_remainder(question, quants, tgt)
     if sr3 is not None:
         res.answer = _fmt(sr3)
         res.ok = True
         res.reason = "schrauben-rest"
         return res
     # --- Hundesitter-Verdienst (Ella: 132)
-    hv3 = _hundesitter_verdienst(question, quants, tgt)
+    hv3 = _hundesitter_earnings(question, quants, tgt)
     if hv3 is not None:
         res.answer = _fmt(hv3)
         res.ok = True
@@ -21713,21 +21713,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "spa-ausgaben"
         return res
     # --- Burrito-Rest (George: 80)
-    br3 = _burrito_rest(question, quants, tgt)
+    br3 = _burrito_remainder(question, quants, tgt)
     if br3 is not None:
         res.answer = _fmt(br3)
         res.ok = True
         res.reason = "burrito-rest"
         return res
     # --- Handy-Wechselgeld (Electronics: 500)
-    hw3 = _handy_wechselgeld(question, quants, tgt)
+    hw3 = _handy_change(question, quants, tgt)
     if hw3 is not None:
         res.answer = _fmt(hw3)
         res.ok = True
         res.reason = "handy-wechselgeld"
         return res
     # --- Lebensmittel-Anteil (Keenan: 40)
-    la3 = _lebensmittel_anteil(question, quants, tgt)
+    la3 = _lebensmittel_share(question, quants, tgt)
     if la3 is not None:
         res.answer = _fmt(la3)
         res.ok = True
@@ -21741,7 +21741,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "pizza-gegessen"
         return res
     # --- Klebestifte-Packungen (Mr. Jackson: 7)
-    kp3 = _klebestifte_packungen(question, quants, tgt)
+    kp3 = _klebestifte_packs(question, quants, tgt)
     if kp3 is not None:
         res.answer = _fmt(kp3)
         res.ok = True
@@ -21762,14 +21762,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "zins-anlage"
         return res
     # --- Familien-Alter (I: 13)
-    fa3 = _familien_alter(question, quants, tgt)
+    fa3 = _familien_age(question, quants, tgt)
     if fa3 is not None:
         res.answer = _fmt(fa3)
         res.ok = True
         res.reason = "familien-alter"
         return res
     # --- Klasse-Fächer (Miss Susan: 12)
-    kf3 = _klasse_faecher(question, quants, tgt)
+    kf3 = _class_faecher(question, quants, tgt)
     if kf3 is not None:
         res.answer = _fmt(kf3)
         res.ok = True
@@ -21783,63 +21783,63 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "konzert-gruppen"
         return res
     # --- Eier-Verdienst (Farmer: 75)
-    ev3 = _eier_verdienst(question, quants, tgt)
+    ev3 = _eggs_earnings(question, quants, tgt)
     if ev3 is not None:
         res.answer = _fmt(ev3)
         res.ok = True
         res.reason = "eier-verdienst"
         return res
     # --- Schuhe-Durchschnitt (James: 110)
-    sd3 = _schuhe_durchschnitt(question, quants, tgt)
+    sd3 = _shoes_average(question, quants, tgt)
     if sd3 is not None:
         res.answer = _fmt(sd3)
         res.ok = True
         res.reason = "schuhe-durchschnitt"
         return res
     # --- Apfel-Scheiben (Adam: 15)
-    as3 = _apfel_scheiben(question, quants, tgt)
+    as3 = _apple_scheiben(question, quants, tgt)
     if as3 is not None:
         res.answer = _fmt(as3)
         res.ok = True
         res.reason = "apfel-scheiben"
         return res
     # --- Milch-Kühe (Farmer: 2)
-    mk3 = _milch_kuehe(question, quants, tgt)
+    mk3 = _milk_kuehe(question, quants, tgt)
     if mk3 is not None:
         res.answer = _fmt(mk3)
         res.ok = True
         res.reason = "milch-kuehe"
         return res
     # --- Auto-Finanzierung (Gabriel: 5600)
-    af3 = _auto_finanzierung(question, quants, tgt)
+    af3 = _car_finanzierung(question, quants, tgt)
     if af3 is not None:
         res.answer = _fmt(af3)
         res.ok = True
         res.reason = "auto-finanzierung"
         return res
     # --- Wechselgeld-Hat (Thea: 10)
-    wh3 = _wechselgeld_hat(question, quants, tgt)
+    wh3 = _change_has(question, quants, tgt)
     if wh3 is not None:
         res.answer = _fmt(wh3)
         res.ok = True
         res.reason = "wechselgeld-hat"
         return res
     # --- Mulan-Geld (Mulan: 60)
-    mg3 = _mulan_geld(question, quants, tgt)
+    mg3 = _mulan_money(question, quants, tgt)
     if mg3 is not None:
         res.answer = _fmt(mg3)
         res.ok = True
         res.reason = "mulan-geld"
         return res
     # --- Ersparnis-Vergleich (Roy: 42)
-    ev3 = _ersparnis_vergleich(question, quants, tgt)
+    ev3 = _savings_compare(question, quants, tgt)
     if ev3 is not None:
         res.answer = _fmt(ev3)
         res.ok = True
         res.reason = "ersparnis-vergleich"
         return res
     # --- Bonbon-Verkauf (Dale: 50)
-    bv3 = _bonbon_verkauf(question, quants, tgt)
+    bv3 = _bonbon_sale(question, quants, tgt)
     if bv3 is not None:
         res.answer = _fmt(bv3)
         res.ok = True
@@ -21853,35 +21853,35 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "parkplatz-autos"
         return res
     # --- TV-Verkauf (Samwell: 25)
-    tv3 = _tv_verkauf(question, quants, tgt)
+    tv3 = _tv_sale(question, quants, tgt)
     if tv3 is not None:
         res.answer = _fmt(tv3)
         res.ok = True
         res.reason = "tv-verkauf"
         return res
     # --- Jeans-Wechselgeld (Mike: 20)
-    jw3 = _jeans_wechselgeld(question, quants, tgt)
+    jw3 = _jeans_change(question, quants, tgt)
     if jw3 is not None:
         res.answer = _fmt(jw3)
         res.ok = True
         res.reason = "jeans-wechselgeld"
         return res
     # --- Mosaik-Länge (Milo: 4)
-    ml3 = _mosaik_laenge(question, quants, tgt)
+    ml3 = _mosaik_length(question, quants, tgt)
     if ml3 is not None:
         res.answer = _fmt(ml3)
         res.ok = True
         res.reason = "mosaik-laenge"
         return res
     # --- Zyklus-Lohn (John: 1260)
-    zl3 = _zyklus_lohn(question, quants, tgt)
+    zl3 = _zyklus_wage(question, quants, tgt)
     if zl3 is not None:
         res.answer = _fmt(zl3)
         res.ok = True
         res.reason = "zyklus-lohn"
         return res
     # --- Tierfutter-Vergleich (Kimberly: 52)
-    tf3 = _tierfutter_vergleich(question, quants, tgt)
+    tf3 = _tierfutter_compare(question, quants, tgt)
     if tf3 is not None:
         res.answer = _fmt(tf3)
         res.ok = True
@@ -21895,14 +21895,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "baumklettern"
         return res
     # --- Marshmallow-Teilen (John: 7)
-    mt3 = _marshmallow_teilen(question, quants, tgt)
+    mt3 = _marshmallow_divide(question, quants, tgt)
     if mt3 is not None:
         res.answer = _fmt(mt3)
         res.ok = True
         res.reason = "marshmallow-teilen"
         return res
     # --- Markt-Einkauf (John: 4500)
-    me3 = _markt_einkauf(question, quants, tgt)
+    me3 = _markt_purchase(question, quants, tgt)
     if me3 is not None:
         res.answer = _fmt(me3)
         res.ok = True
@@ -21916,7 +21916,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "cupcake-bedarf"
         return res
     # --- Brot-Vergleich (Bread: 4)
-    bv3 = _brot_vergleich(question, quants, tgt)
+    bv3 = _bread_compare(question, quants, tgt)
     if bv3 is not None:
         res.answer = _fmt(bv3)
         res.ok = True
@@ -21930,14 +21930,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "ring-premium"
         return res
     # --- Spiel-Ziel (Kris: 9)
-    sz3 = _spiel_ziel(question, quants, tgt)
+    sz3 = _game_ziel(question, quants, tgt)
     if sz3 is not None:
         res.answer = _fmt(sz3)
         res.ok = True
         res.reason = "spiel-ziel"
         return res
     # --- Tee-Anfang (Tea: 12)
-    ta3 = _tee_anfang(question, quants, tgt)
+    ta3 = _tea_beginning(question, quants, tgt)
     if ta3 is not None:
         res.answer = _fmt(ta3)
         res.ok = True
@@ -21958,77 +21958,77 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "holzscheit-heizung"
         return res
     # --- Deckel-Verdienst (Damien: 75)
-    dv3 = _deckel_verdienst(question, quants, tgt)
+    dv3 = _deckel_earnings(question, quants, tgt)
     if dv3 is not None:
         res.answer = _fmt(dv3)
         res.ok = True
         res.reason = "deckel-verdienst"
         return res
     # --- Sonderstunden-Lohn (Jamie: 250)
-    sl3 = _sonderstunden_lohn(question, quants, tgt)
+    sl3 = _sonderstunden_wage(question, quants, tgt)
     if sl3 is not None:
         res.answer = _fmt(sl3)
         res.ok = True
         res.reason = "sonderstunden-lohn"
         return res
     # --- Pizza-Kosten (Friends: 17)
-    pk3 = _pizza_kosten(question, quants, tgt)
+    pk3 = _pizza_cost(question, quants, tgt)
     if pk3 is not None:
         res.answer = _fmt(pk3)
         res.ok = True
         res.reason = "pizza-kosten"
         return res
     # --- Garten-Ernte (Ricardo: 142)
-    ge3 = _garten_ernte(question, quants, tgt)
+    ge3 = _garden_ernte(question, quants, tgt)
     if ge3 is not None:
         res.answer = _fmt(ge3)
         res.ok = True
         res.reason = "garten-ernte"
         return res
     # --- Salat-Einkauf (Leila: 14)
-    se3 = _salat_einkauf(question, quants, tgt)
+    se3 = _salat_purchase(question, quants, tgt)
     if se3 is not None:
         res.answer = _fmt(se3)
         res.ok = True
         res.reason = "salat-einkauf"
         return res
     # --- Benzin-Kosten (Andy: 15)
-    bk3 = _benzin_kosten(question, quants, tgt)
+    bk3 = _gas_cost(question, quants, tgt)
     if bk3 is not None:
         res.answer = _fmt(bk3)
         res.ok = True
         res.reason = "benzin-kosten"
         return res
     # --- Ball-Kaugummi (Marissa: 12)
-    bk4 = _ball_kaugummi(question, quants, tgt)
+    bk4 = _ball_gum(question, quants, tgt)
     if bk4 is not None:
         res.answer = _fmt(bk4)
         res.ok = True
         res.reason = "ball-kaugummi"
         return res
     # --- Lehrer-Verdienst (Tanya: 110)
-    lv3 = _lehrer_verdienst(question, quants, tgt)
+    lv3 = _teacher_earnings(question, quants, tgt)
     if lv3 is not None:
         res.answer = _fmt(lv3)
         res.ok = True
         res.reason = "lehrer-verdienst"
         return res
     # --- Auberginen-Preis (Bennet: 3)
-    ap3 = _auberginen_preis(question, quants, tgt)
+    ap3 = _auberginen_price(question, quants, tgt)
     if ap3 is not None:
         res.answer = _fmt(ap3)
         res.ok = True
         res.reason = "auberginen-preis"
         return res
     # --- Räder-Rest (Henry: 276)
-    rr3 = _raeder_rest(question, quants, tgt)
+    rr3 = _raeder_remainder(question, quants, tgt)
     if rr3 is not None:
         res.answer = _fmt(rr3)
         res.ok = True
         res.reason = "raeder-rest"
         return res
     # --- Rat-Abstimmung (Council: 22)
-    ra3 = _rat_abstimmung(question, quants, tgt)
+    ra3 = _rat_vote(question, quants, tgt)
     if ra3 is not None:
         res.answer = _fmt(ra3)
         res.ok = True
@@ -22042,21 +22042,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "playlist-dauer"
         return res
     # --- Saft-Kosten (Sam: 60)
-    sk3 = _saft_kosten(question, quants, tgt)
+    sk3 = _juice_cost(question, quants, tgt)
     if sk3 is not None:
         res.answer = _fmt(sk3)
         res.ok = True
         res.reason = "saft-kosten"
         return res
     # --- Leser-Gesamt (Ezra: 675)
-    lg3 = _leser_gesamt(question, quants, tgt)
+    lg3 = _leser_total(question, quants, tgt)
     if lg3 is not None:
         res.answer = _fmt(lg3)
         res.ok = True
         res.reason = "leser-gesamt"
         return res
     # --- Computer-Kauf (Company: 385000)
-    ck3 = _computer_kauf(question, quants, tgt)
+    ck3 = _computer_buy(question, quants, tgt)
     if ck3 is not None:
         res.answer = _fmt(ck3)
         res.ok = True
@@ -22084,21 +22084,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "mitbewohner-strom"
         return res
     # --- Milchglas-Kosten (Cecelia: 98)
-    mk3 = _milchglas_kosten(question, quants, tgt)
+    mk3 = _milchglas_cost(question, quants, tgt)
     if mk3 is not None:
         res.answer = _fmt(mk3)
         res.ok = True
         res.reason = "milchglas-kosten"
         return res
     # --- Klassen-Mädchen (Classes: 24)
-    km3 = _klassen_maedchen(question, quants, tgt)
+    km3 = _classes_maedchen(question, quants, tgt)
     if km3 is not None:
         res.answer = _fmt(km3)
         res.ok = True
         res.reason = "klassen-maedchen"
         return res
     # --- Tierpflege-Tage (Melissa: 4)
-    tt3 = _tierpflege_tage(question, quants, tgt)
+    tt3 = _tierpflege_days(question, quants, tgt)
     if tt3 is not None:
         res.answer = _fmt(tt3)
         res.ok = True
@@ -22119,49 +22119,49 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "wahl-stimmen"
         return res
     # --- Kaugummi-Packungen (Parker: 8)
-    kp3 = _kaugummi_packungen(question, quants, tgt)
+    kp3 = _gum_packs(question, quants, tgt)
     if kp3 is not None:
         res.answer = _fmt(kp3)
         res.ok = True
         res.reason = "kaugummi-packungen"
         return res
     # --- Geld-Teilen-Gleich (Greg: 5)
-    gtg3 = _geld_teilen_gleich(question, quants, tgt)
+    gtg3 = _money_divide_gleich(question, quants, tgt)
     if gtg3 is not None:
         res.answer = _fmt(gtg3)
         res.ok = True
         res.reason = "geld-teilen-gleich"
         return res
     # --- Vater-Alter (Dora: 87)
-    va3 = _vater_alter(question, quants, tgt)
+    va3 = _vater_age(question, quants, tgt)
     if va3 is not None:
         res.answer = _fmt(va3)
         res.ok = True
         res.reason = "vater-alter"
         return res
     # --- Bücher-Gewicht (Cindy: 17)
-    bg3 = _buecher_gewicht(question, quants, tgt)
+    bg3 = _buecher_weight(question, quants, tgt)
     if bg3 is not None:
         res.answer = _fmt(bg3)
         res.ok = True
         res.reason = "buecher-gewicht"
         return res
     # --- Lehrer-Schlaf (Teachers: 360)
-    ls3 = _lehrer_schlaf(question, quants, tgt)
+    ls3 = _teacher_sleep(question, quants, tgt)
     if ls3 is not None:
         res.answer = _fmt(ls3)
         res.ok = True
         res.reason = "lehrer-schlaf"
         return res
     # --- Wurst-Zeit (Cat: 25)
-    wz3 = _wurst_zeit(question, quants, tgt)
+    wz3 = _wurst_time(question, quants, tgt)
     if wz3 is not None:
         res.answer = _fmt(wz3)
         res.ok = True
         res.reason = "wurst-zeit"
         return res
     # --- Spulen-Prozent (Candy: 40)
-    sp3 = _spulen_prozent(question, quants, tgt)
+    sp3 = _spulen_percent(question, quants, tgt)
     if sp3 is not None:
         res.answer = _fmt(sp3)
         res.ok = True
@@ -22175,14 +22175,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "stuhl-restaurant"
         return res
     # --- Verhältnis-Teilen (Gerald: 50)
-    vt3 = _verhaeltnis_teilen(question, quants, tgt)
+    vt3 = _ratio_divide(question, quants, tgt)
     if vt3 is not None:
         res.answer = _fmt(vt3)
         res.ok = True
         res.reason = "verhaeltnis-teilen"
         return res
     # --- Tier-Geschwindigkeit (Martha: 120)
-    tg3 = _tier_geschwindigkeit(question, quants, tgt)
+    tg3 = _animal_speed(question, quants, tgt)
     if tg3 is not None:
         res.answer = _fmt(tg3)
         res.ok = True
@@ -22196,28 +22196,28 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "nachhilfe-gebuehr"
         return res
     # --- Bäckerei-Rabatt (Marcus: 45)
-    br3 = _baeckerei_rabatt(question, quants, tgt)
+    br3 = _bakery_discount(question, quants, tgt)
     if br3 is not None:
         res.answer = _fmt(br3)
         res.ok = True
         res.reason = "baeckerei-rabatt"
         return res
     # --- Süßigkeiten-Diff (Ginger: 14)
-    sd3 = _suessigkeiten_diff(question, quants, tgt)
+    sd3 = _candy_diff(question, quants, tgt)
     if sd3 is not None:
         res.answer = _fmt(sd3)
         res.ok = True
         res.reason = "suessigkeiten-diff"
         return res
     # --- Buch-Anzahl (Janey: 9)
-    ba3 = _buch_anzahl(question, quants, tgt)
+    ba3 = _book_count(question, quants, tgt)
     if ba3 is not None:
         res.answer = _fmt(ba3)
         res.ok = True
         res.reason = "buch-anzahl"
         return res
     # --- Zwillinge-Alter (Twins: 13)
-    za3 = _zwillinge_alter(question, quants, tgt)
+    za3 = _zwillinge_age(question, quants, tgt)
     if za3 is not None:
         res.answer = _fmt(za3)
         res.ok = True
@@ -22245,14 +22245,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "waeschekosten"
         return res
     # --- DVD-Rest (Library: 1509)
-    dr3 = _dvd_rest(question, quants, tgt)
+    dr3 = _dvd_remainder(question, quants, tgt)
     if dr3 is not None:
         res.answer = _fmt(dr3)
         res.ok = True
         res.reason = "dvd-rest"
         return res
     # --- Therapie-Kosten (John: 3000)
-    tk3 = _therapie_kosten(question, quants, tgt)
+    tk3 = _therapie_cost(question, quants, tgt)
     if tk3 is not None:
         res.answer = _fmt(tk3)
         res.ok = True
@@ -22266,14 +22266,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kochkurs-rezepte"
         return res
     # --- Arcade-Rest (Howard: 12)
-    ar3 = _arcade_rest(question, quants, tgt)
+    ar3 = _arcade_remainder(question, quants, tgt)
     if ar3 is not None:
         res.answer = _fmt(ar3)
         res.ok = True
         res.reason = "arcade-rest"
         return res
     # --- Alter-Zukunft (Charmaine: 8)
-    az3 = _alter_zukunft(question, quants, tgt)
+    az3 = _age_zukunft(question, quants, tgt)
     if az3 is not None:
         res.answer = _fmt(az3)
         res.ok = True
@@ -22287,7 +22287,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "internet-speed"
         return res
     # --- Karate-Klassen (Manny: 4)
-    kk3 = _karate_klassen(question, quants, tgt)
+    kk3 = _karate_classes(question, quants, tgt)
     if kk3 is not None:
         res.answer = _fmt(kk3)
         res.ok = True
@@ -22308,14 +22308,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "fruehstueck-diff"
         return res
     # --- Stiefel-Preis (Marilyn: 1)
-    sp3 = _stiefel_preis(question, quants, tgt)
+    sp3 = _stiefel_price(question, quants, tgt)
     if sp3 is not None:
         res.answer = _fmt(sp3)
         res.ok = True
         res.reason = "stiefel-preis"
         return res
     # --- Outfit-Rest (Joe: 8)
-    or3 = _outfit_rest(question, quants, tgt)
+    or3 = _outfit_remainder(question, quants, tgt)
     if or3 is not None:
         res.answer = _fmt(or3)
         res.ok = True
@@ -22343,35 +22343,35 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "dreieck-winkel"
         return res
     # --- Gewicht-Erhöhung (Jamaal: 10)
-    ge3 = _gewicht_erhoehung(question, quants, tgt)
+    ge3 = _weight_erhoehung(question, quants, tgt)
     if ge3 is not None:
         res.answer = _fmt(ge3)
         res.ok = True
         res.reason = "gewicht-erhoehung"
         return res
     # --- Provision-Verdienst (Antonella: 450)
-    pv3 = _provision_verdienst(question, quants, tgt)
+    pv3 = _commission_earnings(question, quants, tgt)
     if pv3 is not None:
         res.answer = _fmt(pv3)
         res.ok = True
         res.reason = "provision-verdienst"
         return res
     # --- Schwimmen-Zeit (Ray: 54)
-    sz3 = _schwimmen_zeit(question, quants, tgt)
+    sz3 = _schwimmen_time(question, quants, tgt)
     if sz3 is not None:
         res.answer = _fmt(sz3)
         res.ok = True
         res.reason = "schwimmen-zeit"
         return res
     # --- Kerzen-Kosten (James: 12)
-    kz3 = _kerzen_kosten(question, quants, tgt)
+    kz3 = _kerzen_cost(question, quants, tgt)
     if kz3 is not None:
         res.answer = _fmt(kz3)
         res.ok = True
         res.reason = "kerzen-kosten"
         return res
     # --- Alter-Rätsel (Jerry: 13)
-    ar3 = _alter_raetsel(question, quants, tgt)
+    ar3 = _age_raetsel(question, quants, tgt)
     if ar3 is not None:
         res.answer = _fmt(ar3)
         res.ok = True
@@ -22385,14 +22385,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "aufgaben-diff"
         return res
     # --- Geld-Teilen (Jeff: 80)
-    gt3 = _geld_teilen(question, quants, tgt)
+    gt3 = _money_divide(question, quants, tgt)
     if gt3 is not None:
         res.answer = _fmt(gt3)
         res.ok = True
         res.reason = "geld-teilen"
         return res
     # --- Neffe-Alter (Shiloh: 10)
-    na3 = _neffe_alter(question, quants, tgt)
+    na3 = _neffe_age(question, quants, tgt)
     if na3 is not None:
         res.answer = _fmt(na3)
         res.ok = True
@@ -22406,14 +22406,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "konto-abhebung"
         return res
     # --- Subway-Kosten (Lunch: 160)
-    sw3 = _subway_kosten(question, quants, tgt)
+    sw3 = _subway_cost(question, quants, tgt)
     if sw3 is not None:
         res.answer = _fmt(sw3)
         res.ok = True
         res.reason = "subway-kosten"
         return res
     # --- Sparbuch-Tage (Child: 4)
-    st3 = _sparbuch_tage(question, quants, tgt)
+    st3 = _sparbuch_days(question, quants, tgt)
     if st3 is not None:
         res.answer = _fmt(st3)
         res.ok = True
@@ -22434,14 +22434,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "holz-sticks"
         return res
     # --- Workout-Stunden (Josh: 36)
-    ws3 = _workout_stunden(question, quants, tgt)
+    ws3 = _workout_hours(question, quants, tgt)
     if ws3 is not None:
         res.answer = _fmt(ws3)
         res.ok = True
         res.reason = "workout-stunden"
         return res
     # --- Ali-Geld (Ali: 32)
-    ag3 = _ali_geld(question, quants, tgt)
+    ag3 = _ali_money(question, quants, tgt)
     if ag3 is not None:
         res.answer = _fmt(ag3)
         res.ok = True
@@ -22462,7 +22462,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "sofa-stuhl"
         return res
     # --- CD-Vergleich (Tom: 11)
-    cv3 = _cd_vergleich(question, quants, tgt)
+    cv3 = _cd_compare(question, quants, tgt)
     if cv3 is not None:
         res.answer = _fmt(cv3)
         res.ok = True
@@ -22476,63 +22476,63 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "bus-passagiere"
         return res
     # --- Alter-Dreifach (Brett: 38)
-    ad3 = _alter_dreifach(question, quants, tgt)
+    ad3 = _age_triple(question, quants, tgt)
     if ad3 is not None:
         res.answer = _fmt(ad3)
         res.ok = True
         res.reason = "alter-dreifach"
         return res
     # --- Buspass-Spar (Janet: 2)
-    bs3 = _buspass_spar(question, quants, tgt)
+    bs3 = _buspass_save(question, quants, tgt)
     if bs3 is not None:
         res.answer = _fmt(bs3)
         res.ok = True
         res.reason = "buspass-spar"
         return res
     # --- Tagegeld-Rest (Gerald: 110)
-    tg3 = _tagegeld_rest(question, quants, tgt)
+    tg3 = _tagegeld_remainder(question, quants, tgt)
     if tg3 is not None:
         res.answer = _fmt(tg3)
         res.ok = True
         res.reason = "tagegeld-rest"
         return res
     # --- Minuten-Doppelt (Royce: 280)
-    md3 = _minuten_doppelt(question, quants, tgt)
+    md3 = _minutes_doppelt(question, quants, tgt)
     if md3 is not None:
         res.answer = _fmt(md3)
         res.ok = True
         res.reason = "minuten-doppelt"
         return res
     # --- Taffy-Rest (Sally: 3)
-    tr3 = _taffy_rest(question, quants, tgt)
+    tr3 = _taffy_remainder(question, quants, tgt)
     if tr3 is not None:
         res.answer = _fmt(tr3)
         res.ok = True
         res.reason = "taffy-rest"
         return res
     # --- Jeans-Vergleich (Cole: 8)
-    jv3 = _jeans_vergleich(question, quants, tgt)
+    jv3 = _jeans_compare(question, quants, tgt)
     if jv3 is not None:
         res.answer = _fmt(jv3)
         res.ok = True
         res.reason = "jeans-vergleich"
         return res
     # --- Pokemon-Verkauf (Kenny: 150)
-    pv3 = _pokemon_verkauf(question, quants, tgt)
+    pv3 = _pokemon_sale(question, quants, tgt)
     if pv3 is not None:
         res.answer = _fmt(pv3)
         res.ok = True
         res.reason = "pokemon-verkauf"
         return res
     # --- Suppe-Kosten (Antoine: 2)
-    sk3 = _suppe_kosten(question, quants, tgt)
+    sk3 = _suppe_cost(question, quants, tgt)
     if sk3 is not None:
         res.answer = _fmt(sk3)
         res.ok = True
         res.reason = "suppe-kosten"
         return res
     # --- Feen-Rest (Katelyn: 45)
-    fr3 = _feen_rest(question, quants, tgt)
+    fr3 = _feen_remainder(question, quants, tgt)
     if fr3 is not None:
         res.answer = _fmt(fr3)
         res.ok = True
@@ -22567,49 +22567,49 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "caterer-hotdogs"
         return res
     # --- Streaming-Jahre (Bill: 284)
-    st3 = _streaming_jahre(question, quants, tgt)
+    st3 = _streaming_years(question, quants, tgt)
     if st3 is not None:
         res.answer = _fmt(st3)
         res.ok = True
         res.reason = "streaming-jahre"
         return res
     # --- Pizza-Rest (Jenny: 3)
-    pz3 = _pizza_rest(question, quants, tgt)
+    pz3 = _pizza_remainder(question, quants, tgt)
     if pz3 is not None:
         res.answer = _fmt(pz3)
         res.ok = True
         res.reason = "pizza-rest"
         return res
     # --- Bauarbeiter-Jahr (Builder: 14400)
-    bj3 = _bauarbeiter_jahr(question, quants, tgt)
+    bj3 = _bauarbeiter_year(question, quants, tgt)
     if bj3 is not None:
         res.answer = _fmt(bj3)
         res.ok = True
         res.reason = "bauarbeiter-jahr"
         return res
     # --- Katzen-Rest (Cats: 12)
-    kr3 = _katzen_rest(question, quants, tgt)
+    kr3 = _katzen_remainder(question, quants, tgt)
     if kr3 is not None:
         res.answer = _fmt(kr3)
         res.ok = True
         res.reason = "katzen-rest"
         return res
     # --- Kuchen-Rest (Rory: 15)
-    ku3 = _kuchen_rest(question, quants, tgt)
+    ku3 = _cake_remainder(question, quants, tgt)
     if ku3 is not None:
         res.answer = _fmt(ku3)
         res.ok = True
         res.reason = "kuchen-rest"
         return res
     # --- Urlaub-Zeit (John: 20)
-    uz3 = _urlaub_zeit(question, quants, tgt)
+    uz3 = _urlaub_time(question, quants, tgt)
     if uz3 is not None:
         res.answer = _fmt(uz3)
         res.ok = True
         res.reason = "urlaub-zeit"
         return res
     # --- Tapete-Spar (Ethan: 320)
-    ts3 = _tapete_spar(question, quants, tgt)
+    ts3 = _tapete_save(question, quants, tgt)
     if ts3 is not None:
         res.answer = _fmt(ts3)
         res.ok = True
@@ -22623,21 +22623,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "schuhverkauf"
         return res
     # --- Alter-Halb (Marcus: 42)
-    ah3 = _alter_halb(question, quants, tgt)
+    ah3 = _age_half(question, quants, tgt)
     if ah3 is not None:
         res.answer = _fmt(ah3)
         res.ok = True
         res.reason = "alter-halb"
         return res
     # --- Thunfisch-Verdienst (Deandre: 64)
-    tv3 = _thunfisch_verdienst(question, quants, tgt)
+    tv3 = _thunfisch_earnings(question, quants, tgt)
     if tv3 is not None:
         res.answer = _fmt(tv3)
         res.ok = True
         res.reason = "thunfisch-verdienst"
         return res
     # --- Möbel-Vergleich (Robert: 100)
-    mv3 = _moebel_vergleich(question, quants, tgt)
+    mv3 = _moebel_compare(question, quants, tgt)
     if mv3 is not None:
         res.answer = _fmt(mv3)
         res.ok = True
@@ -22651,7 +22651,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "klassengruppen"
         return res
     # --- Zug-Service (Train: 20)
-    zs3 = _zug_service(question, quants, tgt)
+    zs3 = _train_service(question, quants, tgt)
     if zs3 is not None:
         res.answer = _fmt(zs3)
         res.ok = True
@@ -22665,7 +22665,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "socken-missed"
         return res
     # --- Kredit-Monat (Karan: 803)
-    km3 = _kredit_monat(question, quants, tgt)
+    km3 = _kredit_month(question, quants, tgt)
     if km3 is not None:
         res.answer = _fmt(km3)
         res.ok = True
@@ -22679,21 +22679,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "hotdog-diff"
         return res
     # --- Pflanzentopf-Rest (April: 10)
-    pr3 = _pflanzentopf_rest(question, quants, tgt)
+    pr3 = _pflanzentopf_remainder(question, quants, tgt)
     if pr3 is not None:
         res.answer = _fmt(pr3)
         res.ok = True
         res.reason = "pflanzentopf-rest"
         return res
     # --- Spielzeug-Rest (Dean: 21)
-    sz3 = _spielzeug_rest(question, quants, tgt)
+    sz3 = _spielzeug_remainder(question, quants, tgt)
     if sz3 is not None:
         res.answer = _fmt(sz3)
         res.ok = True
         res.reason = "spielzeug-rest"
         return res
     # --- Klassen-Anwesenheit (Fourth-graders: 49)
-    ka3 = _klassen_anwesenheit(question, quants, tgt)
+    ka3 = _classes_anwesenheit(question, quants, tgt)
     if ka3 is not None:
         res.answer = _fmt(ka3)
         res.ok = True
@@ -22707,21 +22707,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "brettspiel-punkte"
         return res
     # --- Klassen-Jungen (Third class: 17)
-    kj3 = _klassen_jungen(question, quants, tgt)
+    kj3 = _classes_jungen(question, quants, tgt)
     if kj3 is not None:
         res.answer = _fmt(kj3)
         res.ok = True
         res.reason = "klassen-jungen"
         return res
     # --- Haus-Budget (Mrs. Cruz: 9500)
-    hb3 = _haus_budget(question, quants, tgt)
+    hb3 = _house_budget(question, quants, tgt)
     if hb3 is not None:
         res.answer = _fmt(hb3)
         res.ok = True
         res.reason = "haus-budget"
         return res
     # --- Haus-Erlös (Mr. Tan: 118000)
-    he3 = _haus_erloes(question, quants, tgt)
+    he3 = _house_revenue(question, quants, tgt)
     if he3 is not None:
         res.answer = _fmt(he3)
         res.ok = True
@@ -22735,7 +22735,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "wuerfel-wahrscheinlichkeit"
         return res
     # --- Burrito-Kosten (Chad: 9)
-    bk3 = _burrito_kosten(question, quants, tgt)
+    bk3 = _burrito_cost(question, quants, tgt)
     if bk3 is not None:
         res.answer = _fmt(bk3)
         res.ok = True
@@ -22749,14 +22749,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "rutsche-wasserpark"
         return res
     # --- Schoko-Kinder (Chocolate: 2)
-    sk3 = _schoko_kinder(question, quants, tgt)
+    sk3 = _schoko_children(question, quants, tgt)
     if sk3 is not None:
         res.answer = _fmt(sk3)
         res.ok = True
         res.reason = "schoko-kinder"
         return res
     # --- Orangen-Rest (Will: 3)
-    or3 = _orangen_rest(question, quants, tgt)
+    or3 = _orangen_remainder(question, quants, tgt)
     if or3 is not None:
         res.answer = _fmt(or3)
         res.ok = True
@@ -22777,35 +22777,35 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "schnecken-fische"
         return res
     # --- Baum-Gewicht (Redwood: 5600)
-    bg3 = _baum_gewicht(question, quants, tgt)
+    bg3 = _tree_weight(question, quants, tgt)
     if bg3 is not None:
         res.answer = _fmt(bg3)
         res.ok = True
         res.reason = "baum-gewicht"
         return res
     # --- Münzen-Rest (Kelly: 90)
-    mr3 = _muenzen_rest(question, quants, tgt)
+    mr3 = _muenzen_remainder(question, quants, tgt)
     if mr3 is not None:
         res.answer = _fmt(mr3)
         res.ok = True
         res.reason = "muenzen-rest"
         return res
     # --- Steuer-Vergleich (Jackie: 15)
-    sv3 = _steuer_vergleich(question, quants, tgt)
+    sv3 = _steuer_compare(question, quants, tgt)
     if sv3 is not None:
         res.answer = _fmt(sv3)
         res.ok = True
         res.reason = "steuer-vergleich"
         return res
     # --- Computer-Rest (Elvira: 77)
-    cr3 = _computer_rest(question, quants, tgt)
+    cr3 = _computer_remainder(question, quants, tgt)
     if cr3 is not None:
         res.answer = _fmt(cr3)
         res.ok = True
         res.reason = "computer-rest"
         return res
     # --- Schulden-Jahr (Jessica: 18000)
-    sj3 = _schulden_jahr(question, quants, tgt)
+    sj3 = _schulden_year(question, quants, tgt)
     if sj3 is not None:
         res.answer = _fmt(sj3)
         res.ok = True
@@ -22826,14 +22826,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "bienen-rueckkehr"
         return res
     # --- Affen-Bananen (Zookeeper: 1400)
-    ab3 = _affen_bananen(question, quants, tgt)
+    ab3 = _monkeys_bananas(question, quants, tgt)
     if ab3 is not None:
         res.answer = _fmt(ab3)
         res.ok = True
         res.reason = "affen-bananen"
         return res
     # --- Baum-Rest (Tom: 91)
-    bmr3 = _baum_rest(question, quants, tgt)
+    bmr3 = _tree_remainder(question, quants, tgt)
     if bmr3 is not None:
         res.answer = _fmt(bmr3)
         res.ok = True
@@ -22847,7 +22847,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "flamingo-diff"
         return res
     # --- Wasser-Rest (Girls: 10)
-    wr3 = _wasser_rest(question, quants, tgt)
+    wr3 = _water_remainder(question, quants, tgt)
     if wr3 is not None:
         res.answer = _fmt(wr3)
         res.ok = True
@@ -22861,49 +22861,49 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "schallplatten"
         return res
     # --- Kinder-Schuhe (John: 360)
-    ks3 = _kinder_schuhe(question, quants, tgt)
+    ks3 = _children_shoes(question, quants, tgt)
     if ks3 is not None:
         res.answer = _fmt(ks3)
         res.ok = True
         res.reason = "kinder-schuhe"
         return res
     # --- Schlaf-Woche (Sadie: 48)
-    sw3 = _schlaf_woche(question, quants, tgt)
+    sw3 = _sleep_week(question, quants, tgt)
     if sw3 is not None:
         res.answer = _fmt(sw3)
         res.ok = True
         res.reason = "schlaf-woche"
         return res
     # --- Marmor-Preis (Marbles: 92)
-    mp3 = _marmor_preis(question, quants, tgt)
+    mp3 = _marmor_price(question, quants, tgt)
     if mp3 is not None:
         res.answer = _fmt(mp3)
         res.ok = True
         res.reason = "marmor-preis"
         return res
     # --- Foto-Vögel (Jamal: 6)
-    fv3 = _foto_voegel(question, quants, tgt)
+    fv3 = _foto_birds(question, quants, tgt)
     if fv3 is not None:
         res.answer = _fmt(fv3)
         res.ok = True
         res.reason = "foto-voegel"
         return res
     # --- Gehalt-Rest (Greta: 720)
-    gr3 = _gehalt_rest(question, quants, tgt)
+    gr3 = _gehalt_remainder(question, quants, tgt)
     if gr3 is not None:
         res.answer = _fmt(gr3)
         res.ok = True
         res.reason = "gehalt-rest"
         return res
     # --- Brownies-Rest (Greta: 48)
-    br3 = _braunies_rest(question, quants, tgt)
+    br3 = _braunies_remainder(question, quants, tgt)
     if br3 is not None:
         res.answer = _fmt(br3)
         res.ok = True
         res.reason = "braunies-rest"
         return res
     # --- Spiel-Bilanz (Football: 15)
-    sb3 = _spiel_bilanz(question, quants, tgt)
+    sb3 = _game_bilanz(question, quants, tgt)
     if sb3 is not None:
         res.answer = _fmt(sb3)
         res.ok = True
@@ -22917,14 +22917,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "tuerklingel"
         return res
     # --- Kekse-Box (Greta: 80)
-    kb3 = _kekse_box(question, quants, tgt)
+    kb3 = _cookies_box(question, quants, tgt)
     if kb3 is not None:
         res.answer = _fmt(kb3)
         res.ok = True
         res.reason = "kekse-box"
         return res
     # --- Wasser-Prozent (Colorado: 8)
-    wp3 = _wasser_prozent(question, quants, tgt)
+    wp3 = _water_percent(question, quants, tgt)
     if wp3 is not None:
         res.answer = _fmt(wp3)
         res.ok = True
@@ -22938,7 +22938,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "haustiere-total"
         return res
     # --- Elfen-Rest (Nissa: 30)
-    er3 = _elfen_rest(question, quants, tgt)
+    er3 = _elfen_remainder(question, quants, tgt)
     if er3 is not None:
         res.answer = _fmt(er3)
         res.ok = True
@@ -22966,42 +22966,42 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "heels-boots"
         return res
     # --- Reifen-Umsatz (Mechanic: 40)
-    ru3 = _reifen_umsatz(question, quants, tgt)
+    ru3 = _tires_revenue(question, quants, tgt)
     if ru3 is not None:
         res.answer = _fmt(ru3)
         res.ok = True
         res.reason = "reifen-umsatz"
         return res
     # --- Geschwister-Alter (Emily: 4)
-    ga3 = _geschwister_alter(question, quants, tgt)
+    ga3 = _geschwister_age(question, quants, tgt)
     if ga3 is not None:
         res.answer = _fmt(ga3)
         res.ok = True
         res.reason = "geschwister-alter"
         return res
     # --- Puzzle-Rest (Poppy: 500)
-    pr3 = _puzzle_rest(question, quants, tgt)
+    pr3 = _puzzle_remainder(question, quants, tgt)
     if pr3 is not None:
         res.answer = _fmt(pr3)
         res.ok = True
         res.reason = "puzzle-rest"
         return res
     # --- Glas-Rabatt (Kylar: 64)
-    gr3 = _glas_rabatt(question, quants, tgt)
+    gr3 = _glas_discount(question, quants, tgt)
     if gr3 is not None:
         res.answer = _fmt(gr3)
         res.ok = True
         res.reason = "glas-rabatt"
         return res
     # --- Kleidung-Kauf (Mishka: 243)
-    kk3 = _kleidung_kauf(question, quants, tgt)
+    kk3 = _kleidung_buy(question, quants, tgt)
     if kk3 is not None:
         res.answer = _fmt(kk3)
         res.ok = True
         res.reason = "kleidung-kauf"
         return res
     # --- Stopp-Abstand (Henry: 25)
-    sa3 = _stopp_abstand(question, quants, tgt)
+    sa3 = _stopp_gap(question, quants, tgt)
     if sa3 is not None:
         res.answer = _fmt(sa3)
         res.ok = True
@@ -23015,77 +23015,77 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "taschengeld-start"
         return res
     # --- Yogurt-Kosten (Terry: 75)
-    yk3 = _yogurt_kosten(question, quants, tgt)
+    yk3 = _yogurt_cost(question, quants, tgt)
     if yk3 is not None:
         res.answer = _fmt(yk3)
         res.ok = True
         res.reason = "yogurt-kosten"
         return res
     # --- Eier-Woche (Lloyd: 294)
-    ew3 = _eier_woche(question, quants, tgt)
+    ew3 = _eggs_week(question, quants, tgt)
     if ew3 is not None:
         res.answer = _fmt(ew3)
         res.ok = True
         res.reason = "eier-woche"
         return res
     # --- Autowäsche-Jahr (Tom: 720)
-    aw3 = _autowasche_jahr(question, quants, tgt)
+    aw3 = _autowasche_year(question, quants, tgt)
     if aw3 is not None:
         res.answer = _fmt(aw3)
         res.ok = True
         res.reason = "autowasche-jahr"
         return res
     # --- Schlaf-Diff (Harry: 3)
-    sd3 = _schlaf_diff(question, quants, tgt)
+    sd3 = _sleep_diff(question, quants, tgt)
     if sd3 is not None:
         res.answer = _fmt(sd3)
         res.ok = True
         res.reason = "schlaf-diff"
         return res
     # --- Locker-Kette (Timothy: 3)
-    lk3 = _locker_kette(question, quants, tgt)
+    lk3 = _locker_chain(question, quants, tgt)
     if lk3 is not None:
         res.answer = _fmt(lk3)
         res.ok = True
         res.reason = "locker-kette"
         return res
     # --- Alter-Kette (Steve: 29)
-    ak3 = _alter_kette(question, quants, tgt)
+    ak3 = _age_chain(question, quants, tgt)
     if ak3 is not None:
         res.answer = _fmt(ak3)
         res.ok = True
         res.reason = "alter-kette"
         return res
     # --- Kamera-Rest (Jayden: 85)
-    kr3 = _kamera_rest(question, quants, tgt)
+    kr3 = _kamera_remainder(question, quants, tgt)
     if kr3 is not None:
         res.answer = _fmt(kr3)
         res.ok = True
         res.reason = "kamera-rest"
         return res
     # --- Schulreise-Rest (John: 100)
-    srr3 = _schulreise_rest(question, quants, tgt)
+    srr3 = _schulreise_remainder(question, quants, tgt)
     if srr3 is not None:
         res.answer = _fmt(srr3)
         res.ok = True
         res.reason = "schulreise-rest"
         return res
     # --- Fabrik-Rest (Boris: 14000)
-    fr3 = _fabrik_rest(question, quants, tgt)
+    fr3 = _fabrik_remainder(question, quants, tgt)
     if fr3 is not None:
         res.answer = _fmt(fr3)
         res.ok = True
         res.reason = "fabrik-rest"
         return res
     # --- Stunden-Minuten (Sandy: 720)
-    sm2 = _stunden_minuten(question, quants, tgt)
+    sm2 = _hours_minutes(question, quants, tgt)
     if sm2 is not None:
         res.answer = _fmt(sm2)
         res.ok = True
         res.reason = "stunden-minuten"
         return res
     # --- Blüten-Vergleich (Joelle: 15)
-    bv3 = _blueten_vergleich(question, quants, tgt)
+    bv3 = _blueten_compare(question, quants, tgt)
     if bv3 is not None:
         res.answer = _fmt(bv3)
         res.ok = True
@@ -23099,70 +23099,70 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "crawfish-portionen"
         return res
     # --- Sack-Gewicht (Joe: 2600)
-    sg3 = _sack_gewicht(question, quants, tgt)
+    sg3 = _sack_weight(question, quants, tgt)
     if sg3 is not None:
         res.answer = _fmt(sg3)
         res.ok = True
         res.reason = "sack-gewicht"
         return res
     # --- Durchschnitts-Gewicht (Mark: 180)
-    dg3 = _durchschnitt_gewicht(question, quants, tgt)
+    dg3 = _average_weight(question, quants, tgt)
     if dg3 is not None:
         res.answer = _fmt(dg3)
         res.ok = True
         res.reason = "durchschnitt-gewicht"
         return res
     # --- Muschel-Teilen (Carlos: 20)
-    mt3 = _muschel_teilen(question, quants, tgt)
+    mt3 = _muschel_divide(question, quants, tgt)
     if mt3 is not None:
         res.answer = _fmt(mt3)
         res.ok = True
         res.reason = "muschel-teilen"
         return res
     # --- Halb-Plus-Total (Pierson: 428)
-    hp3 = _halb_plus_total(question, quants, tgt)
+    hp3 = _half_plus_total(question, quants, tgt)
     if hp3 is not None:
         res.answer = _fmt(hp3)
         res.ok = True
         res.reason = "halb-plus-total"
         return res
     # --- Halb-Preis-Kette (Magazine: 1)
-    hk2 = _halb_preis_kette(question, quants, tgt)
+    hk2 = _half_price_chain(question, quants, tgt)
     if hk2 is not None:
         res.answer = _fmt(hk2)
         res.ok = True
         res.reason = "halb-preis-kette"
         return res
     # --- Job-Kette (Google: 2)
-    jk3 = _job_kette(question, quants, tgt)
+    jk3 = _job_chain(question, quants, tgt)
     if jk3 is not None:
         res.answer = _fmt(jk3)
         res.ok = True
         res.reason = "job-kette"
         return res
     # --- Abstimmungs-Rest (Polling: 1000)
-    ar3 = _abstimmung_rest(question, quants, tgt)
+    ar3 = _vote_remainder(question, quants, tgt)
     if ar3 is not None:
         res.answer = _fmt(ar3)
         res.ok = True
         res.reason = "abstimmung-rest"
         return res
     # --- Prozent-Rabatt (Bag: 133 / Laptop: 800 / Groomer: 70)
-    pr2 = _prozent_rabatt(question, quants, tgt)
+    pr2 = _percent_discount(question, quants, tgt)
     if pr2 is not None:
         res.answer = _fmt(pr2)
         res.ok = True
         res.reason = "prozent-rabatt"
         return res
     # --- Schreibwaren-Rest (Pencil: 5)
-    sr4 = _schreibwaren_rest(question, quants, tgt)
+    sr4 = _schreibwaren_remainder(question, quants, tgt)
     if sr4 is not None:
         res.answer = _fmt(sr4)
         res.ok = True
         res.reason = "schreibwaren-rest"
         return res
     # --- Blaubeeren-Spar (James: 10)
-    bs3 = _blaubeeren_spar(question, quants, tgt)
+    bs3 = _blaubeeren_save(question, quants, tgt)
     if bs3 is not None:
         res.answer = _fmt(bs3)
         res.ok = True
@@ -23176,7 +23176,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "mosaik-fliesen"
         return res
     # --- Bleistift-Paare (Pencils: 8)
-    bp3 = _bleistift_paare(question, quants, tgt)
+    bp3 = _pencil_paare(question, quants, tgt)
     if bp3 is not None:
         res.answer = _fmt(bp3)
         res.ok = True
@@ -23204,21 +23204,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "tierarzt-bill"
         return res
     # --- Lutscher-Gesamt (Manolo: 7)
-    lg3 = _lutscher_gesamt(question, quants, tgt)
+    lg3 = _lutscher_total(question, quants, tgt)
     if lg3 is not None:
         res.answer = _fmt(lg3)
         res.ok = True
         res.reason = "lutscher-gesamt"
         return res
     # --- Obst-Kauf (Catherine: 14)
-    ok3 = _obst_kauf(question, quants, tgt)
+    ok3 = _fruit_buy(question, quants, tgt)
     if ok3 is not None:
         res.answer = _fmt(ok3)
         res.ok = True
         res.reason = "obst-kauf"
         return res
     # --- Schulweg-Zeit (John/Jack: 11)
-    sz3 = _schulweg_zeit(question, quants, tgt)
+    sz3 = _schulweg_time(question, quants, tgt)
     if sz3 is not None:
         res.answer = _fmt(sz3)
         res.ok = True
@@ -23239,42 +23239,42 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "hash-browns"
         return res
     # --- Anteile-Invest (Skyler: 240)
-    ai3 = _anteile_invest(question, quants, tgt)
+    ai3 = _shares_invest(question, quants, tgt)
     if ai3 is not None:
         res.answer = _fmt(ai3)
         res.ok = True
         res.reason = "anteile-invest"
         return res
     # --- Wechselgeld-Suess (Adam: 4)
-    wg4 = _wechselgeld_suess(question, quants, tgt)
+    wg4 = _change_suess(question, quants, tgt)
     if wg4 is not None:
         res.answer = _fmt(wg4)
         res.ok = True
         res.reason = "wechselgeld-suess"
         return res
     # --- Suessigkeiten-Pool (Candy: 4)
-    sp4 = _suessigkeiten_pool(question, quants, tgt)
+    sp4 = _candy_pool(question, quants, tgt)
     if sp4 is not None:
         res.answer = _fmt(sp4)
         res.ok = True
         res.reason = "suessigkeiten-pool"
         return res
     # --- Basketball-Zeit (Sarah: 53)
-    bz4 = _basketball_zeit(question, quants, tgt)
+    bz4 = _basketball_time(question, quants, tgt)
     if bz4 is not None:
         res.answer = _fmt(bz4)
         res.ok = True
         res.reason = "basketball-zeit"
         return res
     # --- Einkauf-Pie (Gus: 7)
-    ep2 = _einkauf_pie(question, quants, tgt)
+    ep2 = _purchase_pie(question, quants, tgt)
     if ep2 is not None:
         res.answer = _fmt(ep2)
         res.ok = True
         res.reason = "einkauf-pie"
         return res
     # --- Kaffee-Kauf (Roger: 44)
-    kk3 = _kaffee_kauf(question, quants, tgt)
+    kk3 = _coffee_buy(question, quants, tgt)
     if kk3 is not None:
         res.answer = _fmt(kk3)
         res.ok = True
@@ -23288,28 +23288,28 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "schafe-gaense"
         return res
     # --- Flugzeug-Kosten (James: 330000)
-    fk4 = _flugzeug_kosten(question, quants, tgt)
+    fk4 = _flugzeug_cost(question, quants, tgt)
     if fk4 is not None:
         res.answer = _fmt(fk4)
         res.ok = True
         res.reason = "flugzeug-kosten"
         return res
     # --- Eier-Gaeste (Lori: 2)
-    eg3 = _eier_gaeste(question, quants, tgt)
+    eg3 = _eggs_gaeste(question, quants, tgt)
     if eg3 is not None:
         res.answer = _fmt(eg3)
         res.ok = True
         res.reason = "eier-gaeste"
         return res
     # --- Lohn-Abzug (Sally: 80)
-    la3 = _lohn_abzug(question, quants, tgt)
+    la3 = _wage_abzug(question, quants, tgt)
     if la3 is not None:
         res.answer = _fmt(la3)
         res.ok = True
         res.reason = "lohn-abzug"
         return res
     # --- Kutsche-Stunden (James: 75)
-    ks3 = _kutsche_stunden(question, quants, tgt)
+    ks3 = _kutsche_hours(question, quants, tgt)
     if ks3 is not None:
         res.answer = _fmt(ks3)
         res.ok = True
@@ -23330,7 +23330,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "mehl-saecke"
         return res
     # --- Garderobe-Kosten (James: 10800)
-    gk2 = _garderobe_kosten(question, quants, tgt)
+    gk2 = _garderobe_cost(question, quants, tgt)
     if gk2 is not None:
         res.answer = _fmt(gk2)
         res.ok = True
@@ -23365,14 +23365,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kasse-leistung"
         return res
     # --- Auto-Provision (James: 17500)
-    ap2 = _auto_provision(question, quants, tgt)
+    ap2 = _car_commission(question, quants, tgt)
     if ap2 is not None:
         res.answer = _fmt(ap2)
         res.ok = True
         res.reason = "auto-provision"
         return res
     # --- Bohne-Wachstum (Jane: 10)
-    bw2 = _bohne_wachstum(question, quants, tgt)
+    bw2 = _bohne_growth(question, quants, tgt)
     if bw2 is not None:
         res.answer = _fmt(bw2)
         res.ok = True
@@ -23386,7 +23386,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "steak-abendessen"
         return res
     # --- Forschungs-Kosten (John: 1450000)
-    fk3 = _forschungs_kosten(question, quants, tgt)
+    fk3 = _forschungs_cost(question, quants, tgt)
     if fk3 is not None:
         res.answer = _fmt(fk3)
         res.ok = True
@@ -23407,35 +23407,35 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "shampoo-pumpen"
         return res
     # --- Reifen-Rotation (Jeremy: 6)
-    rr3 = _reifen_rotation(question, quants, tgt)
+    rr3 = _tires_rotation(question, quants, tgt)
     if rr3 is not None:
         res.answer = _fmt(rr3)
         res.ok = True
         res.reason = "reifen-rotation"
         return res
     # --- Limonade-Verdienst (Patrick: 42)
-    lv2 = _limonade_verdienst(question, quants, tgt)
+    lv2 = _limonade_earnings(question, quants, tgt)
     if lv2 is not None:
         res.answer = _fmt(lv2)
         res.ok = True
         res.reason = "limonade-verdienst"
         return res
     # --- Flug-Zeiten (Flugzeug: 5)
-    fz3 = _flug_zeiten(question, quants, tgt)
+    fz3 = _flug_times(question, quants, tgt)
     if fz3 is not None:
         res.answer = _fmt(fz3)
         res.ok = True
         res.reason = "flug-zeiten"
         return res
     # --- Tier-Beine (Pet Store: 48)
-    tb2 = _tier_beine(question, quants, tgt)
+    tb2 = _animal_legs(question, quants, tgt)
     if tb2 is not None:
         res.answer = _fmt(tb2)
         res.ok = True
         res.reason = "tier-beine"
         return res
     # --- Muenzen-Kauf (Colby: 69)
-    mk3 = _muenzen_kauf(question, quants, tgt)
+    mk3 = _muenzen_buy(question, quants, tgt)
     if mk3 is not None:
         res.answer = _fmt(mk3)
         res.ok = True
@@ -23449,7 +23449,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "bohnenstange"
         return res
     # --- Hund-Gewichte (Mastiff: 220)
-    hg3 = _hund_gewichte(question, quants, tgt)
+    hg3 = _dog_gewichte(question, quants, tgt)
     if hg3 is not None:
         res.answer = _fmt(hg3)
         res.ok = True
@@ -23470,7 +23470,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kontakt-linsen"
         return res
     # --- Haus-Werte (Juan: 129200)
-    hw3 = _haus_werte(question, quants, tgt)
+    hw3 = _house_werte(question, quants, tgt)
     if hw3 is not None:
         res.answer = _fmt(hw3)
         res.ok = True
@@ -23484,7 +23484,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "film-zeiten2"
         return res
     # --- Teppich-Kosten (Michael: 11232)
-    tk3 = _teppich_kosten(question, quants, tgt)
+    tk3 = _teppich_cost(question, quants, tgt)
     if tk3 is not None:
         res.answer = _fmt(tk3)
         res.ok = True
@@ -23498,7 +23498,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kreide-muffins"
         return res
     # --- Kitten-Kosten (Leah: 308)
-    kk2 = _kitten_kosten(question, quants, tgt)
+    kk2 = _kitten_cost(question, quants, tgt)
     if kk2 is not None:
         res.answer = _fmt(kk2)
         res.ok = True
@@ -23526,14 +23526,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "knoepfe-loecher"
         return res
     # --- Wasser-Flaschen (Bill: 92)
-    wf2 = _wasser_flaschen(question, quants, tgt)
+    wf2 = _water_flaschen(question, quants, tgt)
     if wf2 is not None:
         res.answer = _fmt(wf2)
         res.ok = True
         res.reason = "wasser-flaschen"
         return res
     # --- Burger-Rechnung (Carly: 17)
-    br3 = _burger_rechnung(question, quants, tgt)
+    br3 = _burger_bill(question, quants, tgt)
     if br3 is not None:
         res.answer = _fmt(br3)
         res.ok = True
@@ -23554,28 +23554,28 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "arbeitsweg"
         return res
     # --- Obst-Einkauf (Verna: 7)
-    oe2 = _obst_einkauf(question, quants, tgt)
+    oe2 = _fruit_purchase(question, quants, tgt)
     if oe2 is not None:
         res.answer = _fmt(oe2)
         res.ok = True
         res.reason = "obst-einkauf"
         return res
     # --- Jungs-Anteile (Jungs: 39)
-    ja2 = _jungs_anteile(question, quants, tgt)
+    ja2 = _jungs_shares(question, quants, tgt)
     if ja2 is not None:
         res.answer = _fmt(ja2)
         res.ok = True
         res.reason = "jungs-anteile"
         return res
     # --- Rechnung-Tip (Wife: 35)
-    rt2 = _rechnung_tip(question, quants, tgt)
+    rt2 = _bill_tip(question, quants, tgt)
     if rt2 is not None:
         res.answer = _fmt(rt2)
         res.ok = True
         res.reason = "rechnung-tip"
         return res
     # --- Buch-Dicken (Bücher: 188)
-    bd2 = _buch_dicken(question, quants, tgt)
+    bd2 = _book_dicken(question, quants, tgt)
     if bd2 is not None:
         res.answer = _fmt(bd2)
         res.ok = True
@@ -23589,21 +23589,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "muscheln-suche"
         return res
     # --- Monitor-Preis (Errol: 300)
-    mp2 = _monitor_preis(question, quants, tgt)
+    mp2 = _monitor_price(question, quants, tgt)
     if mp2 is not None:
         res.answer = _fmt(mp2)
         res.ok = True
         res.reason = "monitor-preis"
         return res
     # --- Alter-Abstand (Jame: 25)
-    aa2 = _alter_abstand(question, quants, tgt)
+    aa2 = _age_gap(question, quants, tgt)
     if aa2 is not None:
         res.answer = _fmt(aa2)
         res.ok = True
         res.reason = "alter-abstand"
         return res
     # --- Haus-Streichen (Haus: 48)
-    hs2 = _haus_streichen(question, quants, tgt)
+    hs2 = _house_streichen(question, quants, tgt)
     if hs2 is not None:
         res.answer = _fmt(hs2)
         res.ok = True
@@ -23624,7 +23624,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "tulpen-reihen"
         return res
     # --- Backen-Vergleich (Kelsie: 18)
-    bv3 = _backen_vergleich(question, quants, tgt)
+    bv3 = _bake_compare(question, quants, tgt)
     if bv3 is not None:
         res.answer = _fmt(bv3)
         res.ok = True
@@ -23638,7 +23638,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "taschen-profit"
         return res
     # --- Haus-Grundstueck (Haus: 90000)
-    hg2 = _haus_grundstueck(question, quants, tgt)
+    hg2 = _house_grundstueck(question, quants, tgt)
     if hg2 is not None:
         res.answer = _fmt(hg2)
         res.ok = True
@@ -23652,7 +23652,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "neujahr-ziel"
         return res
     # --- Bauernhof-Zoo (Farm: 120)
-    bz2 = _bauernhof_zoo(question, quants, tgt)
+    bz2 = _farm_zoo(question, quants, tgt)
     if bz2 is not None:
         res.answer = _fmt(bz2)
         res.ok = True
@@ -23666,7 +23666,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "schneeschuh-hunde"
         return res
     # --- Kaugummi-Preise (Suzie: 2)
-    kp3 = _kaugummi_preise(question, quants, tgt)
+    kp3 = _gum_prices(question, quants, tgt)
     if kp3 is not None:
         res.answer = _fmt(kp3)
         res.ok = True
@@ -23680,7 +23680,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "moebel-masse"
         return res
     # --- Veranstaltungs-Vergleich (Mark: 10)
-    vv2 = _veranstaltungs_vergleich(question, quants, tgt)
+    vv2 = _veranstaltungs_compare(question, quants, tgt)
     if vv2 is not None:
         res.answer = _fmt(vv2)
         res.ok = True
@@ -23694,14 +23694,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "orangen-pies"
         return res
     # --- Fahr-Kosten (Paul: 112)
-    fk2 = _fahr_kosten(question, quants, tgt)
+    fk2 = _fahr_cost(question, quants, tgt)
     if fk2 is not None:
         res.answer = _fmt(fk2)
         res.ok = True
         res.reason = "fahr-kosten"
         return res
     # --- Buerogeh-Zeiten (Charisma: 200)
-    bz3 = _buerogeh_zeiten(question, quants, tgt)
+    bz3 = _buerogeh_times(question, quants, tgt)
     if bz3 is not None:
         res.answer = _fmt(bz3)
         res.ok = True
@@ -23715,7 +23715,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "mensch-pyramide"
         return res
     # --- Rasierer-Rabatt (Heather: 25)
-    rr2 = _rasierer_rabatt(question, quants, tgt)
+    rr2 = _rasierer_discount(question, quants, tgt)
     if rr2 is not None:
         res.answer = _fmt(rr2)
         res.ok = True
@@ -23736,7 +23736,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "hafer-bags"
         return res
     # --- Lauf-Stunden (James: 6)
-    ls4 = _lauf_stunden(question, quants, tgt)
+    ls4 = _lauf_hours(question, quants, tgt)
     if ls4 is not None:
         res.answer = _fmt(ls4)
         res.ok = True
@@ -23750,7 +23750,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "musik-speicher"
         return res
     # --- Reise-Kosten (Tom: 15400)
-    rk2 = _reise_kosten(question, quants, tgt)
+    rk2 = _reise_cost(question, quants, tgt)
     if rk2 is not None:
         res.answer = _fmt(rk2)
         res.ok = True
@@ -23764,14 +23764,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "betriebsausflug"
         return res
     # --- Schuhe-Einlaufen (Jason: 20)
-    se2 = _schuhe_einlaufen(question, quants, tgt)
+    se2 = _shoes_einlaufen(question, quants, tgt)
     if se2 is not None:
         res.answer = _fmt(se2)
         res.ok = True
         res.reason = "schuhe-einlaufen"
         return res
     # --- Desktop-Anteil (Schüler: 80)
-    da2 = _desktop_anteil(question, quants, tgt)
+    da2 = _desktop_share(question, quants, tgt)
     if da2 is not None:
         res.answer = _fmt(da2)
         res.ok = True
@@ -23785,7 +23785,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "karotten-regel"
         return res
     # --- Stift-Wechselgeld (Theo: 3)
-    sw2 = _stift_wechselgeld(question, quants, tgt)
+    sw2 = _stift_change(question, quants, tgt)
     if sw2 is not None:
         res.answer = _fmt(sw2)
         res.ok = True
@@ -23806,7 +23806,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "hotel-waesche"
         return res
     # --- Karten-Schueler (Maria: 30)
-    ks3 = _karten_schueler(question, quants, tgt)
+    ks3 = _cards_student(question, quants, tgt)
     if ks3 is not None:
         res.answer = _fmt(ks3)
         res.ok = True
@@ -23820,7 +23820,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "pizza-trinkgeld"
         return res
     # --- Recycling-Einnahmen (Grayson: 84)
-    re3 = _recycling_einnahmen(question, quants, tgt)
+    re3 = _recycling_income(question, quants, tgt)
     if re3 is not None:
         res.answer = _fmt(re3)
         res.ok = True
@@ -23834,28 +23834,28 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "futter-transport"
         return res
     # --- Garten-Erde (Bob: 1920)
-    ge2 = _garten_erde(question, quants, tgt)
+    ge2 = _garden_erde(question, quants, tgt)
     if ge2 is not None:
         res.answer = _fmt(ge2)
         res.ok = True
         res.reason = "garten-erde"
         return res
     # --- Apfel-Tage (Marin: 150)
-    at2 = _apfel_tage(question, quants, tgt)
+    at2 = _apple_days(question, quants, tgt)
     if at2 is not None:
         res.answer = _fmt(at2)
         res.ok = True
         res.reason = "apfel-tage"
         return res
     # --- Juwelen-Wert (Jenna: 6400)
-    jw2 = _juwelen_wert(question, quants, tgt)
+    jw2 = _juwelen_value(question, quants, tgt)
     if jw2 is not None:
         res.answer = _fmt(jw2)
         res.ok = True
         res.reason = "juwelen-wert"
         return res
     # --- Ballon-Preise (Bentley: 11050)
-    bp3 = _ballon_preise(question, quants, tgt)
+    bp3 = _ballon_prices(question, quants, tgt)
     if bp3 is not None:
         res.answer = _fmt(bp3)
         res.ok = True
@@ -23876,35 +23876,35 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "eggnog-trays"
         return res
     # --- Film-Laengen (Movie A: 20)
-    fl2 = _film_laengen(question, quants, tgt)
+    fl2 = _movie_laengen(question, quants, tgt)
     if fl2 is not None:
         res.answer = _fmt(fl2)
         res.ok = True
         res.reason = "film-laengen"
         return res
     # --- Premiere-Zeiten (Wayne: 17)
-    pz3 = _premiere_zeiten(question, quants, tgt)
+    pz3 = _premiere_times(question, quants, tgt)
     if pz3 is not None:
         res.answer = _fmt(pz3)
         res.ok = True
         res.reason = "premiere-zeiten"
         return res
     # --- Benzin-Pints (Josey: 6)
-    bp2 = _benzin_pints(question, quants, tgt)
+    bp2 = _gas_pints(question, quants, tgt)
     if bp2 is not None:
         res.answer = _fmt(bp2)
         res.ok = True
         res.reason = "benzin-pints"
         return res
     # --- Kuechen-Einkauf (Charlotte: 132)
-    ke3 = _kuechen_einkauf(question, quants, tgt)
+    ke3 = _kuechen_purchase(question, quants, tgt)
     if ke3 is not None:
         res.answer = _fmt(ke3)
         res.ok = True
         res.reason = "kuechen-einkauf"
         return res
     # --- Restaurant-Rechnung (Aleksandra: 11)
-    rr2 = _restaurant_rechnung(question, quants, tgt)
+    rr2 = _restaurant_bill(question, quants, tgt)
     if rr2 is not None:
         res.answer = _fmt(rr2)
         res.ok = True
@@ -23918,7 +23918,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "herde-hoecker"
         return res
     # --- Blusen-Rabatt (Misha: 56)
-    br2 = _blusen_rabatt(question, quants, tgt)
+    br2 = _blusen_discount(question, quants, tgt)
     if br2 is not None:
         res.answer = _fmt(br2)
         res.ok = True
@@ -23932,21 +23932,21 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kerzen-defekt"
         return res
     # --- Kekse-Vorrat (Shannon: 5)
-    kv2 = _kekse_vorrat(question, quants, tgt)
+    kv2 = _cookies_vorrat(question, quants, tgt)
     if kv2 is not None:
         res.answer = _fmt(kv2)
         res.ok = True
         res.reason = "kekse-vorrat"
         return res
     # --- Sandwich-Kosten (Tyson: 50)
-    sk4 = _sandwich_kosten(question, quants, tgt)
+    sk4 = _sandwich_cost(question, quants, tgt)
     if sk4 is not None:
         res.answer = _fmt(sk4)
         res.ok = True
         res.reason = "sandwich-kosten"
         return res
     # --- Klima-Ersparnis (Mel: 81)
-    ke2 = _klima_ersparnis(question, quants, tgt)
+    ke2 = _klima_savings(question, quants, tgt)
     if ke2 is not None:
         res.answer = _fmt(ke2)
         res.ok = True
@@ -23960,14 +23960,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "spinnen-zaehler"
         return res
     # --- Streaming-Sparen (Tim: 34)
-    ss3 = _streaming_sparen(question, quants, tgt)
+    ss3 = _streaming_saving(question, quants, tgt)
     if ss3 is not None:
         res.answer = _fmt(ss3)
         res.ok = True
         res.reason = "streaming-sparen"
         return res
     # --- Karneval-Sparen (David: 6)
-    ks2 = _karneval_sparen(question, quants, tgt)
+    ks2 = _karneval_saving(question, quants, tgt)
     if ks2 is not None:
         res.answer = _fmt(ks2)
         res.ok = True
@@ -23988,7 +23988,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "limonade-profit2"
         return res
     # --- Brot-Stuecke (Sherman: 48)
-    bs2 = _brot_stuecke(question, quants, tgt)
+    bs2 = _bread_stuecke(question, quants, tgt)
     if bs2 is not None:
         res.answer = _fmt(bs2)
         res.ok = True
@@ -24009,14 +24009,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "walmart-rauswurf"
         return res
     # --- Park-Kinder (Park: 18)
-    pk2 = _park_kinder(question, quants, tgt)
+    pk2 = _park_children(question, quants, tgt)
     if pk2 is not None:
         res.answer = _fmt(pk2)
         res.ok = True
         res.reason = "park-kinder"
         return res
     # --- Suessigkeiten-Kauf (Billy: 4)
-    sk3 = _suessigkeiten_kauf(question, quants, tgt)
+    sk3 = _candy_buy(question, quants, tgt)
     if sk3 is not None:
         res.answer = _fmt(sk3)
         res.ok = True
@@ -24037,70 +24037,70 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "party-budget"
         return res
     # --- Sparziel-Rest (Annabelle: 45)
-    sr2 = _sparziel_rest(question, quants, tgt)
+    sr2 = _sparziel_remainder(question, quants, tgt)
     if sr2 is not None:
         res.answer = _fmt(sr2)
         res.ok = True
         res.reason = "sparziel-rest"
         return res
     # --- Urlaub-Zeiten (John: 20)
-    uz3 = _urlaub_zeiten(question, quants, tgt)
+    uz3 = _urlaub_times(question, quants, tgt)
     if uz3 is not None:
         res.answer = _fmt(uz3)
         res.ok = True
         res.reason = "urlaub-zeiten"
         return res
     # --- Spar-Betrag (Andrea: 21)
-    sb4 = _spar_betrag(question, quants, tgt)
+    sb4 = _save_betrag(question, quants, tgt)
     if sb4 is not None:
         res.answer = _fmt(sb4)
         res.ok = True
         res.reason = "spar-betrag"
         return res
     # --- Wochen-Aktivitaeten (Peyton: 8)
-    wa2 = _wochen_aktivitaeten(question, quants, tgt)
+    wa2 = _weeks_aktivitaeten(question, quants, tgt)
     if wa2 is not None:
         res.answer = _fmt(wa2)
         res.ok = True
         res.reason = "wochen-aktivitaeten"
         return res
     # --- Haustier-Kosten (Madeline: 2640)
-    hk2 = _haustier_kosten(question, quants, tgt)
+    hk2 = _haustier_cost(question, quants, tgt)
     if hk2 is not None:
         res.answer = _fmt(hk2)
         res.ok = True
         res.reason = "haustier-kosten"
         return res
     # --- Hemden-Rabatt (Davos: 36)
-    hr2 = _hemden_rabatt(question, quants, tgt)
+    hr2 = _hemden_discount(question, quants, tgt)
     if hr2 is not None:
         res.answer = _fmt(hr2)
         res.ok = True
         res.reason = "hemden-rabatt"
         return res
     # --- Trainings-Monat (Tyson: 180000)
-    tm3 = _trainings_monat(question, quants, tgt)
+    tm3 = _trainings_month(question, quants, tgt)
     if tm3 is not None:
         res.answer = _fmt(tm3)
         res.ok = True
         res.reason = "trainings-monat"
         return res
     # --- Bauernhof-Beine (Farmer: 160)
-    bf2 = _bauernhof_beine(question, quants, tgt)
+    bf2 = _farm_legs(question, quants, tgt)
     if bf2 is not None:
         res.answer = _fmt(bf2)
         res.ok = True
         res.reason = "bauernhof-beine"
         return res
     # --- Zucker-Mengen (Mason: 310)
-    zm2 = _zucker_mengen(question, quants, tgt)
+    zm2 = _sugar_mengen(question, quants, tgt)
     if zm2 is not None:
         res.answer = _fmt(zm2)
         res.ok = True
         res.reason = "zucker-mengen"
         return res
     # --- Treuepunkte-Rabatt (Kunde: 31)
-    tr2 = _treuepunkte_rabatt(question, quants, tgt)
+    tr2 = _treuepunkte_discount(question, quants, tgt)
     if tr2 is not None:
         res.answer = _fmt(tr2)
         res.ok = True
@@ -24114,14 +24114,14 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "platten-tausch"
         return res
     # --- Film-Ersatz (Mike: 4400)
-    fe3 = _film_ersatz(question, quants, tgt)
+    fe3 = _movie_ersatz(question, quants, tgt)
     if fe3 is not None:
         res.answer = _fmt(fe3)
         res.ok = True
         res.reason = "film-ersatz"
         return res
     # --- Bleistift-Boxen (Jam: 9)
-    bb2 = _bleistift_boxen(question, quants, tgt)
+    bb2 = _pencil_boxen(question, quants, tgt)
     if bb2 is not None:
         res.answer = _fmt(bb2)
         res.ok = True
@@ -24135,7 +24135,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "team-verteilung"
         return res
     # --- Familie-Eier (Familie: 91)
-    fe2 = _familie_eier(question, quants, tgt)
+    fe2 = _family_eggs(question, quants, tgt)
     if fe2 is not None:
         res.answer = _fmt(fe2)
         res.ok = True
@@ -24149,7 +24149,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "serum-limbs"
         return res
     # --- Rabatt-Ersparnis (Eiscreme: 6)
-    re2 = _rabatt_ersparnis(question, quants, tgt)
+    re2 = _discount_savings(question, quants, tgt)
     if re2 is not None:
         res.answer = _fmt(re2)
         res.ok = True
@@ -24688,7 +24688,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "nachhilfe-stunden"
         return res
     # --- Alter-Kette-drei (Trent: 32)
-    akd = _alter_kette_drei(question, quants, tgt)
+    akd = _age_chain_drei(question, quants, tgt)
     if akd is not None:
         res.answer = _fmt(akd)
         res.ok = True
@@ -25129,7 +25129,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "geschenk-tueten"
         return res
     # --- Markt-Einkauf (Well: 880)
-    me2 = _markt_einkauf(question, quants, tgt)
+    me2 = _markt_purchase(question, quants, tgt)
     if me2 is not None:
         res.answer = _fmt(me2)
         res.ok = True
@@ -25227,7 +25227,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "raten-kauf"
         return res
     # --- Alter-Kette (Emily: 4)
-    ak2 = _alter_kette(question, quants, tgt)
+    ak2 = _age_chain(question, quants, tgt)
     if ak2 is not None:
         res.answer = _fmt(ak2)
         res.ok = True
@@ -25660,7 +25660,7 @@ def _resolve(question: str) -> BindingResult:
         res.ok = True
         res.reason = "kerzen-licht"
         return res
-    # --- Schafe-drei (Toulouse: 260)
+    # --- Sheep three (Toulouse: 260)
     sd2 = _schafe_drei(question, quants, tgt)
     if sd2 is not None:
         res.answer = _fmt(sd2)
@@ -25681,7 +25681,7 @@ def _resolve(question: str) -> BindingResult:
         res.ok = True
         res.reason = "heimfahrt"
         return res
-    # --- Downloads-drei (Program: 366)
+    # --- Downloads three (Program: 366)
     dd2 = _downloads_drei(question, quants, tgt)
     if dd2 is not None:
         res.answer = _fmt(dd2)
@@ -25702,7 +25702,7 @@ def _resolve(question: str) -> BindingResult:
         res.ok = True
         res.reason = "juwelen-kette"
         return res
-    # --- Drache-Wurf (Perg: 200)
+    # --- Dragon throw (Perg: 200)
     dw2 = _drache_wurf(question, quants, tgt)
     if dw2 is not None:
         res.answer = _fmt(dw2)
@@ -25849,7 +25849,7 @@ def _resolve(question: str) -> BindingResult:
         res.ok = True
         res.reason = "weizen-gewinne"
         return res
-    # --- Enten-Insekten (Ducks: 5)
+    # --- Duck insects (Ducks: 5)
     ei = _enten_insecten(question, quants, tgt)
     if ei is not None:
         res.answer = _fmt(ei)
@@ -25877,7 +25877,7 @@ def _resolve(question: str) -> BindingResult:
         res.ok = True
         res.reason = "kaese-woche"
         return res
-    # --- Fahrrad-km (Micheal: 860)
+    # --- Bike km (Micheal: 860)
     fk5 = _fahrrad_km(question, quants, tgt)
     if fk5 is not None:
         res.answer = _fmt(fk5)
@@ -26227,14 +26227,14 @@ def _resolve(question: str) -> BindingResult:
         res.ok = True
         res.reason = "heu-kaufen"
         return res
-    # --- Scrabble-Führung (Joey: 5)
+    # --- Scrabble lead (Joey: 5)
     sf2 = _scrabble_fuehrung(question, quants, tgt)
     if sf2 is not None:
         res.answer = _fmt(sf2)
         res.ok = True
         res.reason = "scrabble-fuehrung"
         return res
-    # --- Karten-Farben (Magicians: 78)
+    # --- Card colors (Magicians: 78)
     kf2 = _karten_farben(question, quants, tgt)
     if kf2 is not None:
         res.answer = _fmt(kf2)
@@ -26255,14 +26255,14 @@ def _resolve(question: str) -> BindingResult:
         res.ok = True
         res.reason = "apfel-rabatt"
         return res
-    # --- Schuhe-zählen (Frank: 120)
+    # --- Shoe count (Frank: 120)
     sz5 = _schuhe_zaehlen(question, quants, tgt)
     if sz5 is not None:
         res.answer = _fmt(sz5)
         res.ok = True
         res.reason = "schuhe-zaehlen"
         return res
-    # --- Bleistift-Rest (Marissa: 80)
+    # --- Pencil remainder (Marissa: 80)
     blr = _bleistift_rest(question, quants, tgt)
     if blr is not None:
         res.answer = _fmt(blr)
@@ -26781,7 +26781,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "aufforstung"
         return res
     # --- Spiel-Ziel (Kris: 9)
-    sz2 = _spiel_ziel(question, quants, tgt)
+    sz2 = _game_ziel(question, quants, tgt)
     if sz2 is not None:
         res.answer = _fmt(sz2)
         res.ok = True
@@ -27808,7 +27808,7 @@ def _resolve(question: str) -> BindingResult:
         res.reason = "kein Frageziel"
         return res
 
-    # --- Abstinenz-Gate 2: Mengen des Zielobjekts (qty) müssen existieren ---
+    # --- Abstention Gate 2: Mengen des Zielobjekts (qty) müssen existieren ---
     target_qty = [q for q in quants if q.role == "qty" and q.obj == tgt.obj]
     ratios = [q for q in quants if q.role == "ratio" and q.obj == tgt.obj]
     subtracts = [q.value for q in quants if q.role == "subtract"]
@@ -27895,7 +27895,7 @@ def bind(question: str) -> BindingResult:
     try:
         return _resolve(question)
     except Exception:
-        return BindingResult(reason="Parser-Fehler (abstinent)")
+        return BindingResult(reason="Parser Error (abstained)")
 
 
 def solve(question: str) -> Optional[str]:
