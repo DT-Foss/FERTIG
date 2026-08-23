@@ -1,190 +1,64 @@
 # FERTIG
 
-**Grounded neuro-symbolic cognitive architecture with a weight-free deterministic core and a constrained neural surface.**
+**Research trial artifact for grounded cognition and deterministic validation.**
 
-FERTIG combines explicit symbolic state, grounded perception, exact tools, learned executable skills, a small rank-only state-space language module, and replay-verified agent experience in one architecture.
+FERTIG studies executable concepts: facts remain explicit, skills remain
+executable, plans remain inspectable, and released actions pass deterministic
+checks. A constrained neural surface ranks grounded candidates while the
+symbolic runtime retains authority over state, arithmetic, evidence, and
+execution.
 
-> **A concept is an executable grounded skill. Showing is programming; a sentence is the call.**
+The repository accompanies the research line around `.causal`, deterministic
+validation, grounded skill acquisition, and neuro-symbolic composition. It
+contains selected trial code, tests, and public measurements. Private traces,
+learned state, deployment material, and capability-transfer experiments remain
+outside the release surface.
 
-The system is not an LLM and not a single-purpose solver. Facts, tools, skills, arithmetic and execution remain explicit and verifiable. Neural components are used where learned ranking or surface form is useful; they do not receive authority to invent facts or bypass verification.
-The `.causal` layer is the explicit wiring and inference layer over local
-weights. It stores structure and causal links without rewriting the tensor
-data.
+## Research contribution
 
-## Architecture
+- **Executable meaning:** a concept can become a named, typed, verified skill.
+- **Explicit truth:** graph state, measurements, tools, and receipts remain
+  first-class runtime objects.
+- **Deterministic release:** language and actions are checked against their
+  plans and observed effects.
+- **Grounded abstention:** incomplete structures remain unresolved instead of
+  becoming fabricated answers.
+- **Causal knowledge:** the `.causal` substrate stores explicit relations and
+  deterministic inference paths.
+- **System composition:** [IMMER](https://github.com/DT-Foss/immer) connects
+  FERTIG verification to local frontier inference and causalized weight
+  addressing.
 
-```text
-┌─────────────────────────────────────────────────────────────────────┐
-│ Interface                    CLI · assistant · chat                  │
-├─────────────────────────────────────────────────────────────────────┤
-│ Agent-trace learning         replay · process distillation          │
-│                              trace learning · experience             │
-├─────────────────────────────────────────────────────────────────────┤
-│ Language & evidence          worldbook · discourse · form arena     │
-│                              lifted walks · verified surface         │
-├─────────────────────────────────────────────────────────────────────┤
-│ Constrained neural surface   HSSLM / HSSLM-C · rank-only scoring    │
-├─────────────────────────────────────────────────────────────────────┤
-│ Desktop apprentice           teach · compose · template · correct   │
-│                              observe → act → verify                  │
-├─────────────────────────────────────────────────────────────────────┤
-│ Understanding & solving      intent · bindings · semantic · math    │
-│                              miner · solver · tools · code           │
-├─────────────────────────────────────────────────────────────────────┤
-│ Grounding & perception       quantitative · visual · video · stream │
-│                              web gaps · learned categories           │
-├─────────────────────────────────────────────────────────────────────┤
-│ Weight-free symbolic core    graph · inference · sampler · corpus   │
-│                              utterance IR · primitives · grammar     │
-└─────────────────────────────────────────────────────────────────────┘
-```
+## Selected trial evidence
 
-The complete module map and system contracts are documented in [docs/architecture.md](docs/architecture.md).
+| Trial | Result | Scope |
+|---|---:|---|
+| Public regression suite | 726 passed, 4 skipped | tracked release tree |
+| Desktop product acceptance | 3/3 actions verified | deterministic simulator, persistence and reload included |
+| Absolute-coordinate placebo | 0/3 steps completed | same desktop trial |
+| GSM8K binding audit | 1,064 correct, 3 wrong, 252 abstentions | full 1,319-item test set |
 
-## Design contract
+Detailed public contracts and measurement boundaries are recorded in
+[docs/architecture.md](docs/architecture.md) and [CHANGELOG.md](CHANGELOG.md).
 
-FERTIG is built around a small set of hard rules:
+## Paper context
 
-- **Facts are explicit.** Graph edges, measurements, tools, replayable experience and exact arithmetic are the sources of factual state.
-- **Abstention beats guessing.** Missing bindings or insufficient evidence produce `UNKNOWN`, `AMBIGUOUS` or no result instead of a fabricated answer.
-- **Generation is verified.** Prose is parsed back against its plan; desktop actions are checked against the visible post-state; evidence can be replayed.
-- **The neural model ranks; it does not rule.** HSSLM scores grounded candidates and surface forms instead of freely defining system state.
-- **Learning closes the loop.** Gaps, demonstrations, streams and agent traces become new executable or replayable structure only after their acceptance checks pass.
+- David Tom Foss, **The `.causal` Format: Embedded Deterministic Inference for
+  Domain-Agnostic Knowledge Graph Amplification**, IEEE IRI 2026. Conference
+  record: [IEEE IRI session E2](https://davidtomfoss.com/service/iri2026-session-e2-nlp-sentiment-multimodal-reasoning/).
+- David Tom Foss, **Deterministic Validation for Reliable LLM-Based Causal
+  Knowledge Extraction**, ICECET 2026. Record:
+  [davidtomfoss.com](https://davidtomfoss.com/talks/deterministic-validation-llm-causal-extraction/).
 
-## Canonical links
+## Related repositories
 
-- [Current architecture](docs/architecture.md)
-- [Moonshot Apprentice](MOONSHOT_APPRENTICE.md)
-- [FERTIG Moonshot Goal](FERTIG_MOONSHOT_GOAL.md)
 - [DT-Foss/immer](https://github.com/DT-Foss/immer)
 - [DT-Foss/o1-state](https://github.com/DT-Foss/o1-state)
 - [DT-Foss/dotcausal](https://github.com/DT-Foss/dotcausal)
-- [safetensors/safetensors](https://github.com/safetensors/safetensors)
-- [Deja Vu: Contextual Sparsity for Efficient LLMs at Inference Time](https://arxiv.org/abs/2310.17157)
-- [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://jmlr.org/papers/v23/21-0998.html)
-- [Next generation reservoir computing](https://doi.org/10.1038/s41467-021-25801-2)
-
-## Current measured state
-
-### GSM8K structure solver
-
-The current full-test run reached:
-
-| Metric | Result |
-| --- | ---: |
-| Correct | **1056 / 1319** |
-| Coverage | **80.06%** |
-| Incorrect answers | **0** |
-| Binding regression tests | **731 passing** |
-
-The run advanced from 715/1319 to 1056/1319 over rounds 315–399 while preserving zero incorrect answers in the full test. Unsolved items remain explicit abstentions. The solver path is only one organ of FERTIG:
-
-```text
-question
-  → bindings
-  → semantic relation graph
-  → exact math / structural reductions
-  → mined rules
-  → answer or abstention
-```
-
-### Desktop apprentice
-
-The product path learns named desktop skills by demonstration rather than by coordinate scripting:
-
-```text
-teach
-  → passive event capture + screenshots
-  → visual anchors + state transitions
-  → persistent skill
-
-run
-  → observe
-  → relocate target
-  → execute one action
-  → verify visible effect
-  → continue or stop
-```
-
-Skills can be composed, parameterized and corrected at the atomic-step level.
-
-### Grounding and evidence
-
-FERTIG spans several grounding levels: word-to-word graph structure, quantitative anchors, perceptual binding and unsupervised visual categories. The gap loop can turn an unknown concept into sourced causal graph structure. The worldbook stores acted records with replayable provenance and digests.
-
-### Constrained neural surface
-
-The HSSLM family is a small state-space language component. Its production role is constrained scoring: deterministic organs generate and ground candidate meanings or forms; HSSLM ranks among those candidates. The final utterance is checked before release.
-
-### Intelligence compilation
-
-The agent-trace layer records decisions, tool outcomes and replayable file mutations, then reduces them to architecture-neutral process examples. Its long-range target is:
-
-```text
-Student = Compile(Recipe, Architecture, Budget)
-```
-
-The recipe is the durable object; a particular model checkpoint is one compiled realization of it.
-
-## Quick start
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-python3 -m fertig info
-python3 -m fertig product-demo
-python3 -m fertig assistant
-python3 -m pytest tests/ -q
-```
-
-Useful entry points:
-
-```bash
-# Desktop apprentice
-python3 -m fertig desktop-doctor
-python3 -m fertig teach "example skill"
-python3 -m fertig explain "example skill"
-python3 -m fertig do "example skill"
-
-# Symbolic / grounded system
-python3 -m fertig graph
-python3 -m fertig speech
-python3 -m fertig intent -x "explain how smoking affects health"
-
-# Benchmarks and verification
-python3 -m fertig bench groundzero
-python3 -m fertig bench causal-v2
-```
-
-## Repository map
-
-```text
-fertig/               core runtime and cognitive modules
-erweiterung/          evidence, discourse and live-language extensions
-grounding_kernel/     independent-agent grounding experiments
-scripts/              training, mining and evaluation utilities
-tests/                regression and architecture tests
-data/                 small runtime data included by policy
-docs/                 architecture and system documentation
-```
-
-Large checkpoints, private traces and historical experiment dumps are intentionally kept outside the source repository.
-
-## Research position
-
-FERTIG's core research object is the separation of **truth, skill, plan and form**:
-
-```text
-FACT   → explicit grounded state
-SKILL  → executable grounded program
-PLAN   → composition of facts and skills
-FORM   → verified language or interface surface
-```
-
-The neural surface can change without redefining the facts. Skills can be learned without rewriting the host's entire model. Execution is checked against the world. Agent experience can be replayed and compiled into new students. The resulting system is a cognitive runtime rather than a monolithic predictor.
 
 ## Author
 
-David Tom Foss · 2026
+[David Tom Foss](https://davidtomfoss.com/) ·
+[ORCID 0009-0004-0289-7154](https://orcid.org/0009-0004-0289-7154)
+
+Copyright © 2026 David Tom Foss.
