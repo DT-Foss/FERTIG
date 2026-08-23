@@ -7,6 +7,9 @@ FERTIG combines explicit symbolic state, grounded perception, exact tools, learn
 > **A concept is an executable grounded skill. Showing is programming; a sentence is the call.**
 
 The system is not an LLM and not a single-purpose solver. Facts, tools, skills, arithmetic and execution remain explicit and verifiable. Neural components are used where learned ranking or surface form is useful; they do not receive authority to invent facts or bypass verification.
+The `.causal` layer is the explicit wiring and inference layer over local
+weights. It stores structure and causal links without rewriting the tensor
+data.
 
 ## Architecture
 
@@ -47,6 +50,19 @@ FERTIG is built around a small set of hard rules:
 - **Generation is verified.** Prose is parsed back against its plan; desktop actions are checked against the visible post-state; evidence can be replayed.
 - **The neural model ranks; it does not rule.** HSSLM scores grounded candidates and surface forms instead of freely defining system state.
 - **Learning closes the loop.** Gaps, demonstrations, streams and agent traces become new executable or replayable structure only after their acceptance checks pass.
+
+## Canonical links
+
+- [Current architecture](docs/architecture.md)
+- [Moonshot Apprentice](MOONSHOT_APPRENTICE.md)
+- [FERTIG Moonshot Goal](FERTIG_MOONSHOT_GOAL.md)
+- [DT-Foss/immer](https://github.com/DT-Foss/immer)
+- [DT-Foss/o1-state](https://github.com/DT-Foss/o1-state)
+- [DT-Foss/dotcausal](https://github.com/DT-Foss/dotcausal)
+- [safetensors/safetensors](https://github.com/safetensors/safetensors)
+- [Deja Vu: Contextual Sparsity for Efficient LLMs at Inference Time](https://arxiv.org/abs/2310.17157)
+- [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://jmlr.org/papers/v23/21-0998.html)
+- [Next generation reservoir computing](https://doi.org/10.1038/s41467-021-25801-2)
 
 ## Current measured state
 
